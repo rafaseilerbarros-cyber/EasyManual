@@ -66,22 +66,33 @@
     .perspective {
       perspective: 1000px;
     }
+    .flip-card {
+      height: 285px;
+      position: relative;
+      isolation: isolate;
+    }
     .flip-card-inner {
       position: relative;
       width: 100%;
       height: 100%;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
       transform-style: preserve-3d;
+      transform-origin: center center;
     }
     .flip-card.flipped .flip-card-inner {
       transform: rotateY(180deg);
     }
     .flip-card-front, .flip-card-back {
       position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       border-radius: 1rem;
+      box-sizing: border-box;
+      overflow: hidden;
     }
     .flip-card-back {
       transform: rotateY(180deg);
@@ -803,13 +814,13 @@
       </div>
 
       <!-- 6 Boarding Pass Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
 
         <!-- Card 1: Entusiastas -->
-        <div class="flip-card perspective h-[260px] cursor-pointer" onclick="toggleCardFlip(this)">
+        <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
                   <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
@@ -828,7 +839,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Entusiastas - Detalhes</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -843,10 +854,10 @@
         </div>
 
         <!-- Card 2: Estudantes -->
-        <div class="flip-card perspective h-[260px] cursor-pointer" onclick="toggleCardFlip(this)">
+        <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
                   <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
@@ -865,7 +876,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Estudantes - Detalhes</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -880,11 +891,11 @@
         </div>
 
         <!-- Card 3: Pilotos Operacionais (POPULAR) -->
-        <div class="flip-card perspective h-[260px] cursor-pointer" onclick="toggleCardFlip(this)">
+        <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
             <div class="flip-card-front bg-[#0D0B34] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-[#F59E0B] text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">
+              <div class="absolute top-3 right-3 bg-[#F59E0B] text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase z-10">
                 Mais Popular
               </div>
               <div>
@@ -893,7 +904,7 @@
                   <span class="text-xs font-mono text-[#94A3B8]">SEAT 4A</span>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white">Pilotos Operacionais</div>
+                <div class="text-xl font-bold font-heading text-white leading-tight">Pilotos Operacionais</div>
                 <div class="mt-3 flex items-baseline gap-1">
                   <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 1.000,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
@@ -905,7 +916,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
               <div>
                 <h4 class="font-bold text-white text-base">Pilotos Operacionais</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -920,10 +931,10 @@
         </div>
 
         <!-- Card 4: Escolas / CIACs -->
-        <div class="flip-card perspective h-[260px] cursor-pointer" onclick="toggleCardFlip(this)">
+        <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
                   <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
@@ -942,7 +953,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Escolas / CIACs</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -957,10 +968,10 @@
         </div>
 
         <!-- Card 5: Táxi Aéreo -->
-        <div class="flip-card perspective h-[260px] cursor-pointer" onclick="toggleCardFlip(this)">
+        <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
                   <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
@@ -979,7 +990,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Táxi Aéreo</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -994,10 +1005,10 @@
         </div>
 
         <!-- Card 6: Companhias Aéreas -->
-        <div class="flip-card perspective h-[260px] cursor-pointer" onclick="toggleCardFlip(this)">
+        <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
                   <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
@@ -1016,7 +1027,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Companhias Aéreas</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
