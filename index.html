@@ -813,23 +813,23 @@
         </p>
       </div>
 
-      <!-- 6 Boarding Pass Cards Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+      <!-- 6 Boarding Pass Cards Grid (3 columns on md and up so Card 3 stays locked in row 1) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 items-stretch">
 
         <!-- Card 1: Entusiastas -->
         <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
-                  <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
-                  <span class="text-xs font-mono text-[#94A3B8]">PASSENGER TICKET</span>
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
+                  <span class="text-[10px] lg:text-xs font-mono text-[#94A3B8]">PASSENGER TICKET</span>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white">Entusiastas</div>
+                <div class="text-lg lg:text-xl font-bold font-heading text-white">Entusiastas</div>
                 <div class="mt-3 flex items-baseline gap-1">
-                  <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 200,00</span>
+                  <span class="text-2xl lg:text-3xl font-extrabold text-[#F59E0B]">R$ 200,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
                 </div>
               </div>
@@ -839,7 +839,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Entusiastas - Detalhes</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -857,16 +857,16 @@
         <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
-                  <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
-                  <span class="text-xs font-mono text-[#94A3B8]">FLIGHT F254</span>
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
+                  <span class="text-[10px] lg:text-xs font-mono text-[#94A3B8]">FLIGHT F254</span>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white">Estudantes</div>
+                <div class="text-lg lg:text-xl font-bold font-heading text-white">Estudantes</div>
                 <div class="mt-3 flex items-baseline gap-1">
-                  <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 500,00</span>
+                  <span class="text-2xl lg:text-3xl font-extrabold text-[#F59E0B]">R$ 500,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
                 </div>
               </div>
@@ -876,7 +876,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Estudantes - Detalhes</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -894,19 +894,19 @@
         <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
-              <div class="absolute top-3 right-3 bg-[#F59E0B] text-black font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase z-10">
-                Mais Popular
-              </div>
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
-                <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
-                  <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
-                  <span class="text-xs font-mono text-[#94A3B8]">SEAT 4A</span>
+                <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4 gap-1">
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold shrink-0">BOARDING PASS</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span class="bg-[#F59E0B] text-black font-extrabold text-[9px] lg:text-[10px] px-2 py-0.5 rounded-full uppercase">Mais Popular</span>
+                    <span class="text-[10px] lg:text-xs font-mono text-[#94A3B8]">SEAT 4A</span>
+                  </div>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white leading-tight">Pilotos Operacionais</div>
+                <div class="text-lg lg:text-xl font-bold font-heading text-white leading-tight">Pilotos Operacionais</div>
                 <div class="mt-3 flex items-baseline gap-1">
-                  <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 1.000,00</span>
+                  <span class="text-2xl lg:text-3xl font-extrabold text-[#F59E0B]">R$ 1.000,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
                 </div>
               </div>
@@ -916,8 +916,12 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
+                <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-3">
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
+                  <span class="bg-[#F59E0B] text-black font-extrabold text-[9px] lg:text-[10px] px-2 py-0.5 rounded-full uppercase">Mais Popular</span>
+                </div>
                 <h4 class="font-bold text-white text-base">Pilotos Operacionais</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
                   Para comandantes e copilotos de linha aérea e executiva. Acesso total a busca de panes instantânea, Treinamento IA e Flow Map de cabine.
@@ -934,16 +938,16 @@
         <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
-                  <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
-                  <span class="text-xs font-mono text-[#94A3B8]">GATE C12</span>
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
+                  <span class="text-[10px] lg:text-xs font-mono text-[#94A3B8]">GATE C12</span>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white">Escolas / CIACs</div>
+                <div class="text-lg lg:text-xl font-bold font-heading text-white">Escolas / CIACs</div>
                 <div class="mt-3 flex items-baseline gap-1">
-                  <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 22.500,00</span>
+                  <span class="text-2xl lg:text-3xl font-extrabold text-[#F59E0B]">R$ 22.500,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
                 </div>
               </div>
@@ -953,7 +957,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Escolas / CIACs</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -971,16 +975,16 @@
         <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
-                  <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
-                  <span class="text-xs font-mono text-[#94A3B8]">OPERATOR 135</span>
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
+                  <span class="text-[10px] lg:text-xs font-mono text-[#94A3B8]">OPERATOR 135</span>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white">Táxi Aéreo</div>
+                <div class="text-lg lg:text-xl font-bold font-heading text-white">Táxi Aéreo</div>
                 <div class="mt-3 flex items-baseline gap-1">
-                  <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 250.000,00</span>
+                  <span class="text-2xl lg:text-3xl font-extrabold text-[#F59E0B]">R$ 250.000,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
                 </div>
               </div>
@@ -990,7 +994,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Táxi Aéreo</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
@@ -1008,16 +1012,16 @@
         <div class="flip-card perspective h-[285px] cursor-pointer" onclick="toggleCardFlip(this)">
           <div class="flip-card-inner">
             <!-- Front -->
-            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-6 flex flex-col justify-between shadow-xl">
+            <div class="flip-card-front bg-[#0D0B34] border-2 border-[#1E1B56] hover:border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-xl">
               <div>
                 <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3 mb-4">
-                  <span class="text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
-                  <span class="text-xs font-mono text-[#94A3B8]">AIRLINE 121</span>
+                  <span class="text-[11px] lg:text-xs uppercase font-mono text-[#F59E0B] font-bold">BOARDING PASS</span>
+                  <span class="text-[10px] lg:text-xs font-mono text-[#94A3B8]">AIRLINE 121</span>
                 </div>
                 <div class="text-xs text-[#94A3B8] uppercase">Passenger / Perfil</div>
-                <div class="text-xl font-bold font-heading text-white">Companhias Aéreas</div>
+                <div class="text-lg lg:text-xl font-bold font-heading text-white">Companhias Aéreas</div>
                 <div class="mt-3 flex items-baseline gap-1">
-                  <span class="text-3xl font-extrabold text-[#F59E0B]">R$ 600.000,00</span>
+                  <span class="text-2xl lg:text-3xl font-extrabold text-[#F59E0B]">R$ 600.000,00</span>
                   <span class="text-xs text-[#94A3B8]">/ano</span>
                 </div>
               </div>
@@ -1027,7 +1031,7 @@
               </div>
             </div>
             <!-- Back -->
-            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-6 flex flex-col justify-between shadow-2xl">
+            <div class="flip-card-back bg-[#16134A] border-2 border-[#F59E0B] p-5 lg:p-6 flex flex-col justify-between shadow-2xl">
               <div>
                 <h4 class="font-bold text-white text-base">Companhias Aéreas</h4>
                 <p class="text-xs text-[#94A3B8] mt-2 leading-relaxed">
