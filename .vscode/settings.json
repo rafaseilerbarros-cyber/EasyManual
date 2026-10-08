@@ -1,0 +1,7 @@
+{
+  "project.name": "EasyManual",
+  "liveServer.settings.defaultPort": 5500,
+  "files.associations": {
+    "*.html": "html"
+  }
+}

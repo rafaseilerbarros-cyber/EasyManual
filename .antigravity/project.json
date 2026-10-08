@@ -1,0 +1,10 @@
+{
+  "name": "EasyManual",
+  "displayName": "EasyManual - Sistema Inteligente de Manuais de Aviação",
+  "description": "Plataforma de inteligência aeronáutica com IA, busca de panes, treinamentos estilo NotebookLM e Flow Map A320.",
+  "version": "2.4.0",
+  "type": "web",
+  "main": "index.html",
+  "path": "C:\\Users\\Rafael\\.gemini\\antigravity\\scratch\\easymanual",
+  "stack": ["Firebase", "HTML5", "Tailwind CSS", "Lucide Icons", "SVG Canvas"]
+}
