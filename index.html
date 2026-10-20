@@ -2175,7 +2175,11 @@
     const flowMapState = {
       mode: 'add', // 'add' or 'move'
       isDragging: false,
-      draggedNodeId: null
+      draggedNodeId: null,
+      selectedNodeId: null,
+      startX: 0,
+      startY: 0,
+      hasMoved: false
     };
 
     function setFlowInteractionMode(mode) {
@@ -2196,8 +2200,15 @@
     }
 
     function handleCockpitCanvasClick(e) {
-      if (flowMapState.isDragging) return;
+      if (flowMapState.isDragging || flowMapState.hasMoved) return;
       if (e.target.closest('.flow-node-dot')) return; // ignore click on node dot
+
+      // If a node was open, clicking empty space deselects it and closes the card
+      if (flowMapState.selectedNodeId !== null) {
+        flowMapState.selectedNodeId = null;
+        renderFlowMap();
+        return;
+      }
 
       if (flowMapState.mode === 'add') {
         const container = document.getElementById('cockpit-canvas-container');
@@ -2216,6 +2227,7 @@
             title: title,
             desc: `Passo #${nextId} sequencial`
           });
+          flowMapState.selectedNodeId = nextId; // Open card for the newly created node
           renderFlowMap();
         }
       }
@@ -2225,11 +2237,20 @@
       e.stopPropagation();
       flowMapState.isDragging = true;
       flowMapState.draggedNodeId = nodeId;
+      flowMapState.startX = e.clientX;
+      flowMapState.startY = e.clientY;
+      flowMapState.hasMoved = false;
     }
 
     function handleCockpitMouseMove(e) {
       if (!flowMapState.isDragging || flowMapState.draggedNodeId === null) return;
       
+      const dx = Math.abs(e.clientX - flowMapState.startX);
+      const dy = Math.abs(e.clientY - flowMapState.startY);
+      if (dx > 4 || dy > 4) {
+        flowMapState.hasMoved = true;
+      }
+
       const container = document.getElementById('cockpit-canvas-container');
       const rect = container.getBoundingClientRect();
       const x = Math.max(20, Math.min(rect.width - 20, Math.round(e.clientX - rect.left)));
@@ -2244,13 +2265,27 @@
     }
 
     function handleCockpitMouseUp(e) {
+      if (flowMapState.isDragging && !flowMapState.hasMoved && flowMapState.draggedNodeId !== null) {
+        // Clean click on node: toggle selection card
+        const clickedId = flowMapState.draggedNodeId;
+        flowMapState.selectedNodeId = (flowMapState.selectedNodeId === clickedId) ? null : clickedId;
+        renderFlowMap();
+      }
       flowMapState.isDragging = false;
       flowMapState.draggedNodeId = null;
+      flowMapState.hasMoved = false;
+    }
+
+    function closeNodeCard(e) {
+      if (e) e.stopPropagation();
+      flowMapState.selectedNodeId = null;
+      renderFlowMap();
     }
 
     function deleteFlowNode(e, nodeId) {
       e.stopPropagation();
       appState.flowNodes = appState.flowNodes.filter(n => n.id !== nodeId);
+      flowMapState.selectedNodeId = null;
       // Re-number nodes for clean sequence
       appState.flowNodes.forEach((n, idx) => { n.id = idx + 1; });
       renderFlowMap();
@@ -2293,32 +2328,46 @@
         svgOverlay.appendChild(line);
       }
 
-      // Render Draggable Node Dots
+      // Render Node Dots (Cards ONLY visible when clicked)
       appState.flowNodes.forEach(node => {
+        const isSelected = (flowMapState.selectedNodeId === node.id);
         const dot = document.createElement('div');
-        dot.className = 'flow-node-dot absolute transform -translate-x-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing group z-30';
+        dot.className = `flow-node-dot absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer select-none ${isSelected ? 'z-50' : 'z-30'}`;
         dot.style.left = `${node.x}px`;
         dot.style.top = `${node.y}px`;
+        dot.title = `Passo ${node.id}: ${node.title} (Clique p/ ver detalhes)`;
 
         dot.onmousedown = (e) => handleNodeMouseDown(e, node.id);
+        dot.onclick = (e) => e.stopPropagation();
 
         dot.innerHTML = `
           <div class="relative flex items-center justify-center">
-            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#F59E0B] to-[#E23B2E] text-black font-extrabold text-xs flex items-center justify-center shadow-xl shadow-[#F59E0B]/40 border-2 border-white group-hover:scale-125 transition-transform duration-200">
+            <!-- Node Number Ball -->
+            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#F59E0B] to-[#E23B2E] text-black font-extrabold text-xs flex items-center justify-center shadow-xl border-2 transition-all duration-200 ${isSelected ? 'border-white ring-4 ring-[#F59E0B] scale-125 shadow-[0_0_20px_rgba(245,158,11,0.8)]' : 'border-white shadow-[#F59E0B]/40 hover:scale-115 hover:shadow-[0_0_15px_rgba(245,158,11,0.6)]'}">
               ${node.id}
             </div>
 
-            <!-- Node Card Overlay with Action Buttons -->
-            <div class="absolute bottom-11 left-1/2 transform -translate-x-1/2 w-52 p-3 rounded-xl bg-[#0D0B34]/95 border border-[#F59E0B] text-white text-[11px] shadow-2xl backdrop-blur-md pointer-events-auto z-40 space-y-1.5">
-              <div class="flex items-center justify-between font-bold text-[#F59E0B]">
-                <span class="truncate pr-2">${escapeHtml(node.title)}</span>
-                <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="editFlowNodeText(event, ${node.id})" title="Editar texto" class="p-1 hover:text-white text-[#94A3B8]">✏️</button>
-                  <button onclick="deleteFlowNode(event, ${node.id})" title="Excluir nó" class="p-1 hover:text-[#E23B2E] text-[#94A3B8]">🗑️</button>
+            <!-- Node Card Overlay: Only rendered when clicked / selected -->
+            ${isSelected ? `
+              <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-64 p-3.5 rounded-xl bg-[#0D0B34]/98 border-2 border-[#F59E0B] text-white text-[11px] shadow-[0_12px_30px_rgba(0,0,0,0.85)] backdrop-blur-md pointer-events-auto z-50 space-y-2 animate-in fade-in zoom-in-95 duration-150">
+                <div class="flex items-center justify-between border-b border-[#1E1B56] pb-2">
+                  <span class="font-mono font-bold text-[#F59E0B] text-xs">PASSO #${node.id}</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="editFlowNodeText(event, ${node.id})" title="Editar texto" class="p-1 rounded hover:bg-[#16134A] text-[#94A3B8] hover:text-white transition-colors">✏️</button>
+                    <button onclick="deleteFlowNode(event, ${node.id})" title="Excluir nó" class="p-1 rounded hover:bg-[#E23B2E]/20 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">🗑️</button>
+                    <button onclick="closeNodeCard(event)" title="Fechar detalhes" class="px-1.5 py-0.5 rounded hover:bg-[#16134A] text-[#94A3B8] hover:text-white font-bold transition-colors">✕</button>
+                  </div>
+                </div>
+                <div class="font-bold text-white text-xs leading-snug">
+                  ${escapeHtml(node.title)}
+                </div>
+                ${node.desc ? `<div class="text-[10px] text-slate-300 leading-relaxed font-sans">${escapeHtml(node.desc)}</div>` : ''}
+                <div class="text-[9px] text-[#94A3B8] font-mono pt-1.5 border-t border-[#1E1B56]/50 flex items-center justify-between">
+                  <span>Arraste a bola p/ mover</span>
+                  <span>X:${node.x} Y:${node.y}</span>
                 </div>
               </div>
-              <div class="text-[10px] text-[#94A3B8] font-mono">Arraste p/ Mover • X:${node.x} Y:${node.y}</div>
-            </div>
+            ` : ''}
           </div>
         `;
         nodesContainer.appendChild(dot);
@@ -2327,10 +2376,12 @@
 
     function clearFlowMap() {
       appState.flowNodes = [];
+      flowMapState.selectedNodeId = null;
       renderFlowMap();
     }
 
     function loadPresetFlow(type) {
+      flowMapState.selectedNodeId = null;
       if (type === 'cockpit-prep') {
         appState.flowNodes = [
           { id: 1, x: 500, y: 140, title: '1. BAT 1 & 2 ... AUTO', desc: 'Verificar voltagem > 25.5V' },
