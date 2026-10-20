@@ -1348,25 +1348,40 @@
               <div class="w-8 h-8 rounded-lg bg-[#F59E0B] text-black font-bold flex items-center justify-center shrink-0">
                 AI
               </div>
-              <div class="p-4 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] text-sm text-[#94A3B8] space-y-2">
-                <p class="font-semibold text-white">Bem-vindo ao módulo de Treinamento e Estudo!</p>
-                <p>Estou pronto para responder suas dúvidas sobre sistemas da aeronave, procedimentos operacionais padronizados (SOPs) e limitações técnicas com base nos manuais carregados em <strong class="text-[#F59E0B]">Upload de arquivos</strong>.</p>
-                <div class="pt-2 flex flex-wrap gap-2">
-                  <button onclick="sendPresetPrompt('Quais são os passos do procedimento de Engine Fire in Flight no A320?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Engine Fire in Flight (FCOM 3)
-                  </button>
-                  <button onclick="sendPresetPrompt('Qual a sequência correta para energização elétrica da cabine no A320?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Energização elétrica (FCOM 1)
-                  </button>
-                  <button onclick="sendPresetPrompt('Qual a técnica recomendada de pouso com vento de través segundo o FCTM?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Vento de Través / Crosswind (FCTM)
-                  </button>
-                  <button onclick="sendPresetPrompt('Posso despachar o A320 com o APU Generator inoperante segundo a MEL?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Despacho com APU Inop (MEL)
-                  </button>
-                  <button onclick="sendPresetPrompt('Qual o checklist de emergência para perda dos sistemas hidráulicos no QRH?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Pane Hidráulica Dupla (QRH)
-                  </button>
+              <div class="p-5 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] text-sm text-[#94A3B8] space-y-4 shadow-xl">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#1E1B56] pb-3 gap-2">
+                  <div>
+                    <h3 class="font-bold text-white text-base flex items-center gap-2">
+                      <span>Módulo de Treinamento & Estudo A320</span>
+                    </h3>
+                    <p class="text-xs text-[#94A3B8] mt-0.5">Assistente Inteligente treinado nos manuais homologados da aeronave</p>
+                  </div>
+                  <span class="px-2.5 py-1 rounded-full bg-[#F59E0B]/20 text-[#F59E0B] text-[10px] font-mono font-bold flex items-center gap-1.5 self-start sm:self-auto border border-[#F59E0B]/40">
+                    <i data-lucide="layers" class="w-3.5 h-3.5"></i> 5 Manuais Conectados
+                  </span>
+                </div>
+                <p class="text-slate-300 leading-relaxed font-sans">
+                  Consulte sistemas, procedimentos operacionais padronizados (SOPs) e contingências com citações diretas dos manuais <strong class="text-white">FCOM Vol 1 & 3</strong>, <strong class="text-white">QRH</strong>, <strong class="text-white">FCTM</strong> e <strong class="text-white">MEL</strong> indexados.
+                </p>
+                <div class="pt-1 space-y-2">
+                  <span class="text-xs font-semibold text-[#94A3B8] block">Perguntas sugeridas para consulta rápida:</span>
+                  <div class="flex flex-wrap gap-2">
+                    <button onclick="sendPresetPrompt('Quais são os passos do procedimento de Engine Fire in Flight no A320?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors flex items-center gap-1.5">
+                      <span>💡 Engine Fire in Flight</span> <span class="text-[10px] text-[#F59E0B] font-mono font-bold">(FCOM 3)</span>
+                    </button>
+                    <button onclick="sendPresetPrompt('Qual a sequência correta para energização elétrica da cabine no A320?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors flex items-center gap-1.5">
+                      <span>💡 Energização Elétrica</span> <span class="text-[10px] text-[#F59E0B] font-mono font-bold">(FCOM 1)</span>
+                    </button>
+                    <button onclick="sendPresetPrompt('Qual a técnica recomendada de pouso com vento de través segundo o FCTM?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors flex items-center gap-1.5">
+                      <span>💡 Vento de Través (Crosswind)</span> <span class="text-[10px] text-[#F59E0B] font-mono font-bold">(FCTM)</span>
+                    </button>
+                    <button onclick="sendPresetPrompt('Posso despachar o A320 com o APU Generator inoperante segundo a MEL?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors flex items-center gap-1.5">
+                      <span>💡 Despacho com APU Inop</span> <span class="text-[10px] text-[#F59E0B] font-mono font-bold">(MEL)</span>
+                    </button>
+                    <button onclick="sendPresetPrompt('Qual o checklist de emergência para perda dos sistemas hidráulicos no QRH?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors flex items-center gap-1.5">
+                      <span>💡 Pane Hidráulica Dupla</span> <span class="text-[10px] text-[#F59E0B] font-mono font-bold">(QRH)</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1819,6 +1834,136 @@
       updateSidebarDocCount();
     }
 
+    // ================= RICH TEXT & CHECKLIST FORMATTERS =================
+    function formatInlineMarkdown(str) {
+      if (!str) return '';
+      return str
+        // Convert bold: **text**
+        .replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-extrabold tracking-wide">$1</strong>')
+        // Convert code blocks / ECAM alarms: `code`
+        .replace(/`([^`]+)`/g, '<code class="px-2 py-0.5 rounded-md bg-[#040122] border border-[#F59E0B]/40 text-[#F59E0B] font-mono text-xs font-bold">$1</code>')
+        // Convert parenthetical highlights: (*text*) -> aviation term badge
+        .replace(/\(\*([^*]+)\*\)/g, '<span class="text-[#F59E0B] font-mono text-xs italic px-2 py-0.5 rounded-md bg-[#16134A] border border-[#1E1B56] mx-1">$1</span>')
+        // Convert standard italic: *text*
+        .replace(/\*([^*]+)\*/g, '<em class="text-amber-200/90 font-medium not-italic">$1</em>')
+        // Format SOP / checklist trigger values: ... ACTION
+        .replace(/\.\.\.\s*(IDLE|OFF|ON|AUTO|PUSH &amp; RELEASE|PUSH & RELEASE|PUSH|DISCH|DISCHARGE|SET|ESTABLISH|OVRD|CHECK)/gi,
+          '<span class="text-[#94A3B8] font-mono mx-1">...</span> <span class="px-2 py-0.5 rounded-md bg-[#F59E0B]/20 border border-[#F59E0B]/50 text-[#F59E0B] font-mono text-[11px] font-bold uppercase">$1</span>');
+    }
+
+    function formatTrainingResponse(text) {
+      const lines = text.trim().split('\n');
+      let html = '';
+      let i = 0;
+
+      while (i < lines.length) {
+        const rawLine = lines[i].trim();
+        if (!rawLine) {
+          i++;
+          continue;
+        }
+
+        // Bullet points list
+        if (rawLine.startsWith('•') || rawLine.startsWith('-')) {
+          html += '<ul class="space-y-2.5 my-3.5">';
+          while (i < lines.length && (lines[i].trim().startsWith('•') || lines[i].trim().startsWith('-'))) {
+            const itemContent = lines[i].trim().replace(/^[•\-]\s*/, '');
+            html += `
+              <li class="flex items-start gap-3 p-3.5 rounded-xl bg-[#040122]/80 border border-[#1E1B56] hover:border-[#F59E0B]/40 transition-colors shadow-sm">
+                <span class="w-2 h-2 rounded-full bg-[#F59E0B] mt-2 shrink-0 shadow-[0_0_8px_rgba(245,158,11,0.6)]"></span>
+                <div class="text-sm text-slate-200 leading-relaxed font-sans flex-1">${formatInlineMarkdown(itemContent)}</div>
+              </li>
+            `;
+            i++;
+          }
+          html += '</ul>';
+          continue;
+        }
+
+        // Numbered sequential steps
+        if (/^\d+\.\s/.test(rawLine)) {
+          html += '<ol class="space-y-2.5 my-3.5">';
+          while (i < lines.length && /^\d+\.\s/.test(lines[i].trim())) {
+            const match = lines[i].trim().match(/^(\d+)\.\s*(.*)$/);
+            const num = match ? match[1] : (i + 1);
+            const content = match ? match[2] : lines[i].trim();
+            html += `
+              <li class="flex items-start gap-3 p-3.5 rounded-xl bg-[#040122]/80 border border-[#1E1B56] hover:border-[#F59E0B]/40 transition-colors shadow-sm">
+                <span class="w-6 h-6 rounded-lg bg-gradient-to-br from-[#16134A] to-[#1E1B56] border border-[#F59E0B]/50 text-[#F59E0B] font-mono font-bold text-xs flex items-center justify-center shrink-0 shadow-md">
+                  ${num}
+                </span>
+                <div class="text-sm text-slate-200 leading-relaxed font-sans flex-1 pt-0.5">${formatInlineMarkdown(content)}</div>
+              </li>
+            `;
+            i++;
+          }
+          html += '</ol>';
+          continue;
+        }
+
+        // Section header / Introduction title
+        if (rawLine.endsWith(':') || /^(Conforme|De acordo|Com base|Consultando)/i.test(rawLine)) {
+          html += `
+            <div class="p-3.5 rounded-xl bg-gradient-to-r from-[#16134A] to-[#0D0B34] border-l-4 border-[#F59E0B] text-white font-semibold text-sm leading-relaxed my-2.5 shadow-md">
+              ${formatInlineMarkdown(rawLine)}
+            </div>
+          `;
+          i++;
+          continue;
+        }
+
+        // Standard paragraph
+        html += `<p class="text-sm text-slate-300 leading-relaxed my-2 font-sans">${formatInlineMarkdown(rawLine)}</p>`;
+        i++;
+      }
+
+      return html;
+    }
+
+    function formatChecklistRow(itemStr) {
+      const dotIndex = itemStr.indexOf('....');
+      if (dotIndex !== -1) {
+        const leftPart = itemStr.substring(0, dotIndex).trim();
+        const rightPart = itemStr.substring(dotIndex).replace(/^\.+/, '').trim();
+
+        const numMatch = leftPart.match(/^(\d+)\.\s*(.*)$/);
+        const num = numMatch ? numMatch[1] : null;
+        const title = numMatch ? numMatch[2] : leftPart;
+
+        let badgeClass = "bg-[#F59E0B]/20 text-[#F59E0B] border-[#F59E0B]/50";
+        const rUpper = rightPart.toUpperCase();
+        if (rUpper.includes('OFF') || rUpper.includes('IDLE') || rUpper.includes('DISCH') || rUpper.includes('PUSH')) {
+          badgeClass = "bg-[#E23B2E]/20 text-[#E23B2E] border-[#E23B2E]/50";
+        } else if (rUpper.includes('ON') || rUpper.includes('100%') || rUpper.includes('OPERACIONAIS') || rUpper.includes('3000 PSI')) {
+          badgeClass = "bg-emerald-500/20 text-emerald-400 border-emerald-500/50";
+        } else if (rUpper.includes('AUTO') || rUpper.includes('SET') || rUpper.includes('QRH') || rUpper.includes('CATEGORIA')) {
+          badgeClass = "bg-cyan-500/20 text-cyan-400 border-cyan-500/50";
+        }
+
+        return `
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-xl bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B]/40 transition-all gap-2 sm:gap-4 shadow-sm">
+            <div class="flex items-center gap-3 min-w-0">
+              ${num ? `<span class="w-6 h-6 rounded-md bg-[#16134A] border border-[#1E1B56] text-[#F59E0B] font-mono font-bold text-xs flex items-center justify-center shrink-0 shadow-sm">${num}</span>` : ''}
+              <span class="font-mono text-xs font-bold text-white tracking-wide truncate">${escapeHtml(title)}</span>
+            </div>
+            <div class="flex items-center justify-end gap-2 shrink-0 self-end sm:self-auto">
+              <span class="hidden md:inline text-[#1E1B56] font-mono text-xs select-none">........................</span>
+              <span class="px-3 py-1 rounded-lg ${badgeClass} border font-mono text-xs font-extrabold uppercase tracking-wider shadow-sm">
+                ${escapeHtml(rightPart)}
+              </span>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="flex items-center gap-3 p-3 rounded-xl bg-[#040122] border border-[#1E1B56]">
+          <span class="w-2 h-2 rounded-full bg-[#E23B2E]"></span>
+          <span class="font-mono text-xs text-white">${escapeHtml(itemStr)}</span>
+        </div>
+      `;
+    }
+
     // Treinamento Chat Handler
     function sendPresetPrompt(promptText) {
       document.getElementById('treinamento-input').value = promptText;
@@ -1837,10 +1982,10 @@
       const userMsg = document.createElement('div');
       userMsg.className = 'flex items-start gap-3 justify-end max-w-3xl ml-auto';
       userMsg.innerHTML = `
-        <div class="p-4 rounded-2xl bg-[#16134A] border border-[#F59E0B]/30 text-sm text-white">
-          <p>${escapeHtml(text)}</p>
+        <div class="p-4 rounded-2xl bg-[#16134A] border border-[#F59E0B]/30 text-sm text-white shadow-lg">
+          <p class="font-sans leading-relaxed">${escapeHtml(text)}</p>
         </div>
-        <div class="w-8 h-8 rounded-lg bg-[#F59E0B]/20 text-[#F59E0B] font-bold flex items-center justify-center shrink-0 text-xs">
+        <div class="w-8 h-8 rounded-lg bg-[#F59E0B]/20 border border-[#F59E0B]/40 text-[#F59E0B] font-bold flex items-center justify-center shrink-0 text-xs shadow-md">
           VOCÊ
         </div>
       `;
@@ -1877,13 +2022,19 @@
         }
 
         aiMsg.innerHTML = `
-          <div class="w-8 h-8 rounded-lg bg-[#F59E0B] text-black font-bold flex items-center justify-center shrink-0 text-xs">
+          <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-[#F59E0B] to-[#E23B2E] text-black font-extrabold flex items-center justify-center shrink-0 text-xs shadow-md">
             AI
           </div>
-          <div class="p-4 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] text-sm text-[#94A3B8] space-y-2">
-            <div class="text-white space-y-2 font-sans">${responseText.replace(/\n/g, '<br>')}</div>
-            <div class="mt-3 pt-2 border-t border-[#1E1B56] text-[11px] text-[#F59E0B] font-mono flex items-center gap-1.5">
-              <i data-lucide="bookmark" class="w-3.5 h-3.5"></i> Fonte: ${citation}
+          <div class="p-5 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] text-sm text-[#94A3B8] shadow-2xl flex-1 max-w-3xl space-y-3">
+            <div class="text-white font-sans">${formatTrainingResponse(responseText)}</div>
+            <div class="mt-4 pt-3 border-t border-[#1E1B56] flex flex-wrap items-center justify-between gap-2">
+              <div class="text-[11px] text-[#F59E0B] font-mono flex items-center gap-1.5">
+                <i data-lucide="bookmark" class="w-3.5 h-3.5"></i>
+                <span>Fonte: <strong>${citation}</strong></span>
+              </div>
+              <span class="text-[10px] uppercase font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 font-semibold">
+                Manual Homologado
+              </span>
             </div>
           </div>
         `;
@@ -1977,31 +2128,42 @@
 
       container.innerHTML = `
         <div class="max-w-4xl mx-auto space-y-6">
-          <div class="p-6 rounded-2xl bg-[#0D0B34] border border-[#E23B2E]/40 space-y-4">
-            <div class="flex items-center justify-between border-b border-[#1E1B56] pb-3">
+          <div class="p-6 rounded-2xl bg-[#0D0B34] border border-[#E23B2E]/40 shadow-2xl space-y-5">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#1E1B56] pb-3.5 gap-2">
               <span class="text-xs uppercase font-mono font-bold text-[#E23B2E] flex items-center gap-2">
-                <i data-lucide="alert-triangle" class="w-4 h-4"></i> RESULTADO DE PANE LOCALIZADA NO MANUAL
+                <i data-lucide="alert-octagon" class="w-4 h-4 text-[#E23B2E] animate-pulse"></i> RESULTADO DE PANE LOCALIZADA NO MANUAL
               </span>
-              <span class="text-xs font-mono text-[#94A3B8]">${badgeText}</span>
+              <span class="text-xs font-mono text-[#F59E0B] px-2.5 py-1 rounded-md bg-[#16134A] border border-[#1E1B56] font-semibold">${badgeText}</span>
             </div>
 
-            <h3 class="text-xl font-bold font-heading text-white">${escapeHtml(query.toUpperCase())}</h3>
-
-            <div class="p-4 rounded-xl bg-[#040122] border border-[#1E1B56] space-y-3">
-              <h4 class="font-bold text-[#F59E0B] text-xs uppercase tracking-wider">Ações Imediatas / Procedimento Operacional:</h4>
-              <ul class="text-xs text-[#94A3B8] space-y-2 font-mono">
-                ${memoryItems.map(item => `
-                  <li class="flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#E23B2E]"></span> ${escapeHtml(item)}
-                  </li>
-                `).join('')}
-              </ul>
-              ${notes ? `<p class="text-xs text-[#94A3B8] pt-2 border-t border-[#1E1B56]/50 italic">${notes}</p>` : ''}
+            <div>
+              <div class="text-[11px] text-[#94A3B8] uppercase font-mono tracking-wider">Indicação de Alarme ECAM / Pane:</div>
+              <h3 class="text-2xl font-extrabold font-heading text-white tracking-wide mt-1">${escapeHtml(query.toUpperCase())}</h3>
             </div>
 
-            <div class="flex items-center justify-between text-xs text-[#94A3B8] pt-2 border-t border-[#1E1B56]">
-              <span>Manual Origem: <strong class="text-white">${originManual}</strong></span>
-              <span class="text-[#F59E0B] font-mono">${originSection}</span>
+            <div class="p-4 rounded-xl bg-[#040122] border border-[#1E1B56] space-y-3.5">
+              <h4 class="font-bold text-[#F59E0B] text-xs uppercase tracking-wider flex items-center gap-2">
+                <i data-lucide="check-square" class="w-3.5 h-3.5"></i> Ações Imediatas de Memória / Procedimento:
+              </h4>
+              <div class="space-y-2 font-mono">
+                ${memoryItems.map(item => formatChecklistRow(item)).join('')}
+              </div>
+              ${notes ? `
+                <div class="p-3.5 rounded-xl bg-[#16134A]/50 border-l-4 border-[#F59E0B] text-xs text-slate-300 space-y-1">
+                  <div class="font-bold text-[#F59E0B] uppercase tracking-wider text-[10px] flex items-center gap-1.5">
+                    <i data-lucide="info" class="w-3.5 h-3.5"></i> Observações Técnicas da Tripulação
+                  </div>
+                  <p class="leading-relaxed font-sans">${escapeHtml(notes)}</p>
+                </div>
+              ` : ''}
+            </div>
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#94A3B8] pt-3 border-t border-[#1E1B56] gap-2">
+              <div class="flex items-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4 text-[#F59E0B]"></i>
+                <span>Manual Origem: <strong class="text-white">${originManual}</strong></span>
+              </div>
+              <span class="px-2.5 py-1 rounded-md bg-[#040122] border border-[#1E1B56] text-[#F59E0B] font-mono text-[11px] font-bold">${originSection}</span>
             </div>
           </div>
         </div>
