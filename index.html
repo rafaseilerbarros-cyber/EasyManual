@@ -1163,11 +1163,11 @@
         <div class="p-3.5 rounded-xl bg-[#040122] border border-[#1E1B56] space-y-2">
           <div class="flex items-center justify-between text-[11px]">
             <span class="text-[#94A3B8]">Manuais Ativos:</span>
-            <span id="sidebar-doc-count" class="font-bold text-[#F59E0B]">1 arquivo</span>
+            <span id="sidebar-doc-count" class="font-bold text-[#F59E0B]">5 arquivos</span>
           </div>
           <div class="flex items-center justify-between text-[11px]">
-            <span class="text-[#94A3B8]">A320 QRH Index:</span>
-            <span class="font-mono text-emerald-400 font-bold">READY</span>
+            <span class="text-[#94A3B8]">A320 Fleet Index:</span>
+            <span class="font-mono text-emerald-400 font-bold">READY (FCOM/QRH/FCTM/MEL)</span>
           </div>
         </div>
       </aside>
@@ -1203,23 +1203,111 @@
           <div class="space-y-4">
             <h3 class="text-sm font-bold text-white flex items-center justify-between">
               <span>Manuais Inseridos na Base de Dados</span>
-              <span class="text-xs text-[#94A3B8] font-normal">Fontes consultáveis pela IA</span>
+              <span class="text-xs text-[#94A3B8] font-normal">Fontes consultáveis pela IA (Frota A320)</span>
             </h3>
 
             <div id="sources-list" class="space-y-3">
-              <!-- Pre-loaded sample document 1 -->
+              <!-- Document 1: A320 FCOM Vol 3 -->
               <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
                 <div class="flex items-center gap-3">
                   <div class="p-2.5 rounded-lg bg-[#F59E0B]/10 text-[#F59E0B]">
                     <i data-lucide="file-text" class="w-5 h-5"></i>
                   </div>
                   <div>
-                    <h4 class="font-bold text-white text-sm">Airbus A320 FCOM Vol 3 - Emergency Procedures.pdf</h4>
+                    <h4 class="font-bold text-white text-sm">Airbus A320 FCOM Vol 3 - Emergency & Abnormal Procedures.pdf</h4>
                     <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
                       <span>4.2 MB</span>
                       <span>•</span>
                       <span class="text-emerald-400 font-semibold flex items-center gap-1">
                         <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (1.240 seções)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Document 2: A320 QRH -->
+              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="p-2.5 rounded-lg bg-[#E23B2E]/10 text-[#E23B2E]">
+                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm">Airbus A320 QRH - Quick Reference Handbook (Rev 22).pdf</h4>
+                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
+                      <span>3.4 MB</span>
+                      <span>•</span>
+                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (740 seções & checklists de contingência)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Document 3: A320 FCOM Vol 1 Systems -->
+              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400">
+                    <i data-lucide="layers" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm">Airbus A320 FCOM Vol 1 - Aircraft Systems Description.pdf</h4>
+                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
+                      <span>8.8 MB</span>
+                      <span>•</span>
+                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (2.650 seções • Hidráulica, FBW, Elétrica, Motores)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Document 4: A320 FCTM Training Manual -->
+              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400">
+                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm">Airbus A320 FCTM - Flight Crew Training Manual.pdf</h4>
+                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
+                      <span>5.2 MB</span>
+                      <span>•</span>
+                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (980 seções • Técnicas de pilotagem, Crosswind, Go-Around)
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </div>
+
+              <!-- Document 5: A320 MEL Minimum Equipment List -->
+              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
+                <div class="flex items-center gap-3">
+                  <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400">
+                    <i data-lucide="clipboard-list" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-white text-sm">Airbus A320 MEL - Minimum Equipment List (Rev 48).pdf</h4>
+                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
+                      <span>6.5 MB</span>
+                      <span>•</span>
+                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
+                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (1.540 itens de despacho operacional)
                       </span>
                     </div>
                   </div>
@@ -1265,10 +1353,19 @@
                 <p>Estou pronto para responder suas dúvidas sobre sistemas da aeronave, procedimentos operacionais padronizados (SOPs) e limitações técnicas com base nos manuais carregados em <strong class="text-[#F59E0B]">Upload de arquivos</strong>.</p>
                 <div class="pt-2 flex flex-wrap gap-2">
                   <button onclick="sendPresetPrompt('Quais são os passos do procedimento de Engine Fire in Flight no A320?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Procedimento de Engine Fire A320
+                    💡 Engine Fire in Flight (FCOM 3)
                   </button>
-                  <button onclick="sendPresetPrompt('Qual a sequência correta para energização elétrica da cabine?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
-                    💡 Energização elétrica da cabine
+                  <button onclick="sendPresetPrompt('Qual a sequência correta para energização elétrica da cabine no A320?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
+                    💡 Energização elétrica (FCOM 1)
+                  </button>
+                  <button onclick="sendPresetPrompt('Qual a técnica recomendada de pouso com vento de través segundo o FCTM?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
+                    💡 Vento de Través / Crosswind (FCTM)
+                  </button>
+                  <button onclick="sendPresetPrompt('Posso despachar o A320 com o APU Generator inoperante segundo a MEL?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
+                    💡 Despacho com APU Inop (MEL)
+                  </button>
+                  <button onclick="sendPresetPrompt('Qual o checklist de emergência para perda dos sistemas hidráulicos no QRH?')" class="text-xs bg-[#040122] hover:border-[#F59E0B] border border-[#1E1B56] px-3 py-1.5 rounded-lg text-white transition-colors">
+                    💡 Pane Hidráulica Dupla (QRH)
                   </button>
                 </div>
               </div>
@@ -1318,13 +1415,17 @@
               </button>
             </form>
 
-            <div class="flex items-center justify-center gap-2 text-xs text-[#94A3B8]">
+            <div class="flex items-center justify-center gap-2 flex-wrap text-xs text-[#94A3B8]">
               <span>Exemplos frequentes:</span>
-              <button onclick="searchQuickPane('ENG 1 FAIL IN FLIGHT')" class="text-[#F59E0B] hover:underline font-mono">ENG 1 FAIL</button>
+              <button onclick="searchQuickPane('ENG 1 FAIL IN FLIGHT')" class="text-[#F59E0B] hover:underline font-mono">ENG 1 FAIL (FCOM 3)</button>
               <span>•</span>
-              <button onclick="searchQuickPane('HYD BLUE SYS LOW PRESS')" class="text-[#F59E0B] hover:underline font-mono">HYD BLUE SYS PRESS</button>
+              <button onclick="searchQuickPane('HYD BLUE SYS LOW PRESS')" class="text-[#F59E0B] hover:underline font-mono">HYD BLUE PRESS (QRH)</button>
               <span>•</span>
-              <button onclick="searchQuickPane('SMOKE / AVIONICS SMOKE')" class="text-[#F59E0B] hover:underline font-mono">AVIONICS SMOKE</button>
+              <button onclick="searchQuickPane('SMOKE / AVIONICS SMOKE')" class="text-[#F59E0B] hover:underline font-mono">AVIONICS SMOKE (QRH)</button>
+              <span>•</span>
+              <button onclick="searchQuickPane('APU GEN FAULT DESPACHO')" class="text-[#F59E0B] hover:underline font-mono">APU GEN FAULT (MEL)</button>
+              <span>•</span>
+              <button onclick="searchQuickPane('CROSSWIND LANDING TECHNIQUE')" class="text-[#F59E0B] hover:underline font-mono">CROSSWIND (FCTM)</button>
             </div>
           </div>
 
@@ -1754,16 +1855,25 @@
         aiMsg.className = 'flex items-start gap-3 max-w-3xl';
 
         let responseText = "";
-        let citation = "[A320 FCOM Vol 3 - Procedimentos de Emergência, Seção 3.02.20 pág. 42]";
+        let citation = "[Airbus A320 FCOM Vol 3 - Procedimentos de Emergência, Seção 3.02.20 pág. 42]";
 
         if (text.toLowerCase().includes('fire') || text.toLowerCase().includes('fogo')) {
-          responseText = "De acordo com o **A320 FCOM Vol 3**, em caso de alarme de fogo no motor (ENGINE FIRE):\n\n1. **THR LEVER 1(2)** ... IDLE\n2. **ENG MASTER 1(2)** ... OFF\n3. **ENG 1(2) FIRE PB** ... PUSH & RELEASE\n4. Aguardar 10 segundos. Se o alarme persistir, **AGENT 1 ... DISCH**.";
-          citation = "[A320 FCOM Vol 3 - Procedimentos de Emergência, Seção 3.02.20 pág. 42]";
+          responseText = "De acordo com o **A320 FCOM Vol 3 (Procedimentos de Emergência)**, em caso de alarme de fogo no motor (ENGINE FIRE):\n\n1. **THR LEVER 1(2)** ... IDLE\n2. **ENG MASTER 1(2)** ... OFF\n3. **ENG 1(2) FIRE PB** ... PUSH & RELEASE\n4. Aguardar 10 segundos. Se o alarme persistir, **AGENT 1 ... DISCH**.\n5. Aguardar 30 segundos. Se o alarme ainda persistir, **AGENT 2 ... DISCH**.";
+          citation = "[Airbus A320 FCOM Vol 3 - Procedimentos de Emergência, Seção PRO-ABN-70 pág. 42]";
         } else if (text.toLowerCase().includes('energização') || text.toLowerCase().includes('elétrica')) {
-          responseText = "Com base no manual **Airbus A320 FCOM Vol 3**, a sequência padrão de energização elétrica da cabine (ELEC POWER UP) exige:\n\n1. Verificar **BAT 1 & 2** ... AUTO (verificar voltagem > 25.5V).\n2. Conectar fonte externa (**EXT PWR**) se disponível no painel superior (Overhead).\n3. Ligar **APU MASTER & START** para alimentação elétrica e de sangria pneumática autônoma.";
-          citation = "[A320 FCOM Vol 3 - Procedimentos Normais SOP, Seção ELEC-01 pág. 18]";
+          responseText = "Com base no **Airbus A320 FCOM Vol 1 & Vol 3 (Sistemas & SOPs)**, a sequência padrão de energização elétrica da cabine (ELEC POWER UP) exige:\n\n1. Verificar **BAT 1 & 2** ... AUTO (verificar voltagem > 25.5V no painel ELEC).\n2. Conectar fonte externa (**EXT PWR**) se disponível no painel superior (Overhead).\n3. Confirmar testes automáticos de ECAM e telas acendendo em sequência.\n4. Ligar **APU MASTER & START** para alimentação elétrica e de sangria pneumática autônoma.";
+          citation = "[Airbus A320 FCOM Vol 1 - Seção 24 Electrical System & SOP-01 pág. 18]";
+        } else if (text.toLowerCase().includes('vento') || text.toLowerCase().includes('crosswind') || text.toLowerCase().includes('fctm')) {
+          responseText = "Conforme o **Airbus A320 FCTM (Flight Crew Training Manual - Técnicas de Pilotagem)**:\n\n• **Aproximação**: Utilizar técnica de caranguejo (*Crabbed Approach*) mantendo as asas niveladas alinhadas com a trajetória da pista.\n• **Fase de Arredondamento (Flare)**: A 30 pés, iniciar o alinhamento com o leme de direção (Rudder) para remover o caranguejo (*Decrab*) e aplicar ligeiro aileron na direção do vento para evitar deriva lateral.\n• **Toque**: Tocar firmemente nos dois trens principais sem prolongar a flutuação. O limite demonstrado de vento de través seco é de **38 kt (rajadas até 43 kt)**.";
+          citation = "[Airbus A320 FCTM - Seção PR-AER-APP Pouso com Vento de Través, pág. 78]";
+        } else if (text.toLowerCase().includes('mel') || text.toLowerCase().includes('apu') || text.toLowerCase().includes('despacho')) {
+          responseText = "Consultando a **Airbus A320 MEL (Minimum Equipment List - Rev 48, Item 49-10)**:\n\n• O despacho da aeronave com o **APU Generator inoperante é PERMITIDO** sob a categoria **C** (prazo de retificação em até 10 dias consecutivos).\n• **Condições Operacionais (O)**: Ambos os geradores acionados por motor (ENG GEN 1 & 2) e o sistema de EXT PWR devem estar plenamente operacionais.\n• **Requisito de Solo**: Requer GPU e unidade de ar pneumático (Air Start Unit) nos aeródromos sem partida autônoma.";
+          citation = "[Airbus A320 MEL Rev 48 - Item 49-10-01 APU Generator, pág. 214]";
+        } else if (text.toLowerCase().includes('hidráulic') || text.toLowerCase().includes('hyd') || text.toLowerCase().includes('qrh')) {
+          responseText = "De acordo com o **Airbus A320 QRH (Quick Reference Handbook - Checklists de Emergência)**:\n\n• **Alarme ECAM**: `HYD G+B SYS LO PR` (Dupla Falha Hidráulica Verde + Azul):\n1. Sistema remanescente: Apenas o **Sistema Amarelo (Yellow)** fornece controle.\n2. **Controle de Voo**: Reversão imediata para **Alternate Law** sem proteções completas.\n3. **Extensão do Trem de Pouso**: Apenas por gravidade (**GRAVITY GEAR EXTN**).\n4. **Flaps/Slats**: Bloqueados na configuração da falha. Preparar para aproximação com incremento de velocidade VREF + 35 kt.";
+          citation = "[Airbus A320 QRH Rev 22 - Seção ABN-29 Dupla Falha Hidráulica, pág. 64]";
         } else {
-          responseText = `Consultando os documentos inseridos na base ("${escapeHtml(text)}"), verificou-se a seguinte orientação técnica:\n\nTodos os parâmetros da manobra devem obedecer aos limites estipulados de POH/FCOM. Mantenha os avisos de ECAM/EICAS monitorados e confirme a execução dos procedimentos de memória com o Pilot Monitoring (PM).`;
+          responseText = `Consultando os 5 manuais A320 ativos na base (FCOM Vol 1, FCOM Vol 3, QRH, FCTM e MEL) para "${escapeHtml(text)}":\n\nTodos os parâmetros da manobra devem obedecer aos limites estipulados de POH/FCOM. Mantenha os avisos de ECAM/EICAS monitorados e confirme a execução dos procedimentos de memória com o Pilot Monitoring (PM). Consulte o QRH para abnormal checklists e a MEL para limites de despacho.`;
         }
 
         aiMsg.innerHTML = `
@@ -1800,7 +1910,71 @@
       if (!query) return;
 
       const container = document.getElementById('pane-results-container');
-      
+      const q = query.toLowerCase();
+
+      let originManual = "Airbus A320 FCOM Vol 3";
+      let originSection = "Seção PRO-ABN-70 pág. 112";
+      let badgeText = "Airbus A320 FCOM - ECAM Response";
+      let memoryItems = [];
+      let notes = "";
+
+      if (q.includes('hyd') || q.includes('hidráulic') || q.includes('blue') || q.includes('azul')) {
+        originManual = "Airbus A320 QRH Rev 22 & FCOM Vol 1";
+        originSection = "QRH ABN-29 pág. 41 / FCOM 29-10-00";
+        badgeText = "Airbus A320 QRH - Hydraulic Failure";
+        memoryItems = [
+          "1. PTU ................................................. AUTO / OFF",
+          "2. BLUE ELEC PUMP ....................................... OFF",
+          "3. MONITOR YELLOW SYS PRESSURE ........................ 3000 PSI",
+          "4. LANDING DISTANCE FACTOR ............................ CONSULT QRH 2.04"
+        ];
+        notes = "Falha no sistema hidráulico Azul. O sistema Verde e Amarelo mantêm capacidade de controle de voo, reversão para Alternate Law se houver perda adicional.";
+      } else if (q.includes('smoke') || q.includes('fumaça') || q.includes('avionics')) {
+        originManual = "Airbus A320 QRH Rev 22 - Emergency Checklists";
+        originSection = "QRH SMOKE-01 pág. 12 (Memory Items)";
+        badgeText = "Airbus A320 QRH - Smoke / Fire Procedure";
+        memoryItems = [
+          "1. OXY MASK / GOGGLES ................................... ON / 100% / EMER",
+          "2. CREW COMMUNICATION ................................... ESTABLISH",
+          "3. DILUTION LEVER ....................................... 100%",
+          "4. BLOWER & EXTRACT PBs (AVIONICS) ...................... OVRD (Se fumaça na aviônica)"
+        ];
+        notes = "Procedimento crítico de memória imediata. Iniciar descida de emergência e desvio para aeródromo mais próximo caso fumaça não se dissipe em 3 minutos.";
+      } else if (q.includes('apu') || q.includes('mel') || q.includes('despacho') || q.includes('gen')) {
+        originManual = "Airbus A320 MEL Rev 48 - Condições de Despacho";
+        originSection = "Item MEL 49-10 APU Generator";
+        badgeText = "Airbus A320 MEL - Dispatch Condition";
+        memoryItems = [
+          "1. APU GEN PB ........................................... OFF",
+          "2. ENG 1 GEN & ENG 2 GEN ................................ OPERACIONAIS",
+          "3. DISPATCH INTERVAL .................................... CATEGORIA C (10 DIAS)",
+          "4. EXTERNAL POWER GPU ................................... OBRIGATÓRIA NA ORIGEM E DESTINO"
+        ];
+        notes = "Despacho autorizado com APU Generator inoperante pela MEL Categoria C. GPU de solo deve estar disponível para partida e ar-condicionado na rampa.";
+      } else if (q.includes('crosswind') || q.includes('vento') || q.includes('fctm')) {
+        originManual = "Airbus A320 FCTM - Flight Crew Training Manual";
+        originSection = "Seção PR-AER-APP Crosswind Guidelines pág. 78";
+        badgeText = "Airbus A320 FCTM - Handling Technique";
+        memoryItems = [
+          "1. APPROACH PROFILE ..................................... CRAB ANGLE (WINGS LEVEL)",
+          "2. FLARE HEIGHT (30 FT) ................................. RUDDER DECRAB TO RUNWAY AXIS",
+          "3. OPPOSITE AILERON ..................................... PREVENT DOWNWIND DRIFT",
+          "4. MAXIMUM DEMONSTRATED XWIND ........................... 38 KT (GUSTS UP TO 43 KT)"
+        ];
+        notes = "Diretrizes de técnica de pilotagem da Airbus. Não aplicar derrapagem antes do flare de 30ft para evitar desvios no controle Fly-by-Wire de roll.";
+      } else {
+        originManual = "Airbus A320 FCOM Vol 3 - Procedimentos de Emergência";
+        originSection = "Seção PRO-ABN-70 pág. 112";
+        badgeText = "Airbus A320 FCOM - ECAM Response";
+        memoryItems = [
+          "1. THR LEVER (AFFECTED) ............................... IDLE",
+          "2. ENG MASTER (AFFECTED) ............................. OFF",
+          "3. ENG FIRE PB ......................................... PUSH",
+          "4. AGENT 1 & 2 (IF FIRE PERSISTS) ...................... DISCHARGE"
+        ];
+        notes = "Verifique indicações no ECAM Engine Display e proceda com o QRH Summary antes de religamento em voo.";
+      }
+
       container.innerHTML = `
         <div class="max-w-4xl mx-auto space-y-6">
           <div class="p-6 rounded-2xl bg-[#0D0B34] border border-[#E23B2E]/40 space-y-4">
@@ -1808,29 +1982,26 @@
               <span class="text-xs uppercase font-mono font-bold text-[#E23B2E] flex items-center gap-2">
                 <i data-lucide="alert-triangle" class="w-4 h-4"></i> RESULTADO DE PANE LOCALIZADA NO MANUAL
               </span>
-              <span class="text-xs font-mono text-[#94A3B8]">Airbus A320 FCOM - ECAM Response</span>
+              <span class="text-xs font-mono text-[#94A3B8]">${badgeText}</span>
             </div>
 
             <h3 class="text-xl font-bold font-heading text-white">${escapeHtml(query.toUpperCase())}</h3>
 
             <div class="p-4 rounded-xl bg-[#040122] border border-[#1E1B56] space-y-3">
-              <h4 class="font-bold text-[#F59E0B] text-xs uppercase tracking-wider">Ações Imediatas de Memória (Memory Items):</h4>
+              <h4 class="font-bold text-[#F59E0B] text-xs uppercase tracking-wider">Ações Imediatas / Procedimento Operacional:</h4>
               <ul class="text-xs text-[#94A3B8] space-y-2 font-mono">
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#E23B2E]"></span> 1. THR LEVER (AFFECTED) ............................... IDLE
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#E23B2E]"></span> 2. ENG MASTER (AFFECTED) ............................. OFF
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#E23B2E]"></span> 3. ENG FIRE PB ......................................... PUSH
-                </li>
+                ${memoryItems.map(item => `
+                  <li class="flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#E23B2E]"></span> ${escapeHtml(item)}
+                  </li>
+                `).join('')}
               </ul>
+              ${notes ? `<p class="text-xs text-[#94A3B8] pt-2 border-t border-[#1E1B56]/50 italic">${notes}</p>` : ''}
             </div>
 
             <div class="flex items-center justify-between text-xs text-[#94A3B8] pt-2 border-t border-[#1E1B56]">
-              <span>Manual Origem: <strong>Airbus A320 FCOM Vol 3</strong></span>
-              <span class="text-[#F59E0B] font-mono">Seção PRO-ABN-70 pág. 112</span>
+              <span>Manual Origem: <strong class="text-white">${originManual}</strong></span>
+              <span class="text-[#F59E0B] font-mono">${originSection}</span>
             </div>
           </div>
         </div>
