@@ -1163,7 +1163,7 @@
         <div class="p-3.5 rounded-xl bg-[#040122] border border-[#1E1B56] space-y-2">
           <div class="flex items-center justify-between text-[11px]">
             <span class="text-[#94A3B8]">Manuais Ativos:</span>
-            <span id="sidebar-doc-count" class="font-bold text-[#F59E0B]">2 arquivos</span>
+            <span id="sidebar-doc-count" class="font-bold text-[#F59E0B]">1 arquivo</span>
           </div>
           <div class="flex items-center justify-between text-[11px]">
             <span class="text-[#94A3B8]">A320 QRH Index:</span>
@@ -1220,28 +1220,6 @@
                       <span>•</span>
                       <span class="text-emerald-400 font-semibold flex items-center gap-1">
                         <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (1.240 seções)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <!-- Pre-loaded sample document 2 -->
-              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 rounded-lg bg-[#F59E0B]/10 text-[#F59E0B]">
-                    <i data-lucide="book" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-white text-sm">Boeing 737-800 QRH Quick Reference Handbook.pdf</h4>
-                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                      <span>2.8 MB</span>
-                      <span>•</span>
-                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (890 seções)
                       </span>
                     </div>
                   </div>
@@ -1725,10 +1703,19 @@
         sourcesList.appendChild(item);
       }
       lucide.createIcons();
+      updateSidebarDocCount();
+    }
+
+    function updateSidebarDocCount() {
+      const list = document.getElementById('sources-list');
+      const count = list ? list.children.length : 0;
+      const el = document.getElementById('sidebar-doc-count');
+      if (el) el.textContent = `${count} ${count === 1 ? 'arquivo' : 'arquivos'}`;
     }
 
     function removeDocument(btn) {
       btn.closest('div.p-4').remove();
+      updateSidebarDocCount();
     }
 
     // Treinamento Chat Handler
@@ -1771,8 +1758,10 @@
 
         if (text.toLowerCase().includes('fire') || text.toLowerCase().includes('fogo')) {
           responseText = "De acordo com o **A320 FCOM Vol 3**, em caso de alarme de fogo no motor (ENGINE FIRE):\n\n1. **THR LEVER 1(2)** ... IDLE\n2. **ENG MASTER 1(2)** ... OFF\n3. **ENG 1(2) FIRE PB** ... PUSH & RELEASE\n4. Aguardar 10 segundos. Se o alarme persistir, **AGENT 1 ... DISCH**.";
+          citation = "[A320 FCOM Vol 3 - Procedimentos de Emergência, Seção 3.02.20 pág. 42]";
         } else if (text.toLowerCase().includes('energização') || text.toLowerCase().includes('elétrica')) {
-          responseText = "Com base no manual **Boeing 737 QRH**, a sequência padrão de energização elétrica da cabine fria exige:\n\n1. Verificar **BATTERY SWITCH** em ON.\n2. Conectar fonte externa (**GRD PWR**) se disponível no painel superior.\n3. Ligar **APU MASTER** e iniciar arranque de auxílio pneumático.";
+          responseText = "Com base no manual **Airbus A320 FCOM Vol 3**, a sequência padrão de energização elétrica da cabine (ELEC POWER UP) exige:\n\n1. Verificar **BAT 1 & 2** ... AUTO (verificar voltagem > 25.5V).\n2. Conectar fonte externa (**EXT PWR**) se disponível no painel superior (Overhead).\n3. Ligar **APU MASTER & START** para alimentação elétrica e de sangria pneumática autônoma.";
+          citation = "[A320 FCOM Vol 3 - Procedimentos Normais SOP, Seção ELEC-01 pág. 18]";
         } else {
           responseText = `Consultando os documentos inseridos na base ("${escapeHtml(text)}"), verificou-se a seguinte orientação técnica:\n\nTodos os parâmetros da manobra devem obedecer aos limites estipulados de POH/FCOM. Mantenha os avisos de ECAM/EICAS monitorados e confirme a execução dos procedimentos de memória com o Pilot Monitoring (PM).`;
         }
