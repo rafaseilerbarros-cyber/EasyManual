@@ -13,7 +13,9 @@ function Hero() {
         <video id="hero-video" className="skyelite-video" muted loop playsInline autoPlay={!window.matchMedia("(prefers-reduced-motion: reduce)").matches && !navigator.connection?.saveData} preload="none" poster="images/hero_background.jpg" aria-hidden="true" tabIndex={-1}>
           <source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_091828_e240eb17-6edc-4129-ad9d-98678e3fd238.mp4" type="video/mp4" />
         </video>
-        <div className="skyelite-shade absolute inset-0"></div>
+        <div className="hero-cloud-tint absolute inset-0" aria-hidden="true" />
+        <div className="hero-cloud-bloom absolute inset-0" aria-hidden="true" />
+        <div className="skyelite-shade absolute inset-0" aria-hidden="true" />
         <button id="hero-playback" className="skyelite-playback" type="button" aria-controls="hero-video" hidden>Reproduzir vídeo</button>
         
         <div className="skyelite-copy relative z-10 max-w-4xl text-center space-y-6 reveal-on-scroll">
