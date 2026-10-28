@@ -346,6 +346,44 @@
       #screen-pagina-inicial .skyelite-playback { bottom: 12px; right: 16px; padding: 5px 10px; font-size: 10px; }
     }
 
+
+    /* Brand accents stay on details, leaving the hero video uncoloured. */
+    #screen-pagina-inicial .performance-section .reveal-scale { display: flex; flex-direction: column; }
+    #screen-pagina-inicial .performance-section .reveal-scale h3 { min-height: 54px; }
+    #screen-pagina-inicial .performance-section .reveal-scale > p { flex: 1; }
+    #screen-pagina-inicial .performance-section .reveal-scale > div:last-child { margin-top: 24px; }
+    @media (max-width: 767px) { #screen-pagina-inicial .performance-section .reveal-scale h3 { min-height: 0; } }
+    #screen-pagina-inicial .fleet-section .reveal-scale > div:first-child { border-radius: 20px; border: 1px solid #1E1B56; }
+    #screen-pagina-inicial .fleet-section .reveal-scale img { transition: transform .7s ease; }
+    #screen-pagina-inicial .fleet-section .reveal-scale:hover img { transform: scale(1.04); }
+    #screen-pagina-inicial .fleet-section > div:first-child > span,
+    #screen-pagina-inicial .testimonials-section > div:first-child > span { display: inline-flex; align-items: center; gap: 12px; }
+    #screen-pagina-inicial .fleet-section > div:first-child > span::before,
+    #screen-pagina-inicial .testimonials-section > div:first-child > span::before { content: ''; width: 28px; height: 2px; background: #F59E0B; }
+    #screen-pagina-inicial .performance-section [data-count] { font-variant-numeric: tabular-nums; display: inline-block; min-width: 4ch; }
+    #screen-pagina-inicial .performance-section .reveal-scale { border-top-color: #F59E0B; }
+    #screen-pagina-inicial .performance-section .reveal-scale:nth-child(2) { border-top-color: #E23B2E; }
+    #screen-pagina-inicial .performance-section .reveal-scale > div:first-child > svg { width: 28px; height: 28px; opacity: .8; }
+    #screen-pagina-inicial .testimonials-section > .grid { align-items: stretch; gap: 24px; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale { position: relative; display: flex; flex-direction: column; border: 1px solid #1E1B56; border-radius: 20px; padding: 32px; background: #0D0B34; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale::before { content: '“'; position: absolute; right: 24px; top: 12px; font-family: Georgia, serif; font-size: 80px; line-height: 1; color: #F59E0B; opacity: .2; pointer-events: none; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale:nth-child(2)::before { color: #E23B2E; }
+    #screen-pagina-inicial .testimonials-section .quote-copy { flex: 1; font-size: 16px; color: white; font-weight: 400; font-style: normal; line-height: 1.85; padding: 16px 0 28px; margin: 0; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale > div:last-child { padding-top: 24px; margin-top: auto; align-items: flex-start; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale h4 { font-size: 13px; line-height: 1.5; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale > div:last-child p { font-size: 11px; line-height: 1.6; margin-top: 4px; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale > div:last-child > div:first-child { flex-shrink: 0; border: 1px solid #F59E0B; background: #040122; width: 40px; height: 40px; }
+    #screen-pagina-inicial .landing-motion { transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+    #screen-pagina-inicial .landing-motion.motion-pending { opacity: 0; transform: translateY(24px); }
+    #screen-pagina-inicial .landing-motion.is-in-view { opacity: 1; transform: translateY(0); }
+    @media (max-width: 767px) {
+      #screen-pagina-inicial .testimonials-section .reveal-scale { padding: 28px 24px; }
+      #screen-pagina-inicial .testimonials-section .quote-copy { font-size: 15px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #screen-pagina-inicial .landing-motion.motion-pending { opacity: 1; transform: none; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right { opacity: 1; transform: none; }
@@ -559,11 +597,11 @@
             <!-- Metric 1 -->
             <div class="reveal-scale delay-100 p-8 rounded-2xl bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B]/60 transition-all space-y-4 shadow-xl">
               <div class="flex items-center justify-between">
-                <span class="text-5xl font-extrabold font-heading text-[#F59E0B]">99.8%</span>
+                <span class="text-5xl font-extrabold font-heading text-[#F59E0B]" data-count="99.8" data-suffix="%" data-decimals="1">99.8%</span>
                 <i data-lucide="check-circle-2" class="w-10 h-10 text-[#F59E0B]"></i>
               </div>
-              <h3 class="font-bold text-white text-lg">Precisão de Busca em Panes</h3>
-              <p class="text-xs text-[#94A3B8] leading-relaxed">Fidelidade aos manuais FCOM, QRH e MEL sem alucinações de dados técnicos.</p>
+              <h3 class="font-bold text-white text-lg">Precisão de busca</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">Auditada por SMEs.</p>
               <!-- Progress Bar -->
               <div class="w-full h-2.5 bg-[#0D0B34] rounded-full overflow-hidden">
                 <div class="h-full bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] w-[99.8%]"></div>
@@ -573,11 +611,11 @@
             <!-- Metric 2 -->
             <div class="reveal-scale delay-200 p-8 rounded-2xl bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B]/60 transition-all space-y-4 shadow-xl">
               <div class="flex items-center justify-between">
-                <span class="text-5xl font-extrabold font-heading text-[#F59E0B]">4x</span>
+                <span class="text-5xl font-extrabold font-heading text-[#F59E0B]" data-count="2" data-suffix="s" data-decimals="0">2s</span>
                 <i data-lucide="trending-up" class="w-10 h-10 text-[#F59E0B]"></i>
               </div>
-              <h3 class="font-bold text-white text-lg">Mais Rápido na Consulta</h3>
-              <p class="text-xs text-[#94A3B8] leading-relaxed">Redução expressiva do tempo de consulta a procedimentos anormais na cabine.</p>
+              <h3 class="font-bold text-white text-lg">Tempo médio até o item de QRH</h3>
+              <p class="text-xs text-[#94A3B8] leading-relaxed">Consulta rápida aos procedimentos do QRH.</p>
               <div class="w-full h-2.5 bg-[#0D0B34] rounded-full overflow-hidden">
                 <div class="h-full bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] w-[85%]"></div>
               </div>
@@ -586,10 +624,10 @@
             <!-- Metric 3 -->
             <div class="reveal-scale delay-300 p-8 rounded-2xl bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B]/60 transition-all space-y-4 shadow-xl">
               <div class="flex items-center justify-between">
-                <span class="text-5xl font-extrabold font-heading text-[#F59E0B]">50.000+</span>
+                <span class="text-5xl font-extrabold font-heading text-[#F59E0B]" data-count="50" data-suffix="k+" data-decimals="0">50k+</span>
                 <i data-lucide="file-text" class="w-10 h-10 text-[#F59E0B]"></i>
               </div>
-              <h3 class="font-bold text-white text-lg">Páginas de Manuais Indexadas</h3>
+              <h3 class="font-bold text-white text-lg">Páginas indexadas de FCOM, MEL e FCTM</h3>
               <p class="text-[#94A3B8] text-xs leading-relaxed">Suporte abrangente a frotas Airbus A320, Boeing 737, Embraer E-Jets e Aviação Geral.</p>
               <div class="w-full h-2.5 bg-[#0D0B34] rounded-full overflow-hidden">
                 <div class="h-full bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] w-[95%]"></div>
@@ -607,7 +645,7 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="reveal-scale delay-100 p-6 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] space-y-4">
+          <article class="reveal-scale delay-100 p-6 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] space-y-4">
             <div class="flex items-center gap-1 text-[#F59E0B]">
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
@@ -615,9 +653,9 @@
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
             </div>
-            <p class="text-xs text-[#94A3B8] italic leading-relaxed">
+            <blockquote class="quote-copy text-xs text-[#94A3B8] italic leading-relaxed">
               "A agilidade de localizar um item de QRH em segundos transforma a gestão de carga cognitiva na cabine. O EasyManual é indispensável."
-            </p>
+            </blockquote>
             <div class="flex items-center gap-3 pt-2 border-t border-[#1E1B56]">
               <div class="w-9 h-9 rounded-full bg-[#F59E0B]/20 text-[#F59E0B] font-bold flex items-center justify-center text-xs">
                 CM
@@ -627,9 +665,9 @@
                 <p class="text-[10px] text-[#94A3B8]">Comandante de A320 (12.000h de voo)</p>
               </div>
             </div>
-          </div>
+          </article>
 
-          <div class="reveal-scale delay-200 p-6 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] space-y-4">
+          <article class="reveal-scale delay-200 p-6 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] space-y-4">
             <div class="flex items-center gap-1 text-[#F59E0B]">
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
@@ -637,9 +675,9 @@
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
             </div>
-            <p class="text-xs text-[#94A3B8] italic leading-relaxed">
+            <blockquote class="quote-copy text-xs text-[#94A3B8] italic leading-relaxed">
               "O módulo de Treinamento estilo NotebookLM me ajudou a passar no checa de simulador sem nenhuma dúvida técnica. Sensacional!"
-            </p>
+            </blockquote>
             <div class="flex items-center gap-3 pt-2 border-t border-[#1E1B56]">
               <div class="w-9 h-9 rounded-full bg-[#F59E0B]/20 text-[#F59E0B] font-bold flex items-center justify-center text-xs">
                 FO
@@ -649,9 +687,9 @@
                 <p class="text-[10px] text-[#94A3B8]">Primeiro Oficial de B737 MAX</p>
               </div>
             </div>
-          </div>
+          </article>
 
-          <div class="reveal-scale delay-300 p-6 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] space-y-4">
+          <article class="reveal-scale delay-300 p-6 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] space-y-4">
             <div class="flex items-center gap-1 text-[#F59E0B]">
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
@@ -659,9 +697,9 @@
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
               <i data-lucide="star" class="w-4 h-4 fill-current"></i>
             </div>
-            <p class="text-xs text-[#94A3B8] italic leading-relaxed">
+            <blockquote class="quote-copy text-xs text-[#94A3B8] italic leading-relaxed">
               "O Flow Map interativo de cabine facilita imensamente o aprendizado de procedimentos pré-voo dos nossos alunos de PCH/INVA."
-            </p>
+            </blockquote>
             <div class="flex items-center gap-3 pt-2 border-t border-[#1E1B56]">
               <div class="w-9 h-9 rounded-full bg-[#F59E0B]/20 text-[#F59E0B] font-bold flex items-center justify-center text-xs">
                 IN
@@ -671,7 +709,7 @@
                 <p class="text-[10px] text-[#94A3B8]">Instrutor de Voo de CIAC</p>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </div>
 
@@ -2549,17 +2587,58 @@
 
     // Scroll Animations Initializer
     function initScrollAnimations() {
-      const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
-      const observer = new IntersectionObserver((entries) => {
+      const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const targets = [...document.querySelectorAll('#screen-pagina-inicial .reveal-on-scroll, #screen-pagina-inicial .reveal-scale, #screen-pagina-inicial .reveal-left, #screen-pagina-inicial .reveal-right')].filter(el => !el.closest('#skyelite-hero-root'));
+      const counters = [...document.querySelectorAll('[data-count]')];
+      const started = new Set();
+      const frames = new Map();
+      const format = (el, value) => value.toFixed(Number(el.dataset.decimals)) + el.dataset.suffix;
+      const finish = el => {
+        cancelAnimationFrame(frames.get(el));
+        el.textContent = format(el, Number(el.dataset.count));
+        frames.delete(el);
+      };
+      const count = el => {
+        if (started.has(el)) return;
+        started.add(el);
+        if (motion.matches) { finish(el); return; }
+        const start = performance.now();
+        const step = now => {
+          const progress = Math.min((now - start) / 1400, 1);
+          el.textContent = format(el, Number(el.dataset.count) * (1 - Math.pow(1 - progress, 3)));
+          if (progress < 1) frames.set(el, requestAnimationFrame(step));
+          else finish(el);
+        };
+        frames.set(el, requestAnimationFrame(step));
+      };
+      if (!('IntersectionObserver' in window)) return;
+      counters.forEach(el => {
+        const accessible = document.createElement('span');
+        accessible.className = 'sr-only';
+        accessible.textContent = el.textContent;
+        el.setAttribute('aria-hidden', 'true');
+        el.after(accessible);
+        if (!motion.matches) el.textContent = format(el, 0);
+      });
+      const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
+          if (!entry.isIntersecting) return;
+          entry.target.classList.remove('motion-pending');
+          entry.target.classList.add('is-in-view');
+          entry.target.querySelectorAll('[data-count]').forEach(count);
+          observer.unobserve(entry.target);
         });
-      }, observerOptions);
-
-      document.querySelectorAll('.reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right').forEach(el => {
+      }, { threshold: .12, rootMargin: '0px 0px -24px 0px' });
+      targets.forEach(el => {
+        el.classList.add('landing-motion');
+        if (!motion.matches) el.classList.add('motion-pending');
         observer.observe(el);
+      });
+      motion.addEventListener('change', () => {
+        if (!motion.matches) return;
+        targets.forEach(el => { el.classList.remove('motion-pending'); el.classList.add('is-in-view'); });
+        counters.forEach(finish);
+        observer.disconnect();
       });
     }
 
@@ -2571,14 +2650,7 @@
       initScrollAnimations();
     });
 
-    window.addEventListener('scroll', () => {
-      document.querySelectorAll('.reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top <= window.innerHeight * 0.9) {
-          el.classList.add('is-visible');
-        }
-      });
-    });
+
   </script>
   <script>
     // Decorative media never blocks navigation or the local image fallback.
