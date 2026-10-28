@@ -223,6 +223,73 @@
       #screen-pagina-inicial .skyelite-badges > div:last-child { border-left: 0; padding-left: 0; }
       #screen-pagina-inicial > div:not(.skyelite-hero) { padding-top: 56px; padding-bottom: 56px; }
     }
+
+    /* Shared visual language: typography, measured spacing and quieter surfaces. */
+    body { -webkit-font-smoothing: antialiased; }
+    .screen-view h1, .screen-view h2, .screen-view h3, .screen-view h4 { font-family: 'Inter', sans-serif; }
+    .screen-view h3, .screen-view h4 { letter-spacing: -.02em; font-weight: 600; }
+    .screen-view button, .screen-view input, .screen-view select, .screen-view textarea,
+    #checkout-modal button, #checkout-modal input { border-radius: 6px; }
+    .screen-view button, .screen-view label[for="manual-file-input"], #site-header button,
+    #site-header > div:first-child > div:first-child { box-shadow: none; }
+    .screen-view button[class*="from-[#F59E0B]"], .screen-view label[for="manual-file-input"],
+    #auth-buttons-logged-out button:last-child { background: #F59E0B; color: #040122; }
+    .screen-view button[class*="from-[#E23B2E]"] { background: #E23B2E; color: white; }
+    .screen-view input:not([type="checkbox"]), .screen-view textarea, .screen-view select {
+      border-color: #1E1B56; background-color: #040122; padding: 14px 16px; line-height: 1.5;
+    }
+    .screen-view input:focus, .screen-view textarea:focus, .screen-view select:focus { border-color: #F59E0B; box-shadow: none; }
+    #screen-pagina-inicial .fleet-section, #screen-pagina-inicial .testimonials-section { max-width: 1288px; }
+    #screen-pagina-inicial .fleet-section > div:first-child,
+    #screen-pagina-inicial .testimonials-section > div:first-child,
+    #screen-pagina-inicial .performance-section > div > div:first-child { text-align: left; margin-left: 0; }
+    #screen-pagina-inicial .fleet-section > div:first-child p { margin-left: 0; margin-top: 18px; line-height: 1.8; }
+    #screen-pagina-inicial h2 { font-size: clamp(1.8rem, 3vw, 2.7rem); max-width: 800px; }
+    #screen-pagina-inicial .fleet-section .reveal-scale { border: 0; background: transparent; overflow: visible; }
+    #screen-pagina-inicial .fleet-section .reveal-scale > div:first-child { height: 260px; border-radius: 8px; overflow: hidden; }
+    #screen-pagina-inicial .fleet-section .reveal-scale > div:last-child { margin-top: 0; padding: 24px 0 0; }
+    #screen-pagina-inicial .fleet-section .reveal-scale p { font-size: 14px; line-height: 1.8; }
+    #screen-pagina-inicial .fleet-section .reveal-scale h3 { font-size: 20px; }
+    #screen-pagina-inicial .performance-section { background: #0D0B34; backdrop-filter: none; }
+    #screen-pagina-inicial .performance-section .reveal-scale { background: transparent; border: 0; border-top: 1px solid #1E1B56; border-radius: 0; padding: 28px 0; }
+    #screen-pagina-inicial .performance-section .reveal-scale span { font-weight: 400; letter-spacing: -.05em; }
+    #screen-pagina-inicial .performance-section .reveal-scale p { font-size: 14px; line-height: 1.8; }
+    #screen-pagina-inicial .performance-section .reveal-scale > div:last-child { height: 3px; }
+    #screen-pagina-inicial .performance-section [class*="bg-gradient-to-r"] { background: #F59E0B; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale { background: transparent; border: 0; border-top: 1px solid #1E1B56; border-radius: 0; padding: 28px 0; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale > p { font-size: 16px; font-style: normal; line-height: 1.85; min-height: 150px; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale > div:first-child { gap: 3px; }
+    #screen-pagina-inicial .testimonials-section .reveal-scale > div:first-child svg { width: 12px; height: 12px; }
+    #screen-pagina-inicial footer { padding-top: 36px; padding-bottom: 36px; }
+    #screen-sobre-nos > div { max-width: 1160px; padding-top: 80px; padding-bottom: 80px; }
+    #screen-sobre-nos > div > div:first-child { text-align: left; padding-bottom: 24px; }
+    #screen-sobre-nos > div > div:first-child p { margin-left: 0; line-height: 1.8; }
+    #screen-sobre-nos h1, #screen-planos h1 { font-size: clamp(2.2rem, 4vw, 3.8rem); }
+    #screen-sobre-nos .rounded-2xl { border-radius: 8px; }
+    #screen-sobre-nos p { line-height: 1.85; font-size: 14px; }
+    #screen-sobre-nos .w-12 { background: transparent; justify-content: flex-start; height: 32px; }
+    #screen-login, #screen-cadastro { padding-top: 64px; padding-bottom: 64px; }
+    #screen-login > div, #screen-cadastro > div { padding: 40px; border-radius: 10px; box-shadow: none; }
+    #screen-login h2, #screen-cadastro h2 { font-size: 28px; }
+    #screen-alteracao-de-conta { width: 100%; padding-top: 64px; padding-bottom: 64px; }
+    #screen-alteracao-de-conta .rounded-2xl { border-radius: 8px; box-shadow: none; }
+    #screen-planos { width: 100%; max-width: 1240px; padding-top: 72px; padding-bottom: 72px; }
+    #screen-planos .flip-card-front, #screen-planos .flip-card-back { border-radius: 10px; box-shadow: none; }
+    #screen-planos table th, #screen-planos table td { padding: 18px 20px; }
+    #screen-app-workspace aside { background: #040122; padding: 24px 16px; }
+    #screen-app-workspace aside button { border-radius: 6px; box-shadow: none; transform: none; }
+    #screen-app-workspace .rounded-2xl { border-radius: 10px; box-shadow: none; }
+    #screen-app-workspace h2 { font-size: 26px; font-weight: 500; letter-spacing: -.035em; }
+    #screen-app-workspace .animate-pulse { animation: none; }
+    .reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right { opacity: 1; transform: none; transition: none; }
+    @media (max-width: 767px) {
+      #screen-sobre-nos > div, #screen-planos { padding-top: 40px; padding-bottom: 48px; }
+      #screen-login > div, #screen-cadastro > div { padding: 28px 24px; }
+      #screen-pagina-inicial .testimonials-section .reveal-scale > p { min-height: 0; }
+      #screen-pagina-inicial .fleet-section .reveal-scale > div:first-child { height: 240px; }
+      #screen-app-workspace aside { border-right: 0; border-bottom: 1px solid #1E1B56; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right { opacity: 1; transform: none; }
@@ -355,7 +422,7 @@
       </div>
 
       <!-- GALERIA DE AVIAÇÃO E FROTAS SUPORTADAS (Nova Seção de Fotos) -->
-      <div class="max-w-6xl mx-auto px-6 py-20 space-y-12">
+      <div class="fleet-section max-w-6xl mx-auto px-6 py-20 space-y-12">
         <div class="text-center space-y-3 reveal-on-scroll">
           <span class="text-xs uppercase font-extrabold tracking-wider text-[#F59E0B]">Galeria de Aviação & Frotas</span>
           <h2 class="text-3xl sm:text-4xl font-extrabold font-heading text-white">Tecnologia Adaptada para Qualquer Aeronave</h2>
@@ -478,7 +545,7 @@
       </div>
 
       <!-- 3º Bloco: Confiabilidade & Métricas em Gráficos -->
-      <div class="bg-[#0D0B34]/80 border-y border-[#1E1B56] py-20 px-6 backdrop-blur-md">
+      <div class="performance-section bg-[#0D0B34]/80 border-y border-[#1E1B56] py-20 px-6 backdrop-blur-md">
         <div class="max-w-6xl mx-auto space-y-12">
           <div class="text-center max-w-2xl mx-auto space-y-3 reveal-on-scroll">
             <span class="text-xs uppercase font-extrabold tracking-wider text-[#F59E0B]">Alta Performance</span>
@@ -531,7 +598,7 @@
       </div>
 
       <!-- SEÇÃO DE DEPOIMENTOS DE COMANDANTES & PILOTOS -->
-      <div class="max-w-6xl mx-auto px-6 py-20 space-y-12">
+      <div class="testimonials-section max-w-6xl mx-auto px-6 py-20 space-y-12">
         <div class="text-center space-y-3 reveal-on-scroll">
           <span class="text-xs uppercase font-extrabold tracking-wider text-[#F59E0B]">Avaliação Operacional</span>
           <h2 class="text-3xl font-bold font-heading text-white">O que dizem os Pilotos e Comandantes</h2>
