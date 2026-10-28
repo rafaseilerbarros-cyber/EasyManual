@@ -1,0 +1,33 @@
+{
+  "name": "easymanual",
+  "version": "1.0.0",
+  "description": "EasyManual frontend with a React and TypeScript hero",
+  "scripts": {
+    "build": "tsc --noEmit && esbuild src/skyelite.tsx --bundle --minify --format=iife --target=es2020 --outfile=assets/skyelite.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafaseilerbarros-cyber/EasyManual.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rafaseilerbarros-cyber/EasyManual/issues"
+  },
+  "homepage": "https://github.com/rafaseilerbarros-cyber/EasyManual#readme",
+  "dependencies": {
+    "lucide-react": "^1.63.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  },
+  "private": true
+}
