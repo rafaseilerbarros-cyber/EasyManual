@@ -290,6 +290,62 @@
       #screen-app-workspace aside { border-right: 0; border-bottom: 1px solid #1E1B56; }
     }
 
+
+    /* SkyElite reference, adapted to the EasyManual content and palette. */
+    body { font-family: 'Inter', sans-serif; }
+    body:has(#screen-pagina-inicial:not(.hidden)) #site-header { position: absolute; inset: 0 0 auto; background: rgba(4,1,34,.25); border-bottom: 0; backdrop-filter: none; }
+    #site-header { max-width: none; padding: 24px max(32px, calc((100vw - 1280px) / 2)); }
+    #site-header nav button { border: 0; border-radius: 999px; transition: color .2s, background-color .2s; }
+    #site-header nav button:hover { color: #F59E0B; background: rgba(13,11,52,.6); }
+    #screen-pagina-inicial #skyelite-hero-root { padding: 0; }
+    #screen-pagina-inicial .skyelite-hero { height: 100vh; height: 100svh; min-height: 760px; padding: 0 24px; justify-content: center; border-bottom: 0; }
+    .skyelite-video { object-fit: cover; width: 100%; height: 100%; }
+    .skyelite-shade { background: linear-gradient(180deg,rgba(4,1,34,.5),rgba(4,1,34,.5) 55%,rgba(4,1,34,.82)); }
+    #screen-pagina-inicial .skyelite-copy { max-width: 1200px; text-align: center; position: static; transform: none; will-change: auto; margin-top: -120px; }
+    #screen-pagina-inicial .skyelite-copy > div:first-child { text-transform: uppercase; font-size: 12px; font-weight: 600; letter-spacing: .14em; margin-bottom: 24px; }
+    .skyelite-copy > div:first-child > span { display: none; }
+    #screen-pagina-inicial .skyelite-copy h1 { margin: 0 auto; max-width: 1100px; font-size: clamp(3rem, 6.5vw, 6.8rem); line-height: 1.1; font-weight: 400; letter-spacing: -.06em; }
+    .hero-title-line { display: block; }
+    .hero-title-line:first-child { color: #94A3B8; }
+    .hero-title-line + .hero-title-line { margin-top: -8px; }
+    #screen-pagina-inicial .skyelite-copy > p { margin: 28px auto 0; max-width: 660px; font-size: 18px; color: white; line-height: 1.6; }
+    #screen-pagina-inicial .skyelite-actions { justify-content: center; gap: 16px; margin-top: 24px; padding-top: 0; }
+    #screen-pagina-inicial .skyelite-actions button { width: auto; border-radius: 999px; padding: 12px 22px; font-weight: 500; transition: background-color .2s, color .2s; }
+    #screen-pagina-inicial .skyelite-actions button:first-child { background: #F59E0B; color: #040122; }
+    #screen-pagina-inicial .skyelite-actions button:first-child:hover { background: #E23B2E; color: white; }
+    #screen-pagina-inicial .skyelite-actions button:last-child { background: rgba(13,11,52,.75); border: 1px solid #94A3B8; }
+    #screen-pagina-inicial .skyelite-actions button:last-child:hover { background: #16134A; }
+    #screen-pagina-inicial .skyelite-badges { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); margin: 0; padding: 0; width: min(730px,calc(100% - 64px)); text-align: left; }
+    #mobile-menu-root { display: none; }
+    @media (max-width: 767px) {
+      #site-header { padding: 18px 16px; flex-wrap: nowrap; gap: 6px; }
+      #site-header > nav { display: none; }
+      #mobile-menu-root { display: block; order: 3; }
+      #site-header > div:last-child { margin-left: auto; }
+      #site-header #mobile-navigation { display: flex; flex-direction: column; align-items: stretch; position: absolute; top: calc(100% - 4px); left: 16px; right: 16px; padding: 12px; background: rgba(13,11,52,.95); backdrop-filter: blur(20px); border: 1px solid #1E1B56; border-radius: 16px; box-shadow: 0 12px 30px rgba(4,1,34,.3); }
+      #site-header #mobile-navigation button { padding: 14px 16px; text-align: left; }
+      .mobile-menu-toggle { color: white; padding: 4px; }
+      #site-header > div:first-child { gap: 6px; flex-shrink: 0; }
+      #site-header > div:first-child > div:first-child { width: 28px; height: 28px; }
+      #site-header > div:first-child > div:last-child > span:first-child { font-size: 14px; }
+      #auth-buttons-logged-in { gap: 2px; }
+      #auth-buttons-logged-in > button:first-child { padding: 6px; gap: 5px; }
+      #auth-buttons-logged-in > button:first-child > div { width: 24px; height: 24px; }
+      #user-display-name { font-size: 11px; max-width: 44px; }
+      #auth-buttons-logged-out { gap: 0; }
+      #auth-buttons-logged-out button { padding: 8px; font-size: 11px; }
+      #screen-pagina-inicial .skyelite-hero { min-height: 780px; }
+      #screen-pagina-inicial .skyelite-copy { margin-top: -96px; }
+      #screen-pagina-inicial .skyelite-copy h1 { font-size: clamp(1.9rem, 8.6vw, 3rem); line-height: 1.15; }
+      .hero-title-line + .hero-title-line { margin-top: -4px; }
+      #screen-pagina-inicial .skyelite-copy > div:first-child { font-size: 10px; letter-spacing: .08em; }
+      #screen-pagina-inicial .skyelite-copy > p { font-size: 15px; margin-top: 24px; }
+      #screen-pagina-inicial .skyelite-actions { gap: 10px; }
+      #screen-pagina-inicial .skyelite-actions button { padding: 12px 16px; font-size: 12px; }
+      #screen-pagina-inicial .skyelite-badges { bottom: 40px; width: calc(100% - 48px); }
+      #screen-pagina-inicial .skyelite-playback { bottom: 12px; right: 16px; padding: 5px 10px; font-size: 10px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right { opacity: 1; transform: none; }
@@ -329,6 +385,8 @@
       </button>
     </nav>
 
+    <div id="mobile-menu-root"></div>
+
     <!-- Right: Auth / Profile Button -->
     <div class="flex items-center gap-3">
       <!-- Non-logged state -->
@@ -363,63 +421,7 @@
     <!-- ================= SCREEN 07: PÁGINA INICIAL (Landing Page) ================= -->
     <section id="screen-pagina-inicial" class="screen-view overflow-hidden">
       <!-- Hero Section with Cockpit Wallpaper & Floating Stats -->
-      <div class="skyelite-hero relative min-h-[600px] flex items-center justify-center px-6 py-24 overflow-hidden border-b border-[#1E1B56]">
-        <!-- A single opaque media layer prevents double-exposure artifacts. -->
-        <video id="hero-video" class="skyelite-video" muted loop playsinline preload="none" poster="images/hero_background.jpg" aria-hidden="true" tabindex="-1">
-          <source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_091828_e240eb17-6edc-4129-ad9d-98678e3fd238.mp4" type="video/mp4">
-        </video>
-        <div class="skyelite-shade absolute inset-0"></div>
-        <button id="hero-playback" class="skyelite-playback" type="button" aria-controls="hero-video" hidden>Reproduzir vídeo</button>
-        
-        <div class="skyelite-copy relative z-10 max-w-4xl text-center space-y-6 reveal-on-scroll">
-          <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0D0B34]/90 border border-[#F59E0B]/40 text-xs font-semibold text-[#F59E0B] backdrop-blur-md shadow-lg shadow-[#F59E0B]/10">
-            <span class="w-2 h-2 rounded-full bg-[#F59E0B] animate-ping"></span>
-            Plataforma de Inteligência Aeronáutica com IA
-          </div>
-
-          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-heading text-white tracking-tight leading-tight">
-            Seus manuais a um click de <span class="text-[#F59E0B] drop-shadow-[0_0_20px_rgba(245,158,11,0.6)]">distância</span>
-          </h1>
-
-          <p class="text-lg sm:text-xl text-[#94A3B8] max-w-2xl mx-auto font-light leading-relaxed">
-            Plataforma moderna para consulta rápida de manuais de aviação, treinamentos interativos e resolução de panes em tempo real.
-          </p>
-
-          <div class="skyelite-actions pt-4 flex flex-wrap items-center justify-center gap-4">
-            <button onclick="navigateTo('app-workspace')" class="px-8 py-4 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] text-white font-bold text-base shadow-xl shadow-[#F59E0B]/25 hover:scale-105 transition-all flex items-center gap-2.5">
-              <i data-lucide="rocket" class="w-5 h-5"></i> Acessar Ferramentas
-            </button>
-            <button onclick="navigateTo('sobre-nos')" class="px-8 py-4 rounded-xl bg-[#0D0B34]/90 backdrop-blur-md border border-[#1E1B56] hover:border-[#F59E0B] text-white font-semibold text-base transition-all flex items-center gap-2">
-              <i data-lucide="info" class="w-5 h-5 text-[#F59E0B]"></i> Conhecer o EasyManual
-            </button>
-          </div>
-
-          <!-- Floating Badges Bar -->
-          <div class="skyelite-badges pt-8 grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
-            <div class="p-3 rounded-xl bg-[#0D0B34]/80 border border-[#1E1B56] backdrop-blur-md text-left flex items-center gap-3">
-              <i data-lucide="check-circle" class="w-5 h-5 text-[#F59E0B] shrink-0"></i>
-              <div>
-                <div class="text-xs font-bold text-white">99.8% Precisão</div>
-                <div class="text-[10px] text-[#94A3B8]">Auditado por SMEs</div>
-              </div>
-            </div>
-            <div class="p-3 rounded-xl bg-[#0D0B34]/80 border border-[#1E1B56] backdrop-blur-md text-left flex items-center gap-3">
-              <i data-lucide="zap" class="w-5 h-5 text-[#F59E0B] shrink-0"></i>
-              <div>
-                <div class="text-xs font-bold text-white">Busca em 2 Segundos</div>
-                <div class="text-[10px] text-[#94A3B8]">Resolução de Panes</div>
-              </div>
-            </div>
-            <div class="p-3 rounded-xl bg-[#0D0B34]/80 border border-[#1E1B56] backdrop-blur-md text-left flex items-center gap-3 col-span-2 sm:col-span-1">
-              <i data-lucide="shield" class="w-5 h-5 text-[#F59E0B] shrink-0"></i>
-              <div>
-                <div class="text-xs font-bold text-white">Frotas 121 & 135</div>
-                <div class="text-[10px] text-[#94A3B8]">Airbus, Boeing, Embraer</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="skyelite-hero-root"></div>
 
       <!-- GALERIA DE AVIAÇÃO E FROTAS SUPORTADAS (Nova Seção de Fotos) -->
       <div class="fleet-section max-w-6xl mx-auto px-6 py-20 space-y-12">
@@ -1719,6 +1721,8 @@
       </form>
     </div>
   </div>
+
+  <script src="assets/skyelite.js"></script>
 
   <!-- APPLICATION SCRIPTS -->
   <script>

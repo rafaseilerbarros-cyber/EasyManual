@@ -94,3 +94,9 @@ Basta abrir o arquivo [`index.html`](file:///C:/Users/Rafael/.gemini/antigravity
    ```bash
    firebase deploy
    ```
+
+## Hero SkyElite em React e TypeScript
+
+O hero e o menu móvel ficam em `src/skyelite.tsx`. As demais telas mantêm o funcionamento atual. O bundle `assets/skyelite.js` é versionado para que o `index.html` continue abrindo diretamente no navegador, sem servidor de build. Tailwind, fontes e vídeo continuam exigindo internet.
+
+Para desenvolver: `npm ci`, `npm run typecheck` e `npm run build`. Após editar o TSX, gere e versione o bundle novamente.
