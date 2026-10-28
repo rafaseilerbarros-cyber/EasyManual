@@ -2427,7 +2427,14 @@
     function renderFlowMap(){
       const nodes=appState.flowNodes;const selected=flowMapState.selectedNodeId;const preset=flowPresets.find(p=>p.id===flowMapState.preset);
       document.getElementById('flow-title').textContent=preset?.title||'Meu flow';document.getElementById('flow-phase').textContent=preset?.phase||'FLOW PERSONALIZADO';document.getElementById('flow-count').textContent=nodes.length+' passos';
-      document.getElementById('flow-svg-overlay').innerHTML='<polyline points="'+nodes.map(n=>n.x+','+n.y).join(' ')+'" fill="none" stroke="#F59E0B" stroke-width="2" vector-effect="non-scaling-stroke" />';
+      // Cubic segments ease into each waypoint without overshooting nearby controls.
+      const path = nodes.map((n, i) => {
+        if (!i) return `M ${n.x} ${n.y}`;
+        const previous = nodes[i - 1];
+        const middleY = (previous.y + n.y) / 2;
+        return `C ${previous.x} ${middleY}, ${n.x} ${middleY}, ${n.x} ${n.y}`;
+      }).join(' ');
+      document.getElementById('flow-svg-overlay').innerHTML = `<path d="${path}" fill="none" stroke="#F59E0B" stroke-opacity="0.75" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />`;
       document.getElementById('flow-nodes-container').innerHTML=nodes.map(n=>`<button class="flow-node-dot ${selected===n.id?'is-active':''}" style="left:${n.x}%;top:${n.y}%" aria-pressed="${selected===n.id}" aria-label="Passo ${n.id}: ${escapeHtml(n.title)}" onpointerdown="handleNodeMouseDown(event,${n.id})" onclick="event.stopPropagation();if(event.detail===0)selectFlowNode(${n.id})">${n.id}</button>`).join('');
       document.getElementById('flow-step-list').innerHTML=nodes.map((n,i)=>`<li><button class="flow-step ${selected===n.id?'is-active':''}" aria-pressed="${selected===n.id}" onclick="selectFlowNode(${n.id})"><span class="flow-step-number">${String(i+1).padStart(2,'0')}</span><span class="flow-step-copy">${escapeHtml(n.title.replace(/^\d+\.\s*/,''))}${selected===n.id&&n.desc?'<small>'+escapeHtml(n.desc)+'</small>':''}</span></button>${selected===n.id?`<div class="flow-step-actions"><button onclick="editFlowNodeText(event,${n.id})">Editar</button><button onclick="reorderFlowNode(${n.id},-1)" ${i===0?'disabled':''} aria-label="Mover passo para cima">↑</button><button onclick="reorderFlowNode(${n.id},1)" ${i===nodes.length-1?'disabled':''} aria-label="Mover passo para baixo">↓</button><button onclick="deleteFlowNode(event,${n.id})">Excluir</button></div>`:''}</li>`).join('')||'<li class="flows-muted">Seu flow está vazio. Use “Adicionar passo” e clique no painel para começar.</li>';
       const index=nodes.findIndex(n=>n.id===selected);document.getElementById('flow-prev').disabled=index<=0;document.getElementById('flow-next').disabled=!nodes.length||index===nodes.length-1;document.getElementById('flow-progress').textContent=index>=0?`Passo ${index+1} de ${nodes.length}`:'Selecione um passo para começar.';
@@ -2442,25 +2449,24 @@
       flowMapState.mode = 'move';
       if (type === 'cockpit-prep') {
         appState.flowNodes = [
-          { id: 1, x: 500, y: 140, title: '1. BAT 1 & 2 ... AUTO', desc: 'Verificar voltagem > 25.5V' },
-          { id: 2, x: 580, y: 190, title: '2. EXT PWR ... ON', desc: 'Conectar força da rampa' },
-          { id: 3, x: 480, y: 260, title: '3. APU BLEED ... ON', desc: 'Sangria pneumática de ar-condicionado' },
-          { id: 4, x: 520, y: 550, title: '4. PARK BRK ... SET', desc: 'Freio de estacionamento aplicado' }
+          { id: 1, x: 49.7396, y: 31.8359, title: '1. BAT 1 & 2 ... AUTO', desc: 'Verificar voltagem > 25.5V' },
+          { id: 2, x: 54.2969, y: 33.6914, title: '2. EXT PWR ... ON', desc: 'Conectar força da rampa' },
+          { id: 3, x: 49.7396, y: 38.4766, title: '3. APU BLEED ... ON', desc: 'Sangria pneumática de ar-condicionado' },
+          { id: 4, x: 50.5208, y: 88.8672, title: '4. PARK BRK ... SET', desc: 'Freio de estacionamento aplicado' }
         ];
       } else if (type === 'before-start') {
         appState.flowNodes = [
-          { id: 1, x: 480, y: 170, title: '1. BEACON LIGHT ... ON', desc: 'Aviso de partida iminente' },
-          { id: 2, x: 510, y: 460, title: '2. THR LEVERS ... IDLE', desc: 'Manetes de potência em marcha lenta' },
-          { id: 3, x: 510, y: 560, title: '3. ENG MASTER 1&2 ... ON', desc: 'Sequência de arranque de motores' }
+          { id: 1, x: 38.8021, y: 39.7461, title: '1. BEACON LIGHT ... ON', desc: 'Aviso de partida iminente' },
+          { id: 2, x: 49.8698, y: 73.7305, title: '2. THR LEVERS ... IDLE', desc: 'Manetes de potência em marcha lenta' },
+          { id: 3, x: 49.8698, y: 82.5195, title: '3. ENG MASTER 1&2 ... ON', desc: 'Sequência de arranque de motores' }
         ];
       } else if (type === 'after-takeoff') {
         appState.flowNodes = [
-          { id: 1, x: 520, y: 480, title: '1. FLAPS ... 0', desc: 'Recolhimento dos hipersustentadores' },
-          { id: 2, x: 520, y: 520, title: '2. SPOILERS ... DISARM', desc: 'Desarmar spoilers de solo' },
-          { id: 3, x: 480, y: 260, title: '3. APU MASTER ... OFF', desc: 'Desligar grupo auxiliar' }
+          { id: 1, x: 53.9062, y: 84.0820, title: '1. FLAPS ... 0', desc: 'Recolhimento dos hipersustentadores' },
+          { id: 2, x: 45.7031, y: 83.3008, title: '2. SPOILERS ... DISARM', desc: 'Desarmar spoilers de solo' },
+          { id: 3, x: 49.7396, y: 41.6016, title: '3. APU MASTER ... OFF', desc: 'Desligar grupo auxiliar' }
         ];
       }
-      appState.flowNodes.forEach(n => { n.x = Math.max(2, Math.min(98, (n.x - 283.5) / 585 * 100)); n.y = n.y / 780 * 100; });
       renderFlowMap();
     }
 
