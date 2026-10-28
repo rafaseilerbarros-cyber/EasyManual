@@ -165,47 +165,63 @@
       animation: pageFadeIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    /* SkyElite: editorial spacing, soft glass and the original EasyManual palette. */
+    /* Restrained aviation editorial layout. Keep the original brand palette. */
     #site-header {
-      margin: 16px 24px 0; top: 16px; border: 1px solid #1E1B56;
-      border-radius: 24px; background: rgba(4, 1, 34, .78);
-      backdrop-filter: blur(24px); box-shadow: 0 16px 48px rgba(4, 1, 34, .24);
+      margin: 0; top: 0; min-height: 88px; padding: 18px max(24px, calc((100vw - 1240px) / 2));
+      border: 0; border-bottom: 1px solid #1E1B56; border-radius: 0;
+      background: rgba(4, 1, 34, .96); backdrop-filter: blur(16px); box-shadow: none;
     }
-    #site-header nav { background: transparent; border: 0; box-shadow: none; }
-    #site-header nav button { border-radius: 999px; box-shadow: none; transform: none; padding: 10px 18px; }
-    #site-header button { border-radius: 999px; }
-    .skyelite-hero {
-      min-height: calc(100svh - 96px); padding: 104px max(32px, calc((100vw - 1200px) / 2)) 56px;
-      justify-content: flex-start; align-items: center;
+    #site-header nav { background: transparent; border: 0; box-shadow: none; padding: 0; gap: 8px; }
+    #site-header nav button { border-radius: 6px; box-shadow: none; transform: none; padding: 10px 16px; font-weight: 500; background: transparent; border-width: 1px; display: inline-flex; align-items: center; gap: 6px; }
+    #site-header button { border-radius: 6px; box-shadow: none; }
+    #screen-pagina-inicial .skyelite-hero {
+      min-height: min(820px, calc(100svh - 88px)); padding: 100px max(32px, calc((100vw - 1240px) / 2)) 64px;
+      justify-content: flex-start; align-items: center; background: #040122; isolation: isolate;
     }
-    .skyelite-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .6; }
-    .skyelite-shade { background: linear-gradient(90deg, rgba(4,1,34,.9), rgba(4,1,34,.45) 65%, rgba(4,1,34,.2)), linear-gradient(0deg, #040122, transparent 50%); }
-    .skyelite-copy { text-align: left; max-width: 1050px; width: 100%; }
-    .skyelite-copy h1 { font-family: 'Inter', sans-serif; font-size: clamp(3rem, 6.8vw, 6.8rem); font-weight: 300; line-height: 1.06; letter-spacing: -.065em; max-width: 1000px; }
-    .skyelite-copy h1 span { filter: none; }
-    .skyelite-copy > p { margin-left: 0; max-width: 600px; line-height: 1.8; }
-    .skyelite-actions { justify-content: flex-start; padding-top: 16px; }
-    .skyelite-actions button { border-radius: 999px; font-weight: 500; padding: 18px 28px; }
-    .skyelite-badges { margin-left: 0; margin-right: 0; max-width: 760px; padding-top: 48px; gap: 12px; }
-    .skyelite-badges > div { padding: 20px 16px; border-radius: 20px; background: rgba(13,11,52,.55); backdrop-filter: blur(20px); }
-    .skyelite-playback { position: absolute; bottom: 20px; right: 24px; z-index: 20; border: 1px solid #1E1B56; border-radius: 999px; padding: 9px 16px; background: rgba(4,1,34,.8); color: #94A3B8; font-size: 12px; }
-    #screen-pagina-inicial h2, #screen-sobre-nos h1, #screen-planos h1 { font-weight: 400; letter-spacing: -.04em; line-height: 1.15; }
-    #screen-pagina-inicial > div:not(.skyelite-hero) { padding-top: 96px; padding-bottom: 96px; }
-    #screen-pagina-inicial .reveal-scale { border-radius: 24px; box-shadow: none; }
-    #screen-pagina-inicial .reveal-scale img { transition: transform 1s ease; }
+    /* The video/poster is one opaque surface: never blend two aircraft images. */
+    .skyelite-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; opacity: 1; z-index: 0; }
+    .skyelite-shade { z-index: 1; pointer-events: none; background: linear-gradient(90deg, rgba(4,1,34,.94), rgba(4,1,34,.7) 45%, rgba(4,1,34,.15)), linear-gradient(0deg, #040122, transparent 35%); }
+    #screen-pagina-inicial .skyelite-copy { text-align: left; max-width: 1240px; width: 100%; }
+    #screen-pagina-inicial .skyelite-copy > div:first-child { padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; backdrop-filter: none; font-weight: 500; letter-spacing: .04em; }
+    .skyelite-copy > div:first-child > span { animation: none; width: 6px; height: 6px; }
+    #screen-pagina-inicial .skyelite-copy h1 { font-family: 'Inter', sans-serif; font-size: clamp(2.8rem, 5.2vw, 5rem); font-weight: 400; line-height: 1.08; letter-spacing: -.055em; max-width: 790px; }
+    #screen-pagina-inicial .skyelite-copy h1 span { filter: none; }
+    #screen-pagina-inicial .skyelite-copy > p { margin-left: 0; max-width: 560px; line-height: 1.75; font-size: 17px; }
+    #screen-pagina-inicial .skyelite-actions { justify-content: flex-start; padding-top: 12px; gap: 14px; }
+    #screen-pagina-inicial .skyelite-actions button { border-radius: 6px; font-weight: 600; padding: 16px 24px; box-shadow: none; transform: none; font-size: 14px; }
+    .skyelite-actions button:first-child { background: #F59E0B; color: #040122; }
+    .skyelite-actions button:last-child { background: rgba(4,1,34,.5); border-color: #94A3B8; }
+    #screen-pagina-inicial .skyelite-badges { margin-left: 0; margin-right: 0; max-width: 730px; padding-top: 36px; gap: 0; }
+    #screen-pagina-inicial .skyelite-badges > div { padding: 12px 20px; border: 0; border-left: 1px solid #1E1B56; border-radius: 0; background: transparent; backdrop-filter: none; }
+    #screen-pagina-inicial .skyelite-badges > div:first-child { padding-left: 0; border-left: 0; }
+    .skyelite-playback { position: absolute; bottom: 24px; right: 24px; z-index: 20; border: 1px solid #94A3B8; border-radius: 6px; padding: 9px 14px; background: rgba(4,1,34,.8); color: white; font-size: 12px; }
+    #screen-pagina-inicial h2, #screen-sobre-nos h1, #screen-planos h1 { font-family: 'Inter', sans-serif; font-weight: 500; letter-spacing: -.035em; line-height: 1.2; }
+    #screen-pagina-inicial > div:not(.skyelite-hero) { padding-top: 88px; padding-bottom: 88px; }
+    #screen-pagina-inicial .reveal-scale { border-radius: 10px; box-shadow: none; }
+    #screen-pagina-inicial .reveal-scale img { transition: transform .5s ease; }
+    #screen-pagina-inicial .reveal-scale:hover img { transform: scale(1.03); }
+    #screen-pagina-inicial .reveal-scale span { box-shadow: none; }
+    #screen-pagina-inicial .reveal-scale > div:first-child > span { border-radius: 4px; }
+    .amber-glow, .red-glow { box-shadow: none; }
     button:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid #F59E0B; outline-offset: 4px; }
     @media (max-width: 767px) {
-      #site-header { margin: 8px 10px 0; top: 8px; border-radius: 20px; flex-wrap: wrap; gap: 12px; padding: 12px; }
-      #site-header nav { display: flex; order: 3; width: 100%; justify-content: space-between; gap: 0; padding: 0; }
+      #site-header { min-height: auto; flex-wrap: wrap; gap: 12px; padding: 14px 16px; }
+      #site-header > div:first-child { gap: 8px; }
+      #site-header > div:first-child > div:first-child { width: 32px; height: 32px; }
+      #site-header > div:first-child > div:last-child > span:first-child { font-size: 16px; }
+      #site-header > div:last-child, #auth-buttons-logged-in { gap: 8px; }
+      #site-header nav { display: flex; order: 3; width: 100%; justify-content: space-between; gap: 0; }
       #site-header nav button { font-size: 11px; padding: 8px; }
-      .skyelite-hero { min-height: calc(100svh - 144px); padding: 64px 24px 72px; }
-      .skyelite-copy h1 { font-size: clamp(2.6rem, 10vw, 4.5rem); }
-      .skyelite-copy > p { font-size: 16px; }
-      .skyelite-actions { align-items: stretch; gap: 12px; }
-      .skyelite-actions button { justify-content: center; width: 100%; font-size: 14px; }
-      .skyelite-badges { padding-top: 28px; }
-      .skyelite-badges > div { padding: 12px; }
-      #screen-pagina-inicial > div:not(.skyelite-hero) { padding-top: 64px; padding-bottom: 64px; }
+      #screen-pagina-inicial .skyelite-hero { min-height: 680px; padding: 56px 24px 76px; }
+      .skyelite-shade { background: linear-gradient(90deg, rgba(4,1,34,.92), rgba(4,1,34,.65)), linear-gradient(0deg, #040122, transparent 50%); }
+      #screen-pagina-inicial .skyelite-copy h1 { font-size: clamp(2.5rem, 10vw, 4rem); }
+      #screen-pagina-inicial .skyelite-copy > p { font-size: 15px; }
+      #screen-pagina-inicial .skyelite-actions { align-items: stretch; gap: 10px; }
+      #screen-pagina-inicial .skyelite-actions button { justify-content: center; width: 100%; }
+      #screen-pagina-inicial .skyelite-badges { padding-top: 24px; gap: 16px 0; }
+      #screen-pagina-inicial .skyelite-badges > div { padding: 4px 12px; }
+      #screen-pagina-inicial .skyelite-badges > div:last-child { border-left: 0; padding-left: 0; }
+      #screen-pagina-inicial > div:not(.skyelite-hero) { padding-top: 56px; padding-bottom: 56px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
@@ -214,8 +230,6 @@
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-[#040122] text-white relative">
-  <!-- Global Cockpit Background Wallpaper Overlay -->
-  <div class="fixed inset-0 bg-cover bg-center opacity-15 pointer-events-none z-0 filter brightness-90" style="background-image: url('images/cockpit_wallpaper.jpg');"></div>
 
   <!-- ================= HEADER (Cabeçalho do site - Custom 01) ================= -->
   <header id="site-header" class="sticky top-0 z-50 bg-[#040122]/90 backdrop-blur-md border-b border-[#1E1B56] px-4 lg:px-8 py-3.5 flex items-center justify-between transition-all">
@@ -283,8 +297,7 @@
     <section id="screen-pagina-inicial" class="screen-view overflow-hidden">
       <!-- Hero Section with Cockpit Wallpaper & Floating Stats -->
       <div class="skyelite-hero relative min-h-[600px] flex items-center justify-center px-6 py-24 overflow-hidden border-b border-[#1E1B56]">
-        <!-- Hero Aircraft Sunset Background -->
-        <div class="absolute inset-0 bg-cover bg-center opacity-50 transform scale-105 filter brightness-90 transition-all duration-1000" style="background-image: url('images/hero_background.jpg');"></div>
+        <!-- A single opaque media layer prevents double-exposure artifacts. -->
         <video id="hero-video" class="skyelite-video" muted loop playsinline preload="none" poster="images/hero_background.jpg" aria-hidden="true" tabindex="-1">
           <source data-src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260328_091828_e240eb17-6edc-4129-ad9d-98678e3fd238.mp4" type="video/mp4">
         </video>
