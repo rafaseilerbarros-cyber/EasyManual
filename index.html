@@ -442,6 +442,32 @@
       *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
       .reveal-on-scroll, .reveal-scale, .reveal-left, .reveal-right { opacity: 1; transform: none; }
     }
+
+    .flows-heading {display:flex;justify-content:space-between;align-items:center;gap:20px;padding:28px;border-bottom:1px solid #1E1B56}
+    .flows-heading p,.flows-muted {color:#94A3B8;font-size:12px;line-height:1.6}
+    .flows-eyebrow {color:#F59E0B;font-size:10px;letter-spacing:.12em}
+    .flows-layout {display:grid;grid-template-columns:220px minmax(280px,1fr) 280px;gap:20px;padding:24px;align-items:start}
+    .flows-layout h3 {font-size:15px;margin-bottom:6px}
+    #tab-content-flow-map button {border:1px solid #1E1B56;background:#0D0B34;color:white;padding:9px 12px;font-size:12px;border-radius:7px}
+    #tab-content-flow-map button:hover {border-color:#F59E0B}
+    #tab-content-flow-map button[aria-pressed="true"],#tab-content-flow-map button.is-active {border-color:#F59E0B;background:#F59E0B19}
+    .flows-search {display:block;font-size:11px;color:#94A3B8;margin:22px 0 16px}.flows-search input {width:100%;margin-top:7px}
+    .flows-preset {display:block;width:100%;text-align:left;margin-bottom:12px}.flows-preset span {display:block;color:#94A3B8;font-size:10px;margin:4px 0}.flows-preset strong {display:block;font-size:13px}
+    .flows-note {font-size:11px;line-height:1.7;color:#94A3B8;border-top:1px solid #1E1B56;margin-top:24px;padding-top:16px}
+    .flows-viewer,.flows-sequence {border:1px solid #1E1B56;border-radius:10px;background:#0D0B34;overflow:hidden}
+    .flows-viewer-heading {display:flex;justify-content:space-between;align-items:center;padding:18px}.flows-viewer-heading h3 {margin:5px 0 0}#flow-count {font-size:11px;color:#94A3B8}
+    .flows-tools {display:flex;flex-wrap:wrap;gap:7px;padding:0 16px}.flows-tools label {font-size:11px;color:#94A3B8;display:flex;gap:6px;align-items:center}
+    #flow-mode-status-pill {padding:10px 18px}.flows-canvas-wrap {padding:0 16px 16px}
+    #cockpit-canvas-container {position:relative;width:100%;max-width:650px;margin:auto;aspect-ratio:3/4;isolation:isolate;touch-action:pan-y}
+    #cockpit-canvas-container img {display:block;width:100%;height:100%;pointer-events:none}#flow-svg-overlay,#flow-nodes-container {position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+    #tab-content-flow-map .flow-node-dot {position:absolute;transform:translate(-50%,-50%);border:2px solid white;border-radius:50%;padding:0;width:30px;height:30px;background:#F59E0B;color:#040122;font-weight:800;pointer-events:auto;touch-action:none;box-shadow:0 2px 8px #0008}
+    #tab-content-flow-map .flow-node-dot.is-active {background:#fff;outline:4px solid #F59E0B80;color:#040122}
+    .flows-sequence-heading {padding:18px;border-bottom:1px solid #1E1B56}#flow-step-list {list-style:none;padding:12px;margin:0;max-height:600px;overflow:auto}
+    #flow-step-list li {margin-bottom:8px}#flow-step-list .flow-step {display:flex;text-align:left;align-items:start;gap:10px;width:100%;padding:12px}
+    .flow-step-number {color:#F59E0B;font-weight:700}.flow-step-copy {flex:1}.flow-step-copy small {display:block;color:#94A3B8;line-height:1.6;margin-top:6px}.flow-step-actions {display:flex;gap:6px;padding:4px 0 10px;flex-wrap:wrap}
+    .flows-navigation {display:flex;justify-content:space-between;gap:8px;padding:12px}#flow-progress {padding:0 18px 18px}#tab-content-flow-map button:disabled {opacity:.35;cursor:default}
+    @media(max-width:1200px){.flows-layout {grid-template-columns:190px minmax(250px,1fr)}.flows-sequence {grid-column:1/-1}#flow-step-list {max-height:300px}}
+    @media(max-width:767px){.flows-heading {padding:20px}.flows-layout {display:flex;flex-direction:column;padding:16px}.flows-layout>section {width:100%}.flows-search {margin:12px 0}.flows-note {margin-top:12px}.flows-preset {margin-bottom:8px}}
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-[#040122] text-white relative">
@@ -1681,74 +1707,24 @@
 
         <!-- ================= SCREEN 08: FLOW MAP (Interactive Cockpit Builder) ================= -->
         <div id="tab-content-flow-map" class="workspace-tab hidden flex-1 flex flex-col h-full min-h-[calc(100vh-65px)]">
-          <!-- Flow Map Toolbar -->
-          <div class="p-4 bg-[#0D0B34] border-b border-[#1E1B56] flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-              <div class="p-2 rounded-lg bg-[#F59E0B]/10 text-[#F59E0B]">
-                <i data-lucide="git-commit" class="w-5 h-5"></i>
-              </div>
-              <div>
-                <h2 class="font-bold text-white text-sm flex items-center gap-2">
-                  Flow Map Interativo - A320 Cockpit Procedures
-                  <span class="text-[10px] bg-[#F59E0B]/20 text-[#F59E0B] px-2 py-0.5 rounded font-mono">Bolas Movíveis & Canvas Expandido</span>
-                </h2>
-                <p class="text-[11px] text-[#94A3B8]">Arraste as bolas com o mouse para reposicionar ou clique para adicionar novos passos no cockpit.</p>
-              </div>
-            </div>
-
-            <!-- Toolbar Action Controls -->
-            <div class="flex flex-wrap items-center gap-2">
-              <div class="flex items-center rounded-xl bg-[#040122] border border-[#1E1B56] p-1 text-xs font-semibold">
-                <button onclick="setFlowInteractionMode('add')" id="flow-mode-add-btn" class="px-3 py-1.5 rounded-lg bg-[#F59E0B] text-black font-bold flex items-center gap-1.5 transition-all">
-                  <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i> + Criar Nó
-                </button>
-                <button onclick="setFlowInteractionMode('move')" id="flow-mode-move-btn" class="px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-white flex items-center gap-1.5 transition-all">
-                  <i data-lucide="move" class="w-3.5 h-3.5"></i> 🖐️ Mover Bolas
-                </button>
-              </div>
-
-              <div class="flex items-center gap-1">
-                <button onclick="loadPresetFlow('cockpit-prep')" class="px-2.5 py-1.5 rounded-lg bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B] text-xs font-semibold text-white">
-                  Prep. Cockpit
-                </button>
-                <button onclick="loadPresetFlow('before-start')" class="px-2.5 py-1.5 rounded-lg bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B] text-xs font-semibold text-white">
-                  Before Start
-                </button>
-                <button onclick="loadPresetFlow('after-takeoff')" class="px-2.5 py-1.5 rounded-lg bg-[#040122] border border-[#1E1B56] hover:border-[#F59E0B] text-xs font-semibold text-white">
-                  After Takeoff
-                </button>
-                <button onclick="clearFlowMap()" class="px-2.5 py-1.5 rounded-lg bg-[#E23B2E]/20 text-[#E23B2E] hover:bg-[#E23B2E] hover:text-white text-xs font-bold transition-colors flex items-center gap-1">
-                  <i data-lucide="trash" class="w-3.5 h-3.5"></i> Limpar
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Interactive Cockpit Canvas Workspace (Expanded Size & Dragging) -->
-          <div class="flex-1 relative bg-[#040122] overflow-auto flex items-center justify-center p-4">
-            
-            <!-- Cockpit Overhead Background Graphic -->
-            <div id="cockpit-canvas-container" class="relative w-full max-w-6xl h-[780px] rounded-2xl border-2 border-[#F59E0B]/40 bg-[#040122] bg-contain bg-no-repeat bg-center shadow-2xl overflow-hidden cursor-crosshair select-none transition-all" style="background-image: url('images/a320_cockpit_panel.webp');" onclick="handleCockpitCanvasClick(event)" onmousemove="handleCockpitMouseMove(event)" onmouseup="handleCockpitMouseUp(event)" onmouseleave="handleCockpitMouseUp(event)">
-              <div class="absolute inset-0 bg-[#040122]/20 pointer-events-none"></div>
-
-              <!-- Overlay Grid / Cockpit Panel Markers -->
-              <div class="absolute top-4 left-4 bg-[#0D0B34]/95 border border-[#F59E0B]/50 px-3.5 py-2 rounded-xl text-xs font-mono text-[#F59E0B] z-20 flex items-center gap-2 shadow-lg">
-                <span class="w-2.5 h-2.5 rounded-full bg-[#F59E0B] animate-ping"></span>
-                <span class="font-bold">PAINEL AIRBUS A320 SCHEMATIC</span>
-                <span id="flow-mode-status-pill" class="ml-2 text-[10px] bg-[#F59E0B]/20 text-[#F59E0B] px-2 py-0.5 rounded uppercase font-sans font-bold">Modo: Adicionar</span>
-              </div>
-
-              <!-- SVG Line Overlay for Bezier Arrows -->
-              <svg id="flow-svg-overlay" class="absolute inset-0 w-full h-full pointer-events-none z-10">
-                <!-- Dynamic Lines rendered via JS -->
-              </svg>
-
-              <!-- Node Dots Container rendered via JS -->
-              <div id="flow-nodes-container" class="absolute inset-0 pointer-events-auto z-20">
-                <!-- Nodes generated here -->
-              </div>
-            </div>
-
+          <header class="flows-heading"><div><span class="flows-eyebrow">WORKSPACE / A320</span><h2>Flows do cockpit</h2><p>Escolha um flow e acompanhe a sequência no painel.</p></div><button onclick="clearFlowMap()">+ Novo flow</button></header>
+          <div class="flows-layout">
+            <section class="flows-library" aria-label="Sugestões de flows">
+              <h3>Sugestões de flows</h3><p class="flows-muted">Organizados pela fase do voo</p>
+              <label class="flows-search">Buscar flow<input id="flow-search" type="search" placeholder="Nome ou fase do voo" oninput="filterFlows(this.value)"></label>
+              <div id="flow-presets"></div>
+              <p class="flows-note">Modelos ilustrativos para estudo. Confira os procedimentos nos manuais da sua operação.</p>
+            </section>
+            <section class="flows-viewer" aria-label="Visualização do flow">
+              <div class="flows-viewer-heading"><div><span class="flows-eyebrow" id="flow-phase">FLOW PERSONALIZADO</span><h3 id="flow-title">Meu flow</h3></div><span id="flow-count"></span></div>
+              <div class="flows-tools" role="group" aria-label="Modo de interação"><button id="flow-mode-move-btn" onclick="setFlowInteractionMode('move')">Visualizar / mover</button><button id="flow-mode-add-btn" onclick="setFlowInteractionMode('add')">+ Adicionar passo</button><label><input type="checkbox" checked onchange="document.getElementById('flow-svg-overlay').style.visibility=this.checked?'visible':'hidden'"> Mostrar trajetória</label></div>
+              <p id="flow-mode-status-pill" class="flows-muted" role="status"></p>
+              <div class="flows-canvas-wrap"><div id="cockpit-canvas-container" onclick="handleCockpitCanvasClick(event)" onpointermove="handleCockpitMouseMove(event)" onpointerup="handleCockpitMouseUp(event)" onpointercancel="handleCockpitMouseUp(event)">
+                <img src="images/a320_cockpit_panel.webp" alt="Painel esquemático do cockpit Airbus A320" draggable="false">
+                <svg id="flow-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg><div id="flow-nodes-container"></div>
+              </div></div>
+            </section>
+            <section class="flows-sequence" aria-label="Sequência de passos"><div class="flows-sequence-heading"><h3>Sequência do flow</h3><span class="flows-muted">Clique em um passo para localizar</span></div><ol id="flow-step-list"></ol><div class="flows-navigation"><button id="flow-prev" onclick="stepFlow(-1)">← Anterior</button><button id="flow-next" onclick="stepFlow(1)">Próximo →</button></div><p id="flow-progress" class="flows-muted" aria-live="polite"></p></section>
           </div>
         </div>
 
@@ -1828,11 +1804,7 @@
       },
       currentScreen: 'pagina-inicial',
       activeWorkspaceTab: 'upload-de-arquivos',
-      flowNodes: [
-        { id: 1, x: 280, y: 110, title: '1. BAT 1 & 2 ... AUTO', desc: 'Energização elétrica primária de emergência' },
-        { id: 2, x: 440, y: 140, title: '2. EXT PWR ... ON', desc: 'Conexão de força externa da aeronave' },
-        { id: 3, x: 580, y: 220, title: '3. APU BLEED ... ON', desc: 'Fornecimento de sangria para ar-condicionado' }
-      ],
+      flowNodes: [],
       selectedPlanForPurchase: null
     };
 
@@ -2398,217 +2370,76 @@
       lucide.createIcons();
     }
 
-    // Flow Map State & Dragging Logic
-    const flowMapState = {
-      mode: 'add', // 'add' or 'move'
-      isDragging: false,
-      draggedNodeId: null,
-      selectedNodeId: null,
-      startX: 0,
-      startY: 0,
-      hasMoved: false
-    };
-
+    // Coordinates are percentages of the image, independent of viewport size.
+    const flowMapState = {mode:'move', selectedNodeId:null, draggedNodeId:null, isDragging:false, hasMoved:false, preset:null, startX:0, startY:0};
+    const flowPresets = [
+      {id:'cockpit-prep', title:'Preparação do cockpit', phase:'01 · No solo', count:4},
+      {id:'before-start', title:'Before Start', phase:'02 · Antes da partida', count:3},
+      {id:'after-takeoff', title:'After Takeoff', phase:'03 · Após a decolagem', count:3}
+    ];
+    function filterFlows(query='') {
+      const results = flowPresets.filter(p => (p.title+' '+p.phase).toLocaleLowerCase('pt-BR').includes(query.toLocaleLowerCase('pt-BR')));
+      document.getElementById('flow-presets').innerHTML = results.map(p => `<button class="flows-preset" aria-pressed="${flowMapState.preset===p.id}" onclick="loadPresetFlow('${p.id}')"><span>${p.phase}</span><strong>${p.title}</strong><span>${p.count} passos · A320</span></button>`).join('') || '<p class="flows-muted">Nenhum flow encontrado.</p>';
+    }
     function setFlowInteractionMode(mode) {
-      flowMapState.mode = mode;
-      const addBtn = document.getElementById('flow-mode-add-btn');
-      const moveBtn = document.getElementById('flow-mode-move-btn');
-      const pill = document.getElementById('flow-mode-status-pill');
-
-      if (mode === 'add') {
-        if (addBtn) addBtn.className = "px-3 py-1.5 rounded-lg bg-[#F59E0B] text-black font-bold flex items-center gap-1.5 transition-all shadow-md";
-        if (moveBtn) moveBtn.className = "px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-white flex items-center gap-1.5 transition-all";
-        if (pill) pill.textContent = "Modo: Adicionar";
-      } else {
-        if (moveBtn) moveBtn.className = "px-3 py-1.5 rounded-lg bg-[#F59E0B] text-black font-bold flex items-center gap-1.5 transition-all shadow-md";
-        if (addBtn) addBtn.className = "px-3 py-1.5 rounded-lg text-[#94A3B8] hover:text-white flex items-center gap-1.5 transition-all";
-        if (pill) pill.textContent = "Modo: Mover Bolas (Drag & Drop)";
-      }
+      flowMapState.mode=mode;
+      ['add','move'].forEach(m=>document.getElementById('flow-mode-'+m+'-btn').setAttribute('aria-pressed',m===mode));
+      document.getElementById('flow-mode-status-pill').textContent=mode==='add'?'Clique no painel para adicionar um passo.':'Selecione um passo para ver os detalhes. Arraste um marcador para reposicionar.';
+      document.getElementById('cockpit-canvas-container').style.cursor=mode==='add'?'crosshair':'default';
     }
-
+    function flowPosition(e) {
+      const r=document.getElementById('cockpit-canvas-container').getBoundingClientRect();
+      return {x:Math.max(2,Math.min(98,(e.clientX-r.left)/r.width*100)),y:Math.max(2,Math.min(98,(e.clientY-r.top)/r.height*100))};
+    }
     function handleCockpitCanvasClick(e) {
-      if (flowMapState.isDragging || flowMapState.hasMoved) return;
-      if (e.target.closest('.flow-node-dot')) return; // ignore click on node dot
-
-      // If a node was open, clicking empty space deselects it and closes the card
-      if (flowMapState.selectedNodeId !== null) {
-        flowMapState.selectedNodeId = null;
-        renderFlowMap();
-        return;
-      }
-
-      if (flowMapState.mode === 'add') {
-        const container = document.getElementById('cockpit-canvas-container');
-        const rect = container.getBoundingClientRect();
-        const x = Math.round(e.clientX - rect.left);
-        const y = Math.round(e.clientY - rect.top);
-
-        const nextId = appState.flowNodes.length + 1;
-        const title = prompt(`Digite a ação para a bola #${nextId}:`, `${nextId}. PASSO A320 COCKPIT`);
-
-        if (title) {
-          appState.flowNodes.push({
-            id: nextId,
-            x: x,
-            y: y,
-            title: title,
-            desc: `Passo #${nextId} sequencial`
-          });
-          flowMapState.selectedNodeId = nextId; // Open card for the newly created node
-          renderFlowMap();
-        }
-      }
+      if(flowMapState.hasMoved){flowMapState.hasMoved=false;return;}
+      if(e.target.closest('.flow-node-dot') || flowMapState.mode!=='add')return;
+      const title=prompt('Qual é a ação deste passo?');
+      if(!title?.trim())return;
+      const id=appState.flowNodes.length+1;
+      appState.flowNodes.push({id,...flowPosition(e),title:title.trim(),desc:''});
+      flowMapState.selectedNodeId=id;renderFlowMap();
     }
-
-    function handleNodeMouseDown(e, nodeId) {
-      e.stopPropagation();
-      flowMapState.isDragging = true;
-      flowMapState.draggedNodeId = nodeId;
-      flowMapState.startX = e.clientX;
-      flowMapState.startY = e.clientY;
-      flowMapState.hasMoved = false;
+    function selectFlowNode(id){flowMapState.selectedNodeId=id;renderFlowMap();}
+    function handleNodeMouseDown(e,id){
+      if(e.button!==0)return;
+      e.stopPropagation();flowMapState.draggedNodeId=id;flowMapState.isDragging=true;flowMapState.hasMoved=false;flowMapState.startX=e.clientX;flowMapState.startY=e.clientY;
+      document.getElementById('cockpit-canvas-container').setPointerCapture(e.pointerId);
     }
-
-    function handleCockpitMouseMove(e) {
-      if (!flowMapState.isDragging || flowMapState.draggedNodeId === null) return;
-      
-      const dx = Math.abs(e.clientX - flowMapState.startX);
-      const dy = Math.abs(e.clientY - flowMapState.startY);
-      if (dx > 4 || dy > 4) {
-        flowMapState.hasMoved = true;
-      }
-
-      const container = document.getElementById('cockpit-canvas-container');
-      const rect = container.getBoundingClientRect();
-      const x = Math.max(20, Math.min(rect.width - 20, Math.round(e.clientX - rect.left)));
-      const y = Math.max(20, Math.min(rect.height - 20, Math.round(e.clientY - rect.top)));
-
-      const node = appState.flowNodes.find(n => n.id === flowMapState.draggedNodeId);
-      if (node) {
-        node.x = x;
-        node.y = y;
-        renderFlowMap();
-      }
+    function handleCockpitMouseMove(e){
+      if(!flowMapState.isDragging)return;
+      if(Math.hypot(e.clientX-flowMapState.startX,e.clientY-flowMapState.startY)<4 && !flowMapState.hasMoved)return;
+      flowMapState.hasMoved=true;
+      Object.assign(appState.flowNodes.find(n=>n.id===flowMapState.draggedNodeId),flowPosition(e));renderFlowMap();
     }
-
-    function handleCockpitMouseUp(e) {
-      if (flowMapState.isDragging && !flowMapState.hasMoved && flowMapState.draggedNodeId !== null) {
-        // Clean click on node: toggle selection card
-        const clickedId = flowMapState.draggedNodeId;
-        flowMapState.selectedNodeId = (flowMapState.selectedNodeId === clickedId) ? null : clickedId;
-        renderFlowMap();
-      }
-      flowMapState.isDragging = false;
-      flowMapState.draggedNodeId = null;
-      flowMapState.hasMoved = false;
+    function handleCockpitMouseUp(e){
+      if(!flowMapState.isDragging)return;
+      const id=flowMapState.draggedNodeId;
+      flowMapState.isDragging=false;flowMapState.draggedNodeId=null;
+      if(!flowMapState.hasMoved)selectFlowNode(id);
+      flowMapState.hasMoved=true;
+      if(document.getElementById('cockpit-canvas-container').hasPointerCapture(e.pointerId))document.getElementById('cockpit-canvas-container').releasePointerCapture(e.pointerId);
     }
-
-    function closeNodeCard(e) {
-      if (e) e.stopPropagation();
-      flowMapState.selectedNodeId = null;
-      renderFlowMap();
+    function editFlowNodeText(e,id){e.stopPropagation();const n=appState.flowNodes.find(n=>n.id===id);const title=prompt('Editar ação',n.title);if(title?.trim()){n.title=title.trim();renderFlowMap();}}
+    function deleteFlowNode(e,id){e.stopPropagation();appState.flowNodes=appState.flowNodes.filter(n=>n.id!==id);appState.flowNodes.forEach((n,i)=>n.id=i+1);flowMapState.selectedNodeId=null;renderFlowMap();}
+    function reorderFlowNode(id,delta){const i=appState.flowNodes.findIndex(n=>n.id===id);const j=i+delta;if(j<0||j>=appState.flowNodes.length)return;[appState.flowNodes[i],appState.flowNodes[j]]=[appState.flowNodes[j],appState.flowNodes[i]];appState.flowNodes.forEach((n,k)=>n.id=k+1);flowMapState.selectedNodeId=j+1;renderFlowMap();}
+    function stepFlow(delta){const index=appState.flowNodes.findIndex(n=>n.id===flowMapState.selectedNodeId);const next=index<0?0:index+delta;if(appState.flowNodes[next])selectFlowNode(appState.flowNodes[next].id);}
+    function renderFlowMap(){
+      const nodes=appState.flowNodes;const selected=flowMapState.selectedNodeId;const preset=flowPresets.find(p=>p.id===flowMapState.preset);
+      document.getElementById('flow-title').textContent=preset?.title||'Meu flow';document.getElementById('flow-phase').textContent=preset?.phase||'FLOW PERSONALIZADO';document.getElementById('flow-count').textContent=nodes.length+' passos';
+      document.getElementById('flow-svg-overlay').innerHTML='<polyline points="'+nodes.map(n=>n.x+','+n.y).join(' ')+'" fill="none" stroke="#F59E0B" stroke-width="2" vector-effect="non-scaling-stroke" />';
+      document.getElementById('flow-nodes-container').innerHTML=nodes.map(n=>`<button class="flow-node-dot ${selected===n.id?'is-active':''}" style="left:${n.x}%;top:${n.y}%" aria-pressed="${selected===n.id}" aria-label="Passo ${n.id}: ${escapeHtml(n.title)}" onpointerdown="handleNodeMouseDown(event,${n.id})" onclick="event.stopPropagation();if(event.detail===0)selectFlowNode(${n.id})">${n.id}</button>`).join('');
+      document.getElementById('flow-step-list').innerHTML=nodes.map((n,i)=>`<li><button class="flow-step ${selected===n.id?'is-active':''}" aria-pressed="${selected===n.id}" onclick="selectFlowNode(${n.id})"><span class="flow-step-number">${String(i+1).padStart(2,'0')}</span><span class="flow-step-copy">${escapeHtml(n.title.replace(/^\d+\.\s*/,''))}${selected===n.id&&n.desc?'<small>'+escapeHtml(n.desc)+'</small>':''}</span></button>${selected===n.id?`<div class="flow-step-actions"><button onclick="editFlowNodeText(event,${n.id})">Editar</button><button onclick="reorderFlowNode(${n.id},-1)" ${i===0?'disabled':''} aria-label="Mover passo para cima">↑</button><button onclick="reorderFlowNode(${n.id},1)" ${i===nodes.length-1?'disabled':''} aria-label="Mover passo para baixo">↓</button><button onclick="deleteFlowNode(event,${n.id})">Excluir</button></div>`:''}</li>`).join('')||'<li class="flows-muted">Seu flow está vazio. Use “Adicionar passo” e clique no painel para começar.</li>';
+      const index=nodes.findIndex(n=>n.id===selected);document.getElementById('flow-prev').disabled=index<=0;document.getElementById('flow-next').disabled=!nodes.length||index===nodes.length-1;document.getElementById('flow-progress').textContent=index>=0?`Passo ${index+1} de ${nodes.length}`:'Selecione um passo para começar.';
+      filterFlows(document.getElementById('flow-search').value);setFlowInteractionMode(flowMapState.mode);
     }
-
-    function deleteFlowNode(e, nodeId) {
-      e.stopPropagation();
-      appState.flowNodes = appState.flowNodes.filter(n => n.id !== nodeId);
-      flowMapState.selectedNodeId = null;
-      // Re-number nodes for clean sequence
-      appState.flowNodes.forEach((n, idx) => { n.id = idx + 1; });
-      renderFlowMap();
-    }
-
-    function editFlowNodeText(e, nodeId) {
-      e.stopPropagation();
-      const node = appState.flowNodes.find(n => n.id === nodeId);
-      if (!node) return;
-      const newTitle = prompt(`Editar texto para a bola #${nodeId}:`, node.title);
-      if (newTitle !== null && newTitle.trim() !== '') {
-        node.title = newTitle;
-        renderFlowMap();
-      }
-    }
-
-    function renderFlowMap() {
-      const svgOverlay = document.getElementById('flow-svg-overlay');
-      const nodesContainer = document.getElementById('flow-nodes-container');
-
-      if (!svgOverlay || !nodesContainer) return;
-
-      svgOverlay.innerHTML = '';
-      nodesContainer.innerHTML = '';
-
-      // Render Bezier connector lines between sequential nodes
-      for (let i = 0; i < appState.flowNodes.length - 1; i++) {
-        const n1 = appState.flowNodes[i];
-        const n2 = appState.flowNodes[i + 1];
-
-        const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-        line.setAttribute('x1', n1.x);
-        line.setAttribute('y1', n1.y);
-        line.setAttribute('x2', n2.x);
-        line.setAttribute('y2', n2.y);
-        line.setAttribute('stroke', '#F59E0B');
-        line.setAttribute('stroke-width', '3.5');
-        line.setAttribute('stroke-dasharray', '6 3');
-        line.setAttribute('class', 'animate-pulse');
-        svgOverlay.appendChild(line);
-      }
-
-      // Render Node Dots (Cards ONLY visible when clicked)
-      appState.flowNodes.forEach(node => {
-        const isSelected = (flowMapState.selectedNodeId === node.id);
-        const dot = document.createElement('div');
-        dot.className = `flow-node-dot absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer select-none ${isSelected ? 'z-50' : 'z-30'}`;
-        dot.style.left = `${node.x}px`;
-        dot.style.top = `${node.y}px`;
-        dot.title = `Passo ${node.id}: ${node.title} (Clique p/ ver detalhes)`;
-
-        dot.onmousedown = (e) => handleNodeMouseDown(e, node.id);
-        dot.onclick = (e) => e.stopPropagation();
-
-        dot.innerHTML = `
-          <div class="relative flex items-center justify-center">
-            <!-- Node Number Ball -->
-            <div class="w-9 h-9 rounded-full bg-gradient-to-br from-[#F59E0B] to-[#E23B2E] text-black font-extrabold text-xs flex items-center justify-center shadow-xl border-2 transition-all duration-200 ${isSelected ? 'border-white ring-4 ring-[#F59E0B] scale-125 shadow-[0_0_20px_rgba(245,158,11,0.8)]' : 'border-white shadow-[#F59E0B]/40 hover:scale-115 hover:shadow-[0_0_15px_rgba(245,158,11,0.6)]'}">
-              ${node.id}
-            </div>
-
-            <!-- Node Card Overlay: Only rendered when clicked / selected -->
-            ${isSelected ? `
-              <div class="absolute bottom-12 left-1/2 transform -translate-x-1/2 w-64 p-3.5 rounded-xl bg-[#0D0B34]/98 border-2 border-[#F59E0B] text-white text-[11px] shadow-[0_12px_30px_rgba(0,0,0,0.85)] backdrop-blur-md pointer-events-auto z-50 space-y-2 animate-in fade-in zoom-in-95 duration-150">
-                <div class="flex items-center justify-between border-b border-[#1E1B56] pb-2">
-                  <span class="font-mono font-bold text-[#F59E0B] text-xs">PASSO #${node.id}</span>
-                  <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="editFlowNodeText(event, ${node.id})" title="Editar texto" class="p-1 rounded hover:bg-[#16134A] text-[#94A3B8] hover:text-white transition-colors">✏️</button>
-                    <button onclick="deleteFlowNode(event, ${node.id})" title="Excluir nó" class="p-1 rounded hover:bg-[#E23B2E]/20 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">🗑️</button>
-                    <button onclick="closeNodeCard(event)" title="Fechar detalhes" class="px-1.5 py-0.5 rounded hover:bg-[#16134A] text-[#94A3B8] hover:text-white font-bold transition-colors">✕</button>
-                  </div>
-                </div>
-                <div class="font-bold text-white text-xs leading-snug">
-                  ${escapeHtml(node.title)}
-                </div>
-                ${node.desc ? `<div class="text-[10px] text-slate-300 leading-relaxed font-sans">${escapeHtml(node.desc)}</div>` : ''}
-                <div class="text-[9px] text-[#94A3B8] font-mono pt-1.5 border-t border-[#1E1B56]/50 flex items-center justify-between">
-                  <span>Arraste a bola p/ mover</span>
-                  <span>X:${node.x} Y:${node.y}</span>
-                </div>
-              </div>
-            ` : ''}
-          </div>
-        `;
-        nodesContainer.appendChild(dot);
-      });
-    }
-
-    function clearFlowMap() {
-      appState.flowNodes = [];
-      flowMapState.selectedNodeId = null;
-      renderFlowMap();
-    }
+    function clearFlowMap(){if(appState.flowNodes.length&&!confirm('Criar um novo flow? As alterações do flow atual serão descartadas.'))return;appState.flowNodes=[];flowMapState.preset=null;flowMapState.selectedNodeId=null;flowMapState.mode='add';renderFlowMap();}
 
     function loadPresetFlow(type) {
-      flowMapState.selectedNodeId = null;
+      if (appState.flowNodes.length && !confirm('Carregar esta sugestão e substituir o flow atual?')) return;
+      flowMapState.preset = type;
+      flowMapState.selectedNodeId = 1;
+      flowMapState.mode = 'move';
       if (type === 'cockpit-prep') {
         appState.flowNodes = [
           { id: 1, x: 500, y: 140, title: '1. BAT 1 & 2 ... AUTO', desc: 'Verificar voltagem > 25.5V' },
@@ -2629,6 +2460,7 @@
           { id: 3, x: 480, y: 260, title: '3. APU MASTER ... OFF', desc: 'Desligar grupo auxiliar' }
         ];
       }
+      appState.flowNodes.forEach(n => { n.x = Math.max(2, Math.min(98, (n.x - 283.5) / 585 * 100)); n.y = n.y / 780 * 100; });
       renderFlowMap();
     }
 
@@ -2700,7 +2532,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       updateAuthUI();
-      renderFlowMap();
+      loadPresetFlow('cockpit-prep');
       initScrollAnimations();
     });
 
