@@ -1,0 +1,26 @@
+/* Header layout must remain visible without Tailwind's responsive utilities. */
+#site-header{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;min-height:88px;box-sizing:border-box;padding:18px max(32px,calc((100vw - 1280px)/2));gap:24px;color:#fff}
+#site-header>div:first-child{display:flex;align-items:center;gap:10px;justify-self:start;cursor:pointer}
+#site-header>div:first-child>div:first-child{width:38px;height:38px;flex:0 0 38px;display:flex;align-items:center;justify-content:center;padding:2px;box-sizing:border-box;background:#0d0b34;border:1px solid #ffffff20;border-radius:10px;overflow:hidden}
+#site-header>div:first-child img{display:block;width:100%;height:100%;object-fit:cover;border-radius:8px}
+#site-header>div:first-child>div:last-child>span:first-child{display:flex;align-items:center;gap:3px;font-size:18px;font-weight:800;letter-spacing:-.5px;line-height:1.2;white-space:nowrap}
+#site-header>div:first-child>div:last-child>span:first-child>span{color:#d99c23}
+#site-header>div:first-child>div:last-child>span:last-child{display:block;margin-top:3px;font:9px/1.2 monospace;letter-spacing:.5px;color:#a4a0b5}
+#site-header>.site-desktop-nav{display:flex;align-items:center;justify-content:center;gap:8px;margin:0;padding:0;background:none;border:0;box-shadow:none;white-space:nowrap}
+#site-header>.site-desktop-nav>button{display:inline-flex;align-items:center;gap:6px;padding:10px 12px;font-size:12px;font-weight:500;border:0;border-radius:8px;transform:none;box-shadow:none;background:transparent;color:#bdb8cf;cursor:pointer}
+#site-header>.site-desktop-nav>button:hover{color:#f5ae2e;background:#ffffff08}
+#site-header>.site-desktop-nav>button svg{width:15px;height:15px;color:#c59850}
+#site-header>#mobile-menu-root{display:none}
+#site-header>div:last-child{justify-self:end;display:flex;align-items:center;gap:10px}
+#auth-buttons-logged-in:not(.hidden),#auth-buttons-logged-out:not(.hidden){display:flex;align-items:center;gap:10px}
+#auth-buttons-logged-in>button:first-child{display:flex;align-items:center;gap:8px;background:#0d0b34;border:1px solid #332c66;border-radius:7px;padding:8px 12px;cursor:pointer;color:#fff}
+#auth-buttons-logged-in>button:first-child>div{display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;background:#f5ae2e14;border-radius:50%;color:#e6b34e;font-size:11px}
+#user-display-name{display:block;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px;color:#fff}
+#auth-buttons-logged-in svg{width:15px;height:15px}#auth-buttons-logged-in>button:last-child{display:grid;place-items:center;background:none;border:0;padding:8px;cursor:pointer;color:#aaa3c0}
+body:has(#screen-pagina-inicial:not(.hidden)) #site-header{position:absolute;inset:0 0 auto;background:transparent;border:0}
+body:has(#screen-pagina-inicial:not(.hidden)) #site-header>.site-desktop-nav>button,body:has(#screen-pagina-inicial:not(.hidden)) #site-header>div:first-child>div:last-child>span{color:#202a36}
+body:has(#screen-pagina-inicial:not(.hidden)) #site-header>div:first-child>div:last-child>span:first-child>span{color:#c99122}
+body:has(#screen-pagina-inicial:not(.hidden)) #site-header #auth-buttons-logged-in>button:last-child{color:#202a36}
+#site-header button:focus-visible{outline:2px solid #f5ae2e;outline-offset:4px}
+@media(max-width:900px) and (min-width:768px){#site-header{padding:18px 24px;gap:10px}#site-header>.site-desktop-nav{gap:0}#site-header>.site-desktop-nav>button{padding:10px 8px}}
+@media(max-width:767px){#site-header{grid-template-columns:1fr auto auto;min-height:76px;padding:16px;gap:10px}#site-header>.site-desktop-nav{display:none}#site-header>#mobile-menu-root{display:block}#site-header>div:first-child>div:first-child{width:30px;height:30px;flex-basis:30px}#site-header>div:first-child>div:last-child>span:first-child{font-size:15px}#site-header>div:first-child>div:last-child>span:last-child{font-size:7px}#auth-buttons-logged-in>button:first-child{padding:6px;gap:5px}#user-display-name{max-width:60px;font-size:11px}#auth-buttons-logged-in:not(.hidden){gap:3px}}
