@@ -224,6 +224,19 @@
       #screen-pagina-inicial > div:not(.skyelite-hero) { padding-top: 56px; padding-bottom: 56px; }
     }
 
+    /* Flow dialogs stay inside the app and preserve keyboard navigation. */
+    #flow-dialog { width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; margin: auto; padding: 28px; border: 1px solid #363268; border-radius: 18px; background: #0D0B34; color: #fff; box-shadow: 0 24px 80px #0008; }
+    #flow-dialog::backdrop { background: #040122b8; backdrop-filter: blur(5px); }
+    #flow-dialog h2 { margin: 0 0 12px; font-size: 22px; font-weight: 600; }
+    #flow-dialog p, #flow-dialog label { color: #94A3B8; font-size: 14px; line-height: 1.6; }
+    #flow-dialog label { display: block; margin-top: 20px; }
+    #flow-dialog input { display: block; width: 100%; margin-top: 8px; padding: 12px 14px; background: #040122; color: white; border: 1px solid #363268; border-radius: 8px; }
+    #flow-dialog .flow-dialog-actions { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+    #flow-dialog button { padding: 10px 18px; border: 1px solid #363268; border-radius: 8px; background: #16134A; color: white; font-weight: 600; }
+    #flow-dialog #flow-dialog-submit { background: #F59E0B; border-color: #F59E0B; color: #040122; }
+    #flow-dialog :focus-visible { outline: 2px solid #F59E0B; outline-offset: 4px; }
+    #flow-dialog [hidden] { display: none; }
+
     /* Shared visual language: typography, measured spacing and quieter surfaces. */
     body { -webkit-font-smoothing: antialiased; }
     .screen-view h1, .screen-view h2, .screen-view h3, .screen-view h4 { font-family: 'Inter', sans-serif; }
@@ -920,7 +933,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">E-mail</label>
             <div class="relative">
               <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="email" id="login-email" required value="rafaseriler.barros@gmail.com" class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="seu@email.com">
+              <input type="email" id="login-email" autocomplete="username" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="seu@email.com">
             </div>
           </div>
 
@@ -928,7 +941,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">Senha</label>
             <div class="relative">
               <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="login-password" required value="Airbus A350" class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="••••••••">
+              <input type="password" id="login-password" autocomplete="current-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="••••••••">
             </div>
           </div>
 
@@ -958,7 +971,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">Nome Completo</label>
             <div class="relative">
               <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="text" id="reg-name" required value="Rafael Barros" class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Seu nome completo">
+              <input type="text" id="reg-name" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Seu nome completo">
             </div>
           </div>
 
@@ -966,7 +979,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">E-mail</label>
             <div class="relative">
               <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="email" id="reg-email" required value="rafaseriler.barros@gmail.com" class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="seu@email.com">
+              <input type="email" id="reg-email" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="seu@email.com">
             </div>
           </div>
 
@@ -974,7 +987,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">Senha</label>
             <div class="relative">
               <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="reg-password" required value="Airbus A350" class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Sua senha">
+              <input type="password" id="reg-password" autocomplete="new-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Sua senha">
             </div>
           </div>
 
@@ -982,7 +995,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">Confirmar Senha</label>
             <div class="relative">
               <i data-lucide="shield-check" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="reg-confirm-password" required value="Airbus A350" class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Repita a senha">
+              <input type="password" id="reg-confirm-password" autocomplete="new-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Repita a senha">
             </div>
           </div>
 
@@ -1020,17 +1033,17 @@
         <form id="form-alterar-conta" onsubmit="handleAccountUpdate(event)" class="space-y-4">
           <div class="space-y-1">
             <label class="text-xs font-semibold text-[#94A3B8]">Nome do Usuário</label>
-            <input type="text" id="acc-name" value="Rafael" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
+            <input type="text" id="acc-name" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-semibold text-[#94A3B8]">E-mail Registrado</label>
-            <input type="email" id="acc-email" value="rafaseriler.barros@gmail.com" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
+            <input type="email" id="acc-email" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
           </div>
 
           <div class="space-y-1">
             <label class="text-xs font-semibold text-[#94A3B8]">Nova Senha (deixe em branco se não quiser alterar)</label>
-            <input type="password" id="acc-password" placeholder="Nova senha..." class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
+            <input type="password" id="acc-password" autocomplete="new-password" placeholder="Nova senha..." class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
           </div>
 
           <div class="space-y-1 pt-2">
@@ -1749,6 +1762,20 @@
 
   </main>
 
+  <dialog id="flow-dialog" aria-labelledby="flow-dialog-title" aria-describedby="flow-dialog-description" onclose="resetFlowDialog()">
+    <form onsubmit="submitFlowDialog(event)">
+      <h2 id="flow-dialog-title"></h2>
+      <p id="flow-dialog-description"></p>
+      <label id="flow-dialog-field" for="flow-dialog-input">Ação do passo
+        <input id="flow-dialog-input" type="text" placeholder="Ex.: BAT 1 &amp; 2 ... AUTO" oninput="this.setCustomValidity('')">
+      </label>
+      <div class="flow-dialog-actions">
+        <button id="flow-dialog-cancel" type="button" onclick="document.getElementById('flow-dialog').close()">Cancelar</button>
+        <button id="flow-dialog-submit" type="submit">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
   <!-- ================= PAYMENT / ACQUIRE PLAN MODAL ================= -->
   <div id="acquire-plan-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="w-full max-w-lg p-8 rounded-2xl bg-[#0D0B34] border border-[#F59E0B]/40 shadow-2xl space-y-6">
@@ -1812,9 +1839,9 @@
     // State Management
     const appState = {
       user: {
-        isLoggedIn: true,
-        name: 'Rafael',
-        email: 'rafaseriler.barros@gmail.com',
+        isLoggedIn: false,
+        name: '',
+        email: '',
         plan: 'Pilotos Operacionais (R$ 1.000,00/ano)'
       },
       currentScreen: 'pagina-inicial',
@@ -2406,14 +2433,57 @@
       const r=document.getElementById('cockpit-canvas-container').getBoundingClientRect();
       return {x:Math.max(2,Math.min(98,(e.clientX-r.left)/r.width*100)),y:Math.max(2,Math.min(98,(e.clientY-r.top)/r.height*100))};
     }
+    let flowDialogAction = null;
+    let flowDialogTrigger = null;
+    function openFlowDialog({title, description, value = null, submitLabel, onSubmit}) {
+      const dialog = document.getElementById('flow-dialog');
+      if (dialog.open) return;
+      flowDialogTrigger = document.activeElement;
+      flowDialogAction = onSubmit;
+      document.getElementById('flow-dialog-title').textContent = title;
+      document.getElementById('flow-dialog-description').textContent = description;
+      document.getElementById('flow-dialog-submit').textContent = submitLabel;
+      const input = document.getElementById('flow-dialog-input');
+      document.getElementById('flow-dialog-field').hidden = value === null;
+      input.disabled = value === null;
+      input.required = value !== null;
+      input.value = value ?? '';
+      input.setCustomValidity('');
+      dialog.showModal();
+      if (value !== null) { input.focus(); input.select(); }
+      else document.getElementById('flow-dialog-cancel').focus();
+    }
+    function resetFlowDialog() {
+      flowDialogAction = null;
+      // Editing re-renders the list, so the original button may no longer exist.
+      const target = flowDialogTrigger?.isConnected ? flowDialogTrigger : document.getElementById('flow-mode-add-btn');
+      target?.focus();
+      flowDialogTrigger = null;
+    }
+    function submitFlowDialog(event) {
+      event.preventDefault();
+      const input = document.getElementById('flow-dialog-input');
+      const value = input.value.trim();
+      if (!input.disabled && !value) {
+        input.setCustomValidity('Digite uma ação para o passo.');
+        input.reportValidity();
+        return;
+      }
+      const action = flowDialogAction;
+      flowDialogAction = null;
+      document.getElementById('flow-dialog').close();
+      action?.(value);
+    }
+
     function handleCockpitCanvasClick(e) {
       if(flowMapState.hasMoved){flowMapState.hasMoved=false;return;}
       if(e.target.closest('.flow-node-dot') || flowMapState.mode!=='add')return;
-      const title=prompt('Qual é a ação deste passo?');
-      if(!title?.trim())return;
-      const id=appState.flowNodes.length+1;
-      appState.flowNodes.push({id,...flowPosition(e),title:title.trim(),desc:''});
-      flowMapState.selectedNodeId=id;renderFlowMap();
+      const position = flowPosition(e);
+      openFlowDialog({title:'Adicionar passo', description:'Qual é a ação deste passo?', value:'', submitLabel:'Adicionar passo', onSubmit(title) {
+        const id=appState.flowNodes.length+1;
+        appState.flowNodes.push({id,...position,title,desc:''});
+        flowMapState.selectedNodeId=id;renderFlowMap();
+      }});
     }
     function selectFlowNode(id){flowMapState.selectedNodeId=id;renderFlowMap();}
     function handleNodeMouseDown(e,id){
@@ -2435,7 +2505,14 @@
       flowMapState.hasMoved=true;
       if(document.getElementById('cockpit-canvas-container').hasPointerCapture(e.pointerId))document.getElementById('cockpit-canvas-container').releasePointerCapture(e.pointerId);
     }
-    function editFlowNodeText(e,id){e.stopPropagation();const n=appState.flowNodes.find(n=>n.id===id);const title=prompt('Editar ação',n.title);if(title?.trim()){n.title=title.trim();renderFlowMap();}}
+    function editFlowNodeText(e,id) {
+      e.stopPropagation();
+      const node=appState.flowNodes.find(n=>n.id===id);
+      if (!node) return;
+      openFlowDialog({title:'Editar passo', description:'Atualize a ação deste passo do flow.', value:node.title, submitLabel:'Salvar alteração', onSubmit(title) {
+        node.title=title;renderFlowMap();
+      }});
+    }
     function deleteFlowNode(e,id){e.stopPropagation();appState.flowNodes=appState.flowNodes.filter(n=>n.id!==id);appState.flowNodes.forEach((n,i)=>n.id=i+1);flowMapState.selectedNodeId=null;renderFlowMap();}
     function reorderFlowNode(id,delta){const i=appState.flowNodes.findIndex(n=>n.id===id);const j=i+delta;if(j<0||j>=appState.flowNodes.length)return;[appState.flowNodes[i],appState.flowNodes[j]]=[appState.flowNodes[j],appState.flowNodes[i]];appState.flowNodes.forEach((n,k)=>n.id=k+1);flowMapState.selectedNodeId=j+1;renderFlowMap();}
     function stepFlow(delta){const index=appState.flowNodes.findIndex(n=>n.id===flowMapState.selectedNodeId);const next=index<0?0:index+delta;if(appState.flowNodes[next])selectFlowNode(appState.flowNodes[next].id);}
@@ -2455,10 +2532,21 @@
       const index=nodes.findIndex(n=>n.id===selected);document.getElementById('flow-prev').disabled=index<=0;document.getElementById('flow-next').disabled=!nodes.length||index===nodes.length-1;document.getElementById('flow-progress').textContent=index>=0?`Passo ${index+1} de ${nodes.length}`:'Selecione um passo para começar.';
       filterFlows(document.getElementById('flow-search').value);setFlowInteractionMode(flowMapState.mode);
     }
-    function clearFlowMap(){if(appState.flowNodes.length&&!confirm('Criar um novo flow? As alterações do flow atual serão descartadas.'))return;appState.flowNodes=[];flowMapState.preset=null;flowMapState.selectedNodeId=null;flowMapState.mode='add';renderFlowMap();}
+    function clearFlowMap() {
+      const clear = () => {appState.flowNodes=[];flowMapState.preset=null;flowMapState.selectedNodeId=null;flowMapState.mode='add';renderFlowMap();};
+      if (!appState.flowNodes.length) { clear(); return; }
+      openFlowDialog({title:'Criar um novo flow?', description:'As alterações do flow atual serão descartadas.', submitLabel:'Criar novo flow', onSubmit:clear});
+    }
 
     function loadPresetFlow(type) {
-      if (appState.flowNodes.length && !confirm('Carregar esta sugestão e substituir o flow atual?')) return;
+      if (appState.flowNodes.length) {
+        openFlowDialog({title:'Substituir o flow atual?', description:'Ao carregar esta sugestão, as alterações do flow atual serão descartadas.', submitLabel:'Carregar sugestão', onSubmit:() => applyPresetFlow(type)});
+        return;
+      }
+      applyPresetFlow(type);
+    }
+
+    function applyPresetFlow(type) {
       flowMapState.preset = type;
       flowMapState.selectedNodeId = 1;
       flowMapState.mode = 'move';
