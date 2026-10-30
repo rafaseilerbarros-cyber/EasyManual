@@ -15,3 +15,7 @@ build/
 functions/.env*
 .firebase/
 *-debug.log*
+
+# Local development account and emulator state
+.local/
+functions/.secret.local

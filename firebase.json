@@ -15,7 +15,9 @@
       "*.rules",
       "firebase.test.json",
       "firestore.indexes.json",
-      "**/*.log"
+      "**/*.log",
+      "scripts/**",
+      "firebase.local.json"
     ],
     "rewrites": [
       {

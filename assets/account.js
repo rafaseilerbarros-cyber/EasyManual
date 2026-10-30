@@ -137,6 +137,14 @@ const ready=(async()=>{
     const [app,...modules]=await Promise.all([sdk('app'),sdk('auth'),sdk('firestore'),sdk('functions'),sdk('storage')]);
     [A,D,F,S]=modules;
     const firebase=app.initializeApp(config);auth=A.getAuth(firebase);db=D.getFirestore(firebase);storage=S.getStorage(firebase);functions=F.getFunctions(firebase,'us-central1');
+    // Only the dedicated loopback server opts into the demo project emulators.
+    if(config.localEmulators===true) {
+      if(!['localhost','127.0.0.1','[::1]'].includes(location.hostname)||config.projectId!=='demo-easymanual')throw new Error('invalid-local-config');
+      A.connectAuthEmulator(auth,'http://127.0.0.1:9099',{disableWarnings:true});
+      D.connectFirestoreEmulator(db,'127.0.0.1',8080);
+      F.connectFunctionsEmulator(functions,'127.0.0.1',5001);
+      S.connectStorageEmulator(storage,'127.0.0.1',9199);
+    }
     A.useDeviceLanguage(auth);
     await A.setPersistence(auth,A.browserLocalPersistence);
     A.onAuthStateChanged(auth,async next=>{

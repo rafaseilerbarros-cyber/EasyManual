@@ -5,11 +5,11 @@ const {JSDOM}=require('../functions/node_modules/jsdom');
 const html=fs.readFileSync('index.html','utf8');
 const source=fs.readFileSync('assets/account.js','utf8').replace(/const sdk=name=>import\([^\n]+\);/,'const sdk=name=>Promise.resolve(window.__sdk[name]);');
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
-async function setup({configured=true,loggedIn=false,plan='entusiastas'}={}) {
-  const dom=new JSDOM(html,{url:'https://example.com',runScripts:'outside-only'}),w=dom.window,calls=[];
+async function setup({configured=true,loggedIn=false,plan='entusiastas',emulatorConfig=false,hostname='example.com'}={}) {
+  const dom=new JSDOM(html,{url:`https://${hostname}`,runScripts:'outside-only'}),w=dom.window,calls=[];
   w.lucide={createIcons(){}};w.ResizeObserver=class{observe(){}};w.IntersectionObserver=class{observe(){}};w.scrollTo=()=>{};w.matchMedia=()=>({matches:true,addEventListener(){}});
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
-  w.fetch=async()=>({ok:configured,json:async()=>({apiKey:'public-config',projectId:'demo-easymanual'})});
+  w.fetch=async()=>({ok:configured,json:async()=>({apiKey:'public-config',projectId:'demo-easymanual',localEmulators:emulatorConfig})});
   let callback;
   const user=loggedIn?{uid:'owner',email:'owner@example.com',displayName:'Owner',emailVerified:true}:null;
   const {PLANS}=require('../functions/policy'),p=PLANS[plan];
@@ -17,15 +17,15 @@ async function setup({configured=true,loggedIn=false,plan='entusiastas'}={}) {
   const spy=name=>async(...args)=>{calls.push({name,args});};
   const auth={currentUser:user};
   const A={getAuth:()=>auth,useDeviceLanguage(){},browserLocalPersistence:'local',setPersistence:spy('persistence'),
-    onAuthStateChanged:(a,cb)=>{callback=cb;queueMicrotask(()=>cb(user));},signInWithEmailAndPassword:spy('passwordLogin'),
+    connectAuthEmulator:spy('authEmulator'),onAuthStateChanged:(a,cb)=>{callback=cb;queueMicrotask(()=>cb(user));},signInWithEmailAndPassword:spy('passwordLogin'),
     GoogleAuthProvider:class{},signInWithPopup:spy('googleLogin'),createUserWithEmailAndPassword:spy('register'),sendPasswordResetEmail:spy('reset'),
     signOut:async()=>{calls.push({name:'logout'});await callback(null);}};
-  const D={getFirestore:()=>({}),doc:(...args)=>args.filter(a=>typeof a==='string').join('/'),collection:(...args)=>args.filter(a=>typeof a==='string').join('/'),
+  const D={connectFirestoreEmulator:spy('firestoreEmulator'),getFirestore:()=>({}),doc:(...args)=>args.filter(a=>typeof a==='string').join('/'),collection:(...args)=>args.filter(a=>typeof a==='string').join('/'),
     onSnapshot:(ref,cb)=>{queueMicrotask(()=>{
       if(ref==='users/owner')cb({exists:()=>true,data:()=>({workspaceId:'owner'})});
       else if(ref==='workspaces/owner')cb({data:()=>workspace});else cb({docs:[]});
     });return ()=>{};},getDoc:async()=>({exists:()=>false})};
-  w.__sdk={app:{initializeApp:()=>({})},auth:A,firestore:D,functions:{getFunctions:()=>({}),httpsCallable:(f,name)=>async data=>{calls.push({name,args:[data]});return {data:{ok:true,url:'https://example.com/#checkout'}};}},storage:{getStorage:()=>({})}};
+  w.__sdk={app:{initializeApp:()=>({})},auth:A,firestore:D,functions:{connectFunctionsEmulator:spy('functionsEmulator'),getFunctions:()=>({}),httpsCallable:(f,name)=>async data=>{calls.push({name,args:[data]});return {data:{ok:true,url:'https://example.com/#checkout'}};}},storage:{connectStorageEmulator:spy('storageEmulator'),getStorage:()=>({})}};
   const main=[...w.document.scripts].find(s=>s.textContent.includes('const appState =')).textContent;
   const context=dom.getInternalVMContext();new (require('node:vm').Script)(main).runInContext(context);new (require('node:vm').Script)(source).runInContext(context);await flush();await flush();await flush();
   return {dom,w,calls,user,workspace,close:()=>dom.window.close()};
@@ -78,4 +78,13 @@ test('missing Firebase config fails closed with actionable message',async()=>{
     await t.w.EasyAccount.google();assert(!t.calls.some(c=>c.name==='googleLogin'));
     assert.match(t.w.document.getElementById('account-message-text').textContent,/Configure/);
   }finally{t.close();}
+});
+
+test('local config connects all SDKs to emulators only on a loopback host',async()=>{
+  const local=await setup({emulatorConfig:true,hostname:'127.0.0.1'});
+  try {for(const name of ['authEmulator','firestoreEmulator','functionsEmulator','storageEmulator'])assert(local.calls.some(c=>c.name===name));}
+  finally{local.close();}
+  const publicSite=await setup({emulatorConfig:true});
+  try {assert(!publicSite.calls.some(c=>c.name.endsWith('Emulator')));assert.match(publicSite.w.document.getElementById('auth-service-status').textContent,/indisponível/);}
+  finally{publicSite.close();}
 });

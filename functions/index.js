@@ -17,6 +17,7 @@ const stripe=()=>require('stripe')(stripeKey.value());
 const prices=()=>JSON.parse(priceIds.value());
 const fail=(code,message)=>{throw new HttpsError(code,message);};
 function uidOf(req) {if(!req.auth)fail('unauthenticated','Entre na sua conta.');return req.auth.uid;}
+function requireLiveBilling() {if(process.env.FUNCTIONS_EMULATOR==='true' && process.env.GCLOUD_PROJECT==='demo-easymanual')fail('failed-precondition','Pagamentos estão desativados no ambiente local. A conta de teste já tem acesso completo.');}
 function verified(req) {uidOf(req);if(!req.auth.token.email_verified)fail('permission-denied','Verifique seu e-mail antes de continuar.');}
 function id(value) {if(typeof value!=='string'||! /^[\w-]{1,128}$/.test(value))fail('invalid-argument','Identificador inválido.');return value;}
 async function workspace(req,tx) {
@@ -47,7 +48,7 @@ exports.initializeWorkspace=onCall(async req=>{
 exports.authorizeModule=onCall(async req=>{const {w}=await workspace(req);allow(w,req.data?.module);return {ok:true};});
 const billingOptions={secrets:[stripeKey,priceIds]};
 exports.createCheckout=onCall(billingOptions,async req=>{
-  verified(req);
+  requireLiveBilling();verified(req);
   const {ref,w,uid}=await workspace(req);owner({w,uid});
   const planId=req.data?.planId, plan=PLANS[planId];
   if(!plan||!prices()[planId])fail('invalid-argument','Plano indisponível.');
@@ -93,11 +94,12 @@ exports.createCheckout=onCall(billingOptions,async req=>{
   return {url:session.url};
 });
 exports.billingPortal=onCall({secrets:[stripeKey]},async req=>{
-  verified(req);const ctx=await workspace(req);owner(ctx);
+  requireLiveBilling();verified(req);const ctx=await workspace(req);owner(ctx);
   if(!ctx.w.customerId)fail('failed-precondition','Nenhuma assinatura encontrada.');
   return {url:(await stripe().billingPortal.sessions.create({customer:ctx.w.customerId,return_url:appUrl.value()})).url};
 });
 exports.stripeWebhook=onRequest({secrets:[stripeKey,webhookKey,priceIds]},async(req,res)=>{
+  if(process.env.FUNCTIONS_EMULATOR==='true' && process.env.GCLOUD_PROJECT==='demo-easymanual')return res.sendStatus(503);
   if(req.method!=='POST')return res.sendStatus(405);
   let event;
   try{event=stripe().webhooks.constructEvent(req.rawBody,req.headers['stripe-signature'],webhookKey.value());}
