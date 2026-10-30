@@ -7,6 +7,20 @@
   let saved={name:'Admin',email:'admin@easymanual.local',files:[],nodes:null};
   try{const value=JSON.parse(localStorage.getItem(key));if(value&&typeof value==='object')saved={...saved,...value};}catch{}
   if(!Array.isArray(saved.files))saved.files=[];
+  // Restore the five original UI examples once, preserving browser uploads.
+  // These are references, not recovered PDF binaries or indexed documents.
+  if(saved.uploadExamplesVersion!==1){
+    const examples=[
+      ['fcom-3','Airbus A320 FCOM Vol 3 - Emergency & Abnormal Procedures.pdf',4.2],
+      ['qrh','Airbus A320 QRH - Quick Reference Handbook (Rev 22).pdf',3.4],
+      ['fcom-1','Airbus A320 FCOM Vol 1 - Aircraft Systems Description.pdf',8.8],
+      ['fctm','Airbus A320 FCTM - Flight Crew Training Manual.pdf',5.2],
+      ['mel','Airbus A320 MEL - Minimum Equipment List (Rev 48).pdf',6.5]
+    ];
+    for(const [id,name,mb] of examples)if(!saved.files.some(file=>file.name===name))saved.files.push({id:'example-'+id,name,size:Math.round(mb*1048576),sample:true});
+    saved.uploadExamplesVersion=1;
+    try{localStorage.setItem(key,JSON.stringify(saved));}catch{}
+  }
   const $=id=>document.getElementById(id);
   function notify(message){$('account-message-text').textContent=message;const d=$('account-message');if(!d.open)d.showModal();}
   function persist(){try{localStorage.setItem(key,JSON.stringify(saved));return true;}catch{notify('O navegador não permitiu salvar os dados. Você pode continuar usando esta demonstração, mas as alterações desta sessão podem não ser mantidas.');return false;}}
@@ -14,7 +28,7 @@
     $('sources-list').replaceChildren();
     saved.files.forEach(file=>{
       const row=document.createElement('div');row.className='p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4';
-      const title=document.createElement('span');title.textContent=`${file.name} · ${(file.size/1048576).toFixed(1)} MB · Referência de arquivo (demo)`;
+      const title=document.createElement('span');title.textContent=`${file.name} · ${(file.size/1048576).toFixed(1)} MB · ${file.sample?'Exemplo de manual (demonstração)':'Referência de arquivo (demo)'}`;
       const remove=document.createElement('button');remove.type='button';remove.textContent='Remover';remove.onclick=()=>{saved.files=saved.files.filter(f=>f.id!==file.id);persist();renderFiles();};
       row.append(title,remove);$('sources-list').append(row);
     });

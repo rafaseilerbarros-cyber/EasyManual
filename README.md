@@ -136,3 +136,5 @@ A versão atual inicia em **modo de demonstração**, conectada como Admin e com
 Para restaurar o fluxo real de autenticação, altere `DEMO_ENABLED` para `false` em `assets/demo.js`. O carregador então inicia o Firebase já existente; nenhum privilégio de produção é concedido pelo modo de demonstração. A aparência geral ainda utiliza os assets e fontes existentes do site, alguns externos.
 
 A abertura direta da demonstração mantém o Admin conectado e começa na página inicial (Hero). O workspace é aberto pelo menu quando desejado. O cabeçalho tem posicionamento e camada definidos no CSS local para permanecer acima do conteúdo, mesmo sem carregar as classes de posicionamento do CDN.
+
+A lista de upload da demonstração inclui novamente os cinco exemplos originais do A320 (FCOM Vol. 3, QRH, FCOM Vol. 1, FCTM e MEL). Eles são referências visuais, sem PDFs recuperados ou indexação real. Uma migração única adiciona os exemplos também às sessões existentes, preserva os itens adicionados e não recria exemplos removidos posteriormente pelo usuário.
