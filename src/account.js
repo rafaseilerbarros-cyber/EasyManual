@@ -7,7 +7,7 @@ import * as storageSdk from 'firebase/storage';
 const sdk=name=>Promise.resolve({app:appSdk,auth:authSdk,firestore:firestoreSdk,functions:functionsSdk,storage:storageSdk}[name]);
 let auth, db, storage, functions, A, F, D, S, user, workspace, workspaceId;
 let authReady=false, unsubscribeUser=()=>{}, workspaceSubscriptions=[], epoch=0, expiresTimer;
-let loadedFlow=false, members=[];
+let loadedFlow=false, members=[], enterLocalWorkspace=false;
 const $=id=>document.getElementById(id);
 const errors={
   'auth/invalid-credential':'E-mail ou senha incorretos.',
@@ -95,6 +95,7 @@ function renderAccess() {
     const fallback=p.modules[0];
     if(fallback)switchWorkspaceTab(fallback);else navigateTo(user?'alteracao-de-conta':'login');
   }
+  if(enterLocalWorkspace && p.modules.length){enterLocalWorkspace=false;navigateTo('app-workspace');}
   if(!p.modules.includes('flow-map')) {appState.flowNodes=[];renderFlowMap();loadedFlow=false;}
   clearTimeout(expiresTimer);
   if(p.active)expiresTimer=setTimeout(renderAccess,Math.min(workspace.expiresAt-Date.now()+50,2147483647));
@@ -155,6 +156,7 @@ const ready=(async()=>{
     // Only the dedicated loopback server opts into the demo project emulators.
     if(config.localEmulators===true) {
       if(!['localhost','127.0.0.1','[::1]'].includes(location.hostname)||config.projectId!=='demo-easymanual')throw new Error('invalid-local-config');
+      enterLocalWorkspace=true;
       A.connectAuthEmulator(auth,'http://127.0.0.1:9099',{disableWarnings:true});
       D.connectFirestoreEmulator(db,'127.0.0.1',8080);
       F.connectFunctionsEmulator(functions,'127.0.0.1',5001);
@@ -165,10 +167,15 @@ const ready=(async()=>{
     catch{await timed(A.setPersistence(auth,A.inMemoryPersistence));}
     let sessionResolved;
     const sessionReady=new Promise(resolve=>{sessionResolved=resolve;});
+    let initialSession=true;
     A.onAuthStateChanged(auth,async next=>{
+      const autoSignIn=initialSession && config.localEmulators===true;initialSession=false;
       const sessionEpoch=++epoch;unsubscribeUser();resetWorkspace();user=next;authReady=true;renderAccess();sessionResolved();
       authStatus('','ready');
-      if(!next)return;
+      if(!next){
+        if(autoSignIn){try{await A.signInWithEmailAndPassword(auth,'admin@easymanual.local','EasyManual');}catch(error){enterLocalWorkspace=false;notify(errorMessage(error));navigateTo('login');}}
+        return;
+      }
       if(['login','cadastro'].includes(appState.currentScreen))navigateTo('alteracao-de-conta');
       try {
         await call('initializeWorkspace');

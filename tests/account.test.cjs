@@ -119,3 +119,12 @@ test('bundle failure reports the error on both authentication screens',async()=>
     assert.equal(statuses.length,2);for(const status of statuses){assert.equal(status.dataset.state,'error');assert.match(status.textContent,/não carregou/);}
   }finally{t.close();}
 });
+
+test('local demo automatically signs in as admin once; public sites do not',async()=>{
+  const local=await setup({emulatorConfig:true,hostname:'127.0.0.1'});
+  try{
+    assert.deepEqual(local.calls.find(c=>c.name==='passwordLogin').args.slice(1),['admin@easymanual.local','EasyManual']);
+    await local.w.__authCallback(null);assert.equal(local.calls.filter(c=>c.name==='passwordLogin').length,1);
+  }finally{local.close();}
+  const publicSite=await setup();try{assert(!publicSite.calls.some(c=>c.name==='passwordLogin'));}finally{publicSite.close();}
+});
