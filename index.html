@@ -494,6 +494,7 @@
     @media(max-width:767px){.flows-heading {padding:20px}.flows-layout {display:flex;flex-direction:column;padding:16px}.flows-layout>section {width:100%}.flows-search {margin:12px 0}.flows-note {margin-top:12px}.flows-preset {margin-bottom:8px}}
   </style>
   <link rel="stylesheet" href="assets/landing.css">
+<link rel="stylesheet" href="assets/auth.css?v=auth2">
 </head>
 <body class="min-h-screen flex flex-col bg-[#040122] text-white relative">
 
@@ -922,110 +923,24 @@
       </div>
     </section>
 
-    <!-- ================= SCREEN 06: LOGIN ================= -->
-    <section id="screen-login" class="screen-view hidden flex-1 flex items-center justify-center p-6">
-      <div class="w-full max-w-md p-8 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] shadow-2xl space-y-6">
-        <div class="text-center space-y-2">
-          <div class="w-14 h-14 mx-auto rounded-2xl overflow-hidden border border-[#F59E0B]/40 shadow-lg shadow-[#F59E0B]/20 mb-4 p-0.5 bg-[#040122]">
-            <img src="images/logo.png" alt="EasyManual Logo" class="w-full h-full object-cover rounded-xl">
-          </div>
-          <h2 class="text-2xl font-bold font-heading text-white">Acessar EasyManual</h2>
-          <p class="text-xs text-[#94A3B8]">Digite seu e-mail e senha para entrar na plataforma</p>
-        </div>
-
-        <p id="auth-service-status" role="status" class="text-sm text-amber-300"></p>
-        <button type="button" onclick="window.EasyAccount?.google(this)" class="w-full py-3 mb-4 rounded-xl border border-[#F59E0B] text-white font-bold">Continuar com Google</button>
-        <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-[#94A3B8]">E-mail</label>
-            <div class="relative">
-              <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="email" id="login-email" autocomplete="username" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="seu@email.com">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-[#94A3B8]">Senha</label>
-            <div class="relative">
-              <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="login-password" autocomplete="current-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="••••••••">
-            </div>
-          </div>
-
-          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] text-white font-bold text-sm shadow-md shadow-[#F59E0B]/20 hover:opacity-95 transition-all">
-            Entrar no Sistema
-          </button>
-        </form>
-
-        <button type="button" onclick="window.EasyAccount?.reset(this)" class="text-sm text-[#F59E0B] mt-3">Esqueci minha senha</button>
-        <div class="text-center pt-2 text-xs text-[#94A3B8] space-y-2">
-          <p>Ainda não tem conta? <button onclick="navigateTo('cadastro')" class="text-[#F59E0B] font-bold hover:underline">Cadastre-se aqui</button></p>
-          <p><button onclick="navigateTo('planos')" class="text-[#94A3B8] hover:text-white transition-colors">Conhecer planos disponíveis</button></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= SCREEN 09: CADASTRO ================= -->
-    <section id="screen-cadastro" class="screen-view hidden flex-1 flex items-center justify-center p-6">
-      <div class="w-full max-w-md p-8 rounded-2xl bg-[#0D0B34] border border-[#1E1B56] shadow-2xl space-y-6">
-        <div class="text-center space-y-2">
-          <span class="text-[10px] uppercase font-bold tracking-widest text-[#F59E0B] bg-[#F59E0B]/10 px-3 py-1 rounded-full">Sign-in</span>
-          <h2 class="text-2xl font-bold font-heading text-white">Criar Nova Conta</h2>
-          <p class="text-xs text-[#94A3B8]">Preencha os dados abaixo para se cadastrar</p>
-        </div>
-
-        <button type="button" onclick="window.EasyAccount?.google(this)" class="w-full py-3 mb-4 rounded-xl border border-[#F59E0B] text-white font-bold">Continuar com Google</button>
-        <form id="form-cadastro" onsubmit="handleRegister(event)" class="space-y-4">
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-[#94A3B8]">Nome Completo</label>
-            <div class="relative">
-              <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="text" id="reg-name" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Seu nome completo">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-[#94A3B8]">E-mail</label>
-            <div class="relative">
-              <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="email" id="reg-email" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="seu@email.com">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-[#94A3B8]">Senha</label>
-            <div class="relative">
-              <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="reg-password" minlength="6" autocomplete="new-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Sua senha">
-            </div>
-          </div>
-
-          <div class="space-y-1">
-            <label class="text-xs font-semibold text-[#94A3B8]">Confirmar Senha</label>
-            <div class="relative">
-              <i data-lucide="shield-check" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="reg-confirm-password" autocomplete="new-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Repita a senha">
-            </div>
-          </div>
-
-          <div class="flex items-center gap-2 pt-1">
-            <input type="checkbox" id="reg-terms" required class="w-4 h-4 rounded accent-[#F59E0B] bg-[#040122] border-[#1E1B56]">
-            <label for="reg-terms" class="text-xs text-[#94A3B8] cursor-pointer">
-              I agree with the security terms
-            </label>
-          </div>
-
-          <button type="submit" class="w-full py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] text-white font-bold text-sm shadow-md shadow-[#F59E0B]/20 hover:opacity-95 transition-all">
-            Concluir Cadastro
-          </button>
-        </form>
-
-        <div class="text-center text-xs text-[#94A3B8]">
-          Já possui conta? <button onclick="navigateTo('login')" class="text-[#F59E0B] font-bold hover:underline">Fazer login</button>
-        </div>
-      </div>
-    </section>
-
+<section id="screen-login" class="screen-view hidden auth-screen">
+ <div class="auth-layout"><aside class="auth-story"><a href="#" onclick="event.preventDefault();navigateTo('pagina-inicial')" class="auth-brand"><img src="images/logo.png" alt="">EasyManual<span>FLIGHT KNOWLEDGE</span></a><div class="auth-story-copy"><span class="auth-eyebrow">CONHECIMENTO PARA IR ALÉM</span><h1>Bom ter você a bordo.</h1><p>Seus manuais, seu treinamento e seus flows. Tudo no mesmo lugar, pronto para a próxima etapa.</p><div class="auth-story-rule"></div><span class="auth-story-note">Mais clareza no estudo.<br>Mais organização na sua rotina.</span></div><span class="auth-story-footer">ESTUDE. CONECTE. EVOLUA.</span></aside>
+ <div class="auth-panel"><div class="auth-tabs" aria-label="Acesso à conta"><button type="button" aria-current="page" onclick="navigateTo('login')">Entrar</button><button type="button" aria-current="false" onclick="navigateTo('cadastro')">Criar conta</button></div>
+ <div class="auth-heading"><span class="auth-eyebrow">BEM-VINDO DE VOLTA</span><h2>Acesse sua conta</h2><p>Continue de onde você parou.</p></div>
+ <p id="auth-service-status" data-auth-status role="status" aria-live="polite" class="auth-status"></p>
+ <button type="button" class="auth-google" onclick="authAction('google',this)"><span aria-hidden="true">G</span> Continuar com Google</button><div class="auth-divider"><span>ou use seu e-mail</span></div>
+ <form id="form-login" onsubmit="handleLogin(event)"><div class="auth-field"><label for="login-email">E-mail</label><div class="auth-input-wrap"><input type="email" id="login-email" autocomplete="username" placeholder="seu@email.com" required ></div></div><div class="auth-field"><label for="login-password">Senha</label><div class="auth-input-wrap"><input type="password" id="login-password" autocomplete="current-password" placeholder="Digite sua senha" required ><button type="button" class="auth-reveal" aria-controls="login-password" aria-pressed="false" onclick="toggleAuthPassword('login-password',this)">Mostrar</button></div></div><button type="button" class="auth-forgot" onclick="authAction('reset',this)">Esqueci minha senha</button><button type="submit" class="auth-submit">Entrar na plataforma <span aria-hidden="true">→</span></button></form>
+ <p class="auth-switch">Ainda não tem uma conta? <button type="button" onclick="navigateTo('cadastro')">Cadastre-se</button></p><button type="button" class="auth-back" onclick="navigateTo('pagina-inicial')">← Voltar para o início</button>
+ </div></div></section>
+<section id="screen-cadastro" class="screen-view hidden auth-screen">
+ <div class="auth-layout"><aside class="auth-story"><a href="#" onclick="event.preventDefault();navigateTo('pagina-inicial')" class="auth-brand"><img src="images/logo.png" alt="">EasyManual<span>FLIGHT KNOWLEDGE</span></a><div class="auth-story-copy"><span class="auth-eyebrow">CONHECIMENTO PARA IR ALÉM</span><h1>Seu próximo voo começa aqui.</h1><p>Seus manuais, seu treinamento e seus flows. Tudo no mesmo lugar, pronto para a próxima etapa.</p><div class="auth-story-rule"></div><span class="auth-story-note">Mais clareza no estudo.<br>Mais organização na sua rotina.</span></div><span class="auth-story-footer">ESTUDE. CONECTE. EVOLUA.</span></aside>
+ <div class="auth-panel"><div class="auth-tabs" aria-label="Acesso à conta"><button type="button" aria-current="false" onclick="navigateTo('login')">Entrar</button><button type="button" aria-current="page" onclick="navigateTo('cadastro')">Criar conta</button></div>
+ <div class="auth-heading"><span class="auth-eyebrow">SEJA BEM-VINDO</span><h2>Crie sua conta</h2><p>Comece a organizar seu conhecimento.</p></div>
+ <p  data-auth-status role="status" aria-live="polite" class="auth-status"></p>
+ <button type="button" class="auth-google" onclick="authAction('google',this)"><span aria-hidden="true">G</span> Continuar com Google</button><div class="auth-divider"><span>ou use seu e-mail</span></div>
+ <form id="form-cadastro" onsubmit="handleRegister(event)"><div class="auth-field"><label for="reg-name">Nome completo</label><div class="auth-input-wrap"><input type="text" id="reg-name" autocomplete="name" placeholder="Como podemos chamar você?" required ></div></div><div class="auth-field"><label for="reg-email">E-mail</label><div class="auth-input-wrap"><input type="email" id="reg-email" autocomplete="email" placeholder="seu@email.com" required ></div></div><div class="auth-password-grid"><div class="auth-field"><label for="reg-password">Senha</label><div class="auth-input-wrap"><input type="password" id="reg-password" autocomplete="new-password" placeholder="Pelo menos 6 caracteres" required minlength="6"><button type="button" class="auth-reveal" aria-controls="reg-password" aria-pressed="false" onclick="toggleAuthPassword('reg-password',this)">Mostrar</button></div></div><div class="auth-field"><label for="reg-confirm-password">Confirmar senha</label><div class="auth-input-wrap"><input type="password" id="reg-confirm-password" autocomplete="new-password" placeholder="Repita sua senha" required ><button type="button" class="auth-reveal" aria-controls="reg-confirm-password" aria-pressed="false" onclick="toggleAuthPassword('reg-confirm-password',this)">Mostrar</button></div></div></div><label class="auth-terms"><input type="checkbox" id="reg-terms" required> Concordo com os termos de uso e segurança.</label><button type="submit" class="auth-submit">Criar minha conta <span aria-hidden="true">→</span></button></form>
+ <p class="auth-switch">Já tem uma conta? <button type="button" onclick="navigateTo('login')">Entrar</button></p><button type="button" class="auth-back" onclick="navigateTo('pagina-inicial')">← Voltar para o início</button>
+ </div></div></section>
     <!-- ================= SCREEN 04: ALTERAÇÃO DE CONTA ================= -->
     <section id="screen-alteracao-de-conta" class="screen-view hidden max-w-2xl mx-auto px-6 py-12 space-y-8">
       <div class="flex items-center gap-4">
@@ -1756,7 +1671,7 @@
     <p id="account-message-text" role="status" class="text-sm mb-4"></p>
     <form method="dialog"><button class="px-5 py-2 bg-[#F59E0B] text-black rounded-xl">Entendi</button></form>
   </dialog>
-  <script type="module" src="assets/account.js"></script>
+  <script defer src="assets/account.js?v=auth2" onerror="authLoadFailed()"></script>
   <script src="assets/skyelite.js"></script>
 
   <!-- APPLICATION SCRIPTS -->
@@ -1855,9 +1770,26 @@
       lucide.createIcons();
     }
 
+    function authLoadFailed() {
+      const message='O serviço de acesso não carregou. Recarregue a página. Se estiver usando o projeto local, execute npm run dev:local.';
+      document.querySelectorAll('[data-auth-status]').forEach(el=>{el.textContent=message;el.dataset.state='error';});
+    }
+    function authAction(name, argument) {
+      argument?.preventDefault?.();
+      if (window.EasyAccount?.[name]) return window.EasyAccount[name](argument);
+      if(window.pendingAuthAction)return;
+      document.querySelectorAll('[data-auth-status]').forEach(el=>{el.textContent='Preparando o acesso…';el.dataset.state='loading';});
+      const resume=()=>{clearTimeout(window.pendingAuthAction);window.pendingAuthAction=null;window.EasyAccount?.[name]?.(argument);};
+      window.addEventListener('easymanual:auth-loaded',resume,{once:true});
+      window.pendingAuthAction=setTimeout(()=>{window.removeEventListener('easymanual:auth-loaded',resume);window.pendingAuthAction=null;authLoadFailed();},12000);
+    }
+    function toggleAuthPassword(id, button) {
+      const input=document.getElementById(id), show=input.type==='password';
+      input.type=show?'text':'password';button.textContent=show?'Ocultar':'Mostrar';button.setAttribute('aria-pressed',String(show));
+    }
     // Authentication is validated by Firebase, never by local form state.
-    function handleLogin(e) { e.preventDefault(); return window.EasyAccount?.login(e); }
-    function handleRegister(e) { e.preventDefault(); return window.EasyAccount?.register(e); }
+    function handleLogin(e) { e.preventDefault(); return authAction('login',e); }
+    function handleRegister(e) { e.preventDefault(); return authAction('register',e); }
     function handleAccountUpdate(e) { e.preventDefault(); return window.EasyAccount?.update(e); }
     function logoutUser() { return window.EasyAccount?.logout(); }
 
