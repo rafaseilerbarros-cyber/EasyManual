@@ -472,7 +472,12 @@
     .flows-tools {display:flex;flex-wrap:wrap;gap:7px;padding:0 16px}.flows-tools label {font-size:11px;color:#94A3B8;display:flex;gap:6px;align-items:center}
     #flow-mode-status-pill {padding:10px 18px}
     .flows-canvas-wrap {margin:0 16px 16px;padding:16px;overflow:hidden;border:1px solid rgba(148,163,184,.15);border-radius:20px;background:radial-gradient(ellipse at 50% 30%,rgba(73,87,116,.18),transparent 65%),linear-gradient(160deg,#11102f,#07051d);box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 12px 32px rgba(0,0,0,.12)}
-    #cockpit-canvas-container {position:relative;width:100%;max-width:768px;margin:auto;aspect-ratio:3/4;isolation:isolate;touch-action:pan-y}
+    #cockpit-canvas-container {position:relative;width:100%;max-width:768px;margin:auto;aspect-ratio:3/4;isolation:isolate;transform-origin:0 0;will-change:transform}
+    #flow-viewport {position:relative;overflow:hidden;aspect-ratio:3/4;touch-action:none;cursor:grab;user-select:none;outline-offset:-3px}
+    #flow-viewport:focus-visible {outline:2px solid #F59E0B}
+    #flow-viewport #cockpit-canvas-container {max-width:none;margin:0}
+    .flow-zoom-tools {display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
+    #flow-zoom-level {min-width:48px;text-align:center;font-size:12px;color:#F59E0B;font-variant-numeric:tabular-nums}
     /* Display-only white key and gentle sharpening keep the original panel and
        its percentage coordinate system intact. Never regenerate instrument art. */
     #cockpit-canvas-container img {display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:url(#flow-panel-finish);image-rendering:auto}
@@ -1737,9 +1742,16 @@
             </section>
             <section class="flows-viewer" aria-label="Visualização do flow">
               <div class="flows-viewer-heading"><div><span class="flows-eyebrow" id="flow-phase">FLOW PERSONALIZADO</span><h3 id="flow-title">Meu flow</h3></div><span id="flow-count"></span></div>
-              <div class="flows-tools" role="group" aria-label="Modo de interação"><button id="flow-mode-move-btn" onclick="setFlowInteractionMode('move')">Visualizar / mover</button><button id="flow-mode-add-btn" onclick="setFlowInteractionMode('add')">+ Adicionar passo</button><label><input type="checkbox" checked onchange="document.getElementById('flow-svg-overlay').style.visibility=this.checked?'visible':'hidden'"> Mostrar trajetória</label></div>
+              <div class="flows-tools" role="group" aria-label="Modo de interação"><button id="flow-mode-move-btn" onclick="setFlowInteractionMode('move')">Navegar / mover passos</button><button id="flow-mode-add-btn" onclick="setFlowInteractionMode('add')">+ Adicionar passo</button><label><input type="checkbox" checked onchange="document.getElementById('flow-svg-overlay').style.visibility=this.checked?'visible':'hidden'"> Mostrar trajetória</label></div>
               <p id="flow-mode-status-pill" class="flows-muted" role="status"></p>
-              <div class="flows-canvas-wrap"><div id="cockpit-canvas-container" onclick="handleCockpitCanvasClick(event)" onpointermove="handleCockpitMouseMove(event)" onpointerup="handleCockpitMouseUp(event)" onpointercancel="handleCockpitMouseUp(event)">
+              <div class="flow-zoom-tools" role="group" aria-label="Zoom do painel">
+                <button id="flow-zoom-out" onclick="zoomFlowBy(1/1.25)" aria-label="Diminuir zoom">−</button>
+                <output id="flow-zoom-level" aria-live="polite">100%</output>
+                <button id="flow-zoom-in" onclick="zoomFlowBy(1.25)" aria-label="Aumentar zoom">+</button>
+                <button onclick="resetFlowView()">Ajustar à tela</button>
+              </div>
+              <p id="flow-navigation-help" class="flows-muted" style="padding:0 18px 12px">Arraste o painel para explorar. Use a roda do mouse ou os botões para zoom. No teclado: setas para mover, + / − para zoom e 0 para ajustar.</p>
+              <div class="flows-canvas-wrap"><div id="flow-viewport" tabindex="0" role="region" aria-label="Painel interativo do cockpit" aria-describedby="flow-navigation-help" onclick="handleCockpitCanvasClick(event)" onpointerdown="startFlowPan(event)" onpointermove="moveFlowPointer(event)" onpointerup="endFlowPointer(event)" onpointercancel="endFlowPointer(event)" onlostpointercapture="endFlowPointer(event)" onkeydown="handleFlowViewKey(event)"><div id="cockpit-canvas-container">
                 <svg class="flow-filter-defs" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><defs>
                   <filter id="flow-panel-finish" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
                     <feConvolveMatrix in="SourceGraphic" order="3" kernelMatrix="0 -0.12 0 -0.12 1.48 -0.12 0 -0.12 0" preserveAlpha="true" result="crisp"/>
@@ -1750,7 +1762,7 @@
                 </defs></svg>
                 <img src="images/a320_cockpit_panel.webp" width="768" height="1024" decoding="async" alt="Painel esquemático do cockpit Airbus A320" draggable="false">
                 <svg id="flow-svg-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg><div id="flow-nodes-container"></div>
-              </div></div>
+              </div></div></div>
             </section>
             <section class="flows-sequence" aria-label="Sequência de passos"><div class="flows-sequence-heading"><h3>Sequência do flow</h3><span class="flows-muted">Clique em um passo para localizar</span></div><ol id="flow-step-list"></ol><div class="flows-navigation"><button id="flow-prev" onclick="stepFlow(-1)">← Anterior</button><button id="flow-next" onclick="stepFlow(1)">Próximo →</button></div><p id="flow-progress" class="flows-muted" aria-live="polite"></p></section>
           </div>
@@ -2414,6 +2426,67 @@
 
     // Coordinates are percentages of the image, independent of viewport size.
     const flowMapState = {mode:'move', selectedNodeId:null, draggedNodeId:null, isDragging:false, hasMoved:false, preset:null, startX:0, startY:0};
+    const flowView = {scale:1, x:0, y:0, pointerId:null, lastX:0, lastY:0};
+    function updateFlowView() {
+      const viewport=document.getElementById('flow-viewport');
+      const width=viewport.clientWidth, height=viewport.clientHeight;
+      // Keep part of the panel reachable, even after a long drag or resize.
+      flowView.x=Math.max(-width*(flowView.scale-1)-width/3,Math.min(width/3,flowView.x));
+      flowView.y=Math.max(-height*(flowView.scale-1)-height/3,Math.min(height/3,flowView.y));
+      document.getElementById('cockpit-canvas-container').style.transform=`translate(${flowView.x}px, ${flowView.y}px) scale(${flowView.scale})`;
+      document.getElementById('flow-zoom-level').textContent=Math.round(flowView.scale*100)+'%';
+      document.getElementById('flow-zoom-out').disabled=flowView.scale<=1;
+      document.getElementById('flow-zoom-in').disabled=flowView.scale>=4;
+    }
+    function zoomFlowBy(factor, clientX, clientY) {
+      if (flowMapState.isDragging || flowView.pointerId!==null) return;
+      const rect=document.getElementById('flow-viewport').getBoundingClientRect();
+      const x=clientX===undefined?rect.width/2:clientX-rect.left;
+      const y=clientY===undefined?rect.height/2:clientY-rect.top;
+      const next=Math.max(1,Math.min(4,flowView.scale*factor));
+      const ratio=next/flowView.scale;
+      flowView.x=x-(x-flowView.x)*ratio;
+      flowView.y=y-(y-flowView.y)*ratio;
+      flowView.scale=next;
+      updateFlowView();
+    }
+    function resetFlowView() {flowView.scale=1;flowView.x=0;flowView.y=0;updateFlowView();}
+    function startFlowPan(e) {
+      if (e.button!==0 || !e.isPrimary || e.target.closest('.flow-node-dot') || flowMapState.isDragging || flowView.pointerId!==null) return;
+      e.preventDefault();
+      flowMapState.hasMoved=false;
+      flowView.pointerId=e.pointerId;flowView.lastX=e.clientX;flowView.lastY=e.clientY;
+      const viewport=document.getElementById('flow-viewport');
+      viewport.focus({preventScroll:true});viewport.setPointerCapture(e.pointerId);viewport.style.cursor='grabbing';
+    }
+    function moveFlowPointer(e) {
+      if (flowView.pointerId===e.pointerId) {
+        const dx=e.clientX-flowView.lastX,dy=e.clientY-flowView.lastY;
+        if (!flowMapState.hasMoved && Math.hypot(dx,dy)<4) return;
+        flowMapState.hasMoved=true;
+        flowView.x+=dx;flowView.y+=dy;flowView.lastX=e.clientX;flowView.lastY=e.clientY;updateFlowView();
+      } else handleCockpitMouseMove(e);
+    }
+    function endFlowPointer(e) {
+      if (flowView.pointerId===e.pointerId) {
+        flowView.pointerId=null;
+        const viewport=document.getElementById('flow-viewport');
+        viewport.style.cursor=flowMapState.mode==='add'?'crosshair':'grab';
+        if (viewport.hasPointerCapture(e.pointerId)) viewport.releasePointerCapture(e.pointerId);
+      } else handleCockpitMouseUp(e);
+    }
+    function handleFlowViewKey(e) {
+      if (e.target!==e.currentTarget) return;
+      const directions={ArrowLeft:[40,0],ArrowRight:[-40,0],ArrowUp:[0,40],ArrowDown:[0,-40]};
+      if (directions[e.key]) {e.preventDefault();flowView.x+=directions[e.key][0];flowView.y+=directions[e.key][1];updateFlowView();}
+      else if (['+','=','-','0'].includes(e.key)) {e.preventDefault();if(e.key==='0')resetFlowView();else zoomFlowBy(e.key==='-'?1/1.25:1.25);}
+    }
+    function initFlowView() {
+      const viewport=document.getElementById('flow-viewport');
+      viewport.addEventListener('wheel',e=>{e.preventDefault();zoomFlowBy(Math.exp(-e.deltaY*(e.deltaMode===1?.04:e.deltaMode===2?.5:.002)),e.clientX,e.clientY);},{passive:false});
+      new ResizeObserver(()=>updateFlowView()).observe(viewport);
+      updateFlowView();
+    }
     const flowPresets = [
       {id:'cockpit-prep', title:'Preparação do cockpit', phase:'01 · No solo', count:4},
       {id:'before-start', title:'Before Start', phase:'02 · Antes da partida', count:3},
@@ -2426,8 +2499,8 @@
     function setFlowInteractionMode(mode) {
       flowMapState.mode=mode;
       ['add','move'].forEach(m=>document.getElementById('flow-mode-'+m+'-btn').setAttribute('aria-pressed',m===mode));
-      document.getElementById('flow-mode-status-pill').textContent=mode==='add'?'Clique no painel para adicionar um passo.':'Selecione um passo para ver os detalhes. Arraste um marcador para reposicionar.';
-      document.getElementById('cockpit-canvas-container').style.cursor=mode==='add'?'crosshair':'default';
+      document.getElementById('flow-mode-status-pill').textContent=mode==='add'?'Clique para adicionar um passo. Arraste o fundo para mover o painel.':'Arraste o fundo para explorar ou um marcador para reposicionar o passo.';
+      document.getElementById('flow-viewport').style.cursor=mode==='add'?'crosshair':'grab';
     }
     function flowPosition(e) {
       const r=document.getElementById('cockpit-canvas-container').getBoundingClientRect();
@@ -2487,23 +2560,23 @@
     }
     function selectFlowNode(id){flowMapState.selectedNodeId=id;renderFlowMap();}
     function handleNodeMouseDown(e,id){
-      if(e.button!==0)return;
-      e.stopPropagation();flowMapState.draggedNodeId=id;flowMapState.isDragging=true;flowMapState.hasMoved=false;flowMapState.startX=e.clientX;flowMapState.startY=e.clientY;
-      document.getElementById('cockpit-canvas-container').setPointerCapture(e.pointerId);
+      if(e.button!==0 || !e.isPrimary || flowView.pointerId!==null || flowMapState.isDragging)return;
+      e.stopPropagation();flowMapState.nodePointerId=e.pointerId;flowMapState.draggedNodeId=id;flowMapState.isDragging=true;flowMapState.hasMoved=false;flowMapState.startX=e.clientX;flowMapState.startY=e.clientY;
+      document.getElementById('flow-viewport').setPointerCapture(e.pointerId);
     }
     function handleCockpitMouseMove(e){
-      if(!flowMapState.isDragging)return;
+      if(!flowMapState.isDragging || e.pointerId!==flowMapState.nodePointerId)return;
       if(Math.hypot(e.clientX-flowMapState.startX,e.clientY-flowMapState.startY)<4 && !flowMapState.hasMoved)return;
       flowMapState.hasMoved=true;
       Object.assign(appState.flowNodes.find(n=>n.id===flowMapState.draggedNodeId),flowPosition(e));renderFlowMap();
     }
     function handleCockpitMouseUp(e){
-      if(!flowMapState.isDragging)return;
+      if(!flowMapState.isDragging || e.pointerId!==flowMapState.nodePointerId)return;
       const id=flowMapState.draggedNodeId;
       flowMapState.isDragging=false;flowMapState.draggedNodeId=null;
       if(!flowMapState.hasMoved)selectFlowNode(id);
       flowMapState.hasMoved=true;
-      if(document.getElementById('cockpit-canvas-container').hasPointerCapture(e.pointerId))document.getElementById('cockpit-canvas-container').releasePointerCapture(e.pointerId);
+      if(document.getElementById('flow-viewport').hasPointerCapture(e.pointerId))document.getElementById('flow-viewport').releasePointerCapture(e.pointerId);
     }
     function editFlowNodeText(e,id) {
       e.stopPropagation();
@@ -2533,7 +2606,7 @@
       filterFlows(document.getElementById('flow-search').value);setFlowInteractionMode(flowMapState.mode);
     }
     function clearFlowMap() {
-      const clear = () => {appState.flowNodes=[];flowMapState.preset=null;flowMapState.selectedNodeId=null;flowMapState.mode='add';renderFlowMap();};
+      const clear = () => {resetFlowView();appState.flowNodes=[];flowMapState.preset=null;flowMapState.selectedNodeId=null;flowMapState.mode='add';renderFlowMap();};
       if (!appState.flowNodes.length) { clear(); return; }
       openFlowDialog({title:'Criar um novo flow?', description:'As alterações do flow atual serão descartadas.', submitLabel:'Criar novo flow', onSubmit:clear});
     }
@@ -2547,6 +2620,7 @@
     }
 
     function applyPresetFlow(type) {
+      resetFlowView();
       flowMapState.preset = type;
       flowMapState.selectedNodeId = 1;
       flowMapState.mode = 'move';
@@ -2641,6 +2715,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       lucide.createIcons();
       updateAuthUI();
+      initFlowView();
       loadPresetFlow('cockpit-prep');
       initScrollAnimations();
     });
