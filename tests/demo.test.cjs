@@ -4,6 +4,7 @@ const fs=require('node:fs');const vm=require('node:vm');
 const {JSDOM}=require('../functions/node_modules/jsdom');
 async function setup(storage=false){
  const dom=new JSDOM(fs.readFileSync('index.html','utf8'),{url:'https://example.com',runScripts:'outside-only'}),w=dom.window;
+ const headerStyle=w.document.createElement('style');headerStyle.textContent=fs.readFileSync('assets/header.css','utf8');w.document.head.append(headerStyle);
  w.lucide={createIcons(){}};w.scrollTo=()=>{};w.ResizeObserver=class{observe(){}};w.IntersectionObserver=class{observe(){}};w.matchMedia=()=>({matches:true,addEventListener(){}});
  w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
  if(storage)Object.defineProperty(w,'localStorage',{get(){throw Error('blocked');}});
@@ -28,5 +29,15 @@ test('demo works when browser persistence is unavailable and never simulates pay
  assert.equal(t.w.document.getElementById('user-display-name').textContent,'Admin');
  t.w.EasyAccount.checkout({preventDefault(){}});
  assert.match(t.w.document.getElementById('account-message-text').textContent,/desativados/);
+ }finally{t.dom.window.close();}
+});
+
+test('desktop header exposes all navigation buttons instead of retaining the hidden utility',async()=>{
+ const t=await setup();try{
+ const header=t.w.document.getElementById('site-header'),nav=header.querySelector(':scope > nav');
+ assert(!nav.classList.contains('hidden'));assert.equal(t.w.getComputedStyle(nav).display,'flex');
+ assert.deepEqual([...nav.querySelectorAll('button')].map(b=>b.textContent.trim()),['Início','Sobre Nós','Planos','Workspace']);
+ assert.equal(t.w.document.getElementById('auth-buttons-logged-in').classList.contains('hidden'),false);
+ t.w.eval(t.w.document.getElementById('nav-btn-app-workspace').getAttribute('onclick'));assert(!t.w.document.getElementById('screen-app-workspace').classList.contains('hidden'));
  }finally{t.dom.window.close();}
 });
