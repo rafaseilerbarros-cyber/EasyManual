@@ -104,3 +104,21 @@ Para desenvolver: `npm ci`, `npm run typecheck` e `npm run build`. Após editar 
 ## Autenticação e permissões de planos
 
 Login real por e-mail/senha e Google, recuperação de senha, assinatura Stripe e limites por workspace. A ativação exige configurar os provedores Firebase, publicar funções/regras e cadastrar os preços e o webhook Stripe. Consulte [o guia completo de ativação](docs/AUTH_AND_PLANS.md).
+
+## Usar localmente com todos os módulos
+
+Requisitos: Node 22 e Java 17+ instalados. Depois de baixar este código:
+
+```bash
+npm ci
+npm ci --prefix functions
+npm run dev:local
+```
+
+Abra **http://127.0.0.1:5173**. Entre com **admin@easymanual.local** e a senha exibida no terminal. A senha é gerada na primeira execução, guardada em `.local/credentials.json` (ignorado pelo Git) e reutilizada nas seguintes. Nenhuma senha é enviada ao GitHub.
+
+O comando inicia os emuladores locais e cria uma conta titular com plano Companhias Aéreas: Upload, Busca, Treinamento, Flow Map, convites e gerenciamento de até 2.000 usuários. Não exige Firebase de produção, configuração de Google ou Stripe. O botão Google usa o simulador local do Firebase; para a conta com acesso completo, use o e-mail/senha acima. As demais contas começam sem plano. Pagamentos estão desativados nesse ambiente.
+
+Encerre com Ctrl+C para salvar os arquivos, flows e usuários em `.local/firebase`; eles são restaurados na próxima inicialização. Reiniciar renova o período local de acesso sem apagar conteúdo. A aplicação usa os mesmos validadores e regras de acesso de produção. As respostas de IA permanecem demonstrativas. Não basta abrir `index.html` ou usar Live Server: utilize o comando acima.
+
+Verificação do ambiente local: `npm run test:local` inicia todos os emuladores e testa o login da conta gerada, os quatro módulos e o bloqueio de pagamentos/arquivos privados. Em containers que proíbem sockets Unix, `EASYMANUAL_TEST_DIRECT_CALLABLES=1 npm run test:local` testa os handlers em processo com tokens reais do Auth emulator; a execução padrão verifica o caminho HTTP do Functions emulator.
