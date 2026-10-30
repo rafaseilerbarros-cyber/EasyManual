@@ -122,3 +122,7 @@ O comando inicia os emuladores locais e cria uma conta titular com plano Companh
 Encerre com Ctrl+C para salvar os arquivos, flows e usuários em `.local/firebase`; eles são restaurados na próxima inicialização. Reiniciar renova o período local de acesso sem apagar conteúdo. A aplicação usa os mesmos validadores e regras de acesso de produção. As respostas de IA permanecem demonstrativas. Não basta abrir `index.html` ou usar Live Server: utilize o comando acima.
 
 Verificação do ambiente local: `npm run test:local` inicia todos os emuladores e testa o login da conta gerada, os quatro módulos e o bloqueio de pagamentos/arquivos privados. Em containers que proíbem sockets Unix, `EASYMANUAL_TEST_DIRECT_CALLABLES=1 npm run test:local` testa os handlers em processo com tokens reais do Auth emulator; a execução padrão verifica o caminho HTTP do Functions emulator.
+
+## Interface de autenticação
+
+O SDK Firebase de navegador é empacotado em `assets/account.js` a partir de `src/account.js` por `npm run build`. As telas não dependem do CDN do Firebase nem do Tailwind para a apresentação dos formulários. A configuração pública continua em `/__/firebase/init.json`; abrir o HTML diretamente ou usar um servidor genérico não inicia os emuladores. Para a conta local, use `npm run dev:local`. Login e cadastro aguardam a sessão inicial sem apagar os dados digitados, mostram o progresso e informam falhas de conexão em ambas as telas.

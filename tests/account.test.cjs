@@ -3,9 +3,9 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const {JSDOM}=require('../functions/node_modules/jsdom');
 const html=fs.readFileSync('index.html','utf8');
-const source=fs.readFileSync('assets/account.js','utf8').replace(/const sdk=name=>import\([^\n]+\);/,'const sdk=name=>Promise.resolve(window.__sdk[name]);');
+const source=fs.readFileSync('src/account.js','utf8').replace(/^import .*$/gm,'').replace(/const sdk=name=>[^\n]+;/,'const sdk=name=>Promise.resolve(window.__sdk[name]);');
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
-async function setup({configured=true,loggedIn=false,plan='entusiastas',emulatorConfig=false,hostname='example.com'}={}) {
+async function setup({configured=true,loggedIn=false,plan='entusiastas',emulatorConfig=false,hostname='example.com',delaySession=false}={}) {
   const dom=new JSDOM(html,{url:`https://${hostname}`,runScripts:'outside-only'}),w=dom.window,calls=[];
   w.lucide={createIcons(){}};w.ResizeObserver=class{observe(){}};w.IntersectionObserver=class{observe(){}};w.scrollTo=()=>{};w.matchMedia=()=>({matches:true,addEventListener(){}});
   w.HTMLDialogElement.prototype.showModal=function(){this.open=true;};w.HTMLDialogElement.prototype.close=function(){this.open=false;};
@@ -17,8 +17,8 @@ async function setup({configured=true,loggedIn=false,plan='entusiastas',emulator
   const spy=name=>async(...args)=>{calls.push({name,args});};
   const auth={currentUser:user};
   const A={getAuth:()=>auth,useDeviceLanguage(){},browserLocalPersistence:'local',setPersistence:spy('persistence'),
-    connectAuthEmulator:spy('authEmulator'),onAuthStateChanged:(a,cb)=>{callback=cb;queueMicrotask(()=>cb(user));},signInWithEmailAndPassword:spy('passwordLogin'),
-    GoogleAuthProvider:class{},signInWithPopup:spy('googleLogin'),createUserWithEmailAndPassword:spy('register'),sendPasswordResetEmail:spy('reset'),
+    connectAuthEmulator:spy('authEmulator'),onAuthStateChanged:(a,cb)=>{callback=cb;w.__authCallback=cb;if(!delaySession)queueMicrotask(()=>cb(user));},signInWithEmailAndPassword:spy('passwordLogin'),
+    GoogleAuthProvider:class{},signInWithPopup:spy('googleLogin'),createUserWithEmailAndPassword:async(...args)=>{calls.push({name:'register',args});return {user:{uid:'new-user'}};},updateProfile:spy('updateProfile'),sendEmailVerification:spy('verification'),sendPasswordResetEmail:spy('reset'),
     signOut:async()=>{calls.push({name:'logout'});await callback(null);}};
   const D={connectFirestoreEmulator:spy('firestoreEmulator'),getFirestore:()=>({}),doc:(...args)=>args.filter(a=>typeof a==='string').join('/'),collection:(...args)=>args.filter(a=>typeof a==='string').join('/'),
     onSnapshot:(ref,cb)=>{queueMicrotask(()=>{
@@ -76,7 +76,7 @@ test('logout clears documents, passwords, flow data and team invite codes',async
 test('missing Firebase config fails closed with actionable message',async()=>{
   const t=await setup({configured:false});try{
     await t.w.EasyAccount.google();assert(!t.calls.some(c=>c.name==='googleLogin'));
-    assert.match(t.w.document.getElementById('account-message-text').textContent,/Configure/);
+    assert.match(t.w.document.getElementById('account-message-text').textContent,/conectar/);
   }finally{t.close();}
 });
 
@@ -85,6 +85,37 @@ test('local config connects all SDKs to emulators only on a loopback host',async
   try {for(const name of ['authEmulator','firestoreEmulator','functionsEmulator','storageEmulator'])assert(local.calls.some(c=>c.name===name));}
   finally{local.close();}
   const publicSite=await setup({emulatorConfig:true});
-  try {assert(!publicSite.calls.some(c=>c.name.endsWith('Emulator')));assert.match(publicSite.w.document.getElementById('auth-service-status').textContent,/indisponível/);}
+  try {assert(!publicSite.calls.some(c=>c.name.endsWith('Emulator')));assert.match(publicSite.w.document.getElementById('auth-service-status').textContent,/Não foi possível conectar/);}
   finally{publicSite.close();}
+});
+
+test('a login click during initial session restoration retains typed credentials and completes',async()=>{
+  const t=await setup({delaySession:true});try{
+    t.w.document.getElementById('login-email').value='pilot@example.com';t.w.document.getElementById('login-password').value='EasyManual';
+    const action=t.w.handleLogin(event(t.w));await t.w.__authCallback(null);await action;
+    assert.deepEqual(t.calls.find(c=>c.name==='passwordLogin').args.slice(1),['pilot@example.com','EasyManual']);
+  }finally{t.close();}
+});
+test('a click before the account bundle loads is resumed once it becomes available',async()=>{
+  const t=await setup();try{
+    const account=t.w.EasyAccount;delete t.w.EasyAccount;
+    t.w.document.getElementById('login-email').value='pilot@example.com';t.w.document.getElementById('login-password').value='EasyManual';
+    t.w.handleLogin(event(t.w));t.w.EasyAccount=account;t.w.dispatchEvent(new t.w.Event('easymanual:auth-loaded'));await flush();
+    assert.equal(t.calls.filter(c=>c.name==='passwordLogin').length,1);
+  }finally{t.close();}
+});
+test('registration sends account fields, saves profile and requests verification',async()=>{
+  const t=await setup();try{
+    for(const [id,value] of Object.entries({'reg-name':'Piloto','reg-email':'new@example.com','reg-password':'EasyManual','reg-confirm-password':'EasyManual'}))t.w.document.getElementById(id).value=value;
+    t.w.document.getElementById('reg-terms').checked=true;
+    await t.w.handleRegister(event(t.w));
+    assert.deepEqual(t.calls.find(c=>c.name==='register').args.slice(1),['new@example.com','EasyManual']);
+    assert(t.calls.some(c=>c.name==='updateProfile'));assert(t.calls.some(c=>c.name==='verification'));
+  }finally{t.close();}
+});
+test('bundle failure reports the error on both authentication screens',async()=>{
+  const t=await setup();try{
+    t.w.authLoadFailed();const statuses=[...t.w.document.querySelectorAll('[data-auth-status]')];
+    assert.equal(statuses.length,2);for(const status of statuses){assert.equal(status.dataset.state,'error');assert.match(status.textContent,/não carregou/);}
+  }finally{t.close();}
 });
