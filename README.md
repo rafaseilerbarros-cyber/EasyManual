@@ -128,3 +128,9 @@ Verificação do ambiente local: `npm run test:local` inicia todos os emuladores
 O SDK Firebase de navegador é empacotado em `assets/account.js` a partir de `src/account.js` por `npm run build`. As telas não dependem do CDN do Firebase nem do Tailwind para a apresentação dos formulários. A configuração pública continua em `/__/firebase/init.json`; abrir o HTML diretamente ou usar um servidor genérico não inicia os emuladores. Para a conta local, use `npm run dev:local`. Login e cadastro aguardam a sessão inicial sem apagar os dados digitados, mostram o progresso e informam falhas de conexão em ambas as telas.
 
 No ambiente local, a sessão inicial entra automaticamente com `admin@easymanual.local` / `EasyManual` e abre o workspace quando as permissões carregam. O botão Sair continua funcionando; a entrada automática ocorre apenas na inicialização da página. Essa conveniência depende da configuração explícita dos emuladores e do host loopback, sem acesso automático no site de produção.
+
+## Abertura direta, sem comandos (modo temporário)
+
+A versão atual inicia em **modo de demonstração**, conectada como Admin e com todos os módulos visíveis. Basta abrir o site publicado ou `index.html`: não exige terminal, emuladores, Firebase nem senha. Flows, perfil demonstrativo e referências de arquivos são salvos somente neste navegador; o conteúdo dos arquivos não é enviado/indexado. Cadastro, pagamentos e convites reais ficam desativados. As respostas de treinamento/busca continuam demonstrativas. O aviso na página identifica este modo.
+
+Para restaurar o fluxo real de autenticação, altere `DEMO_ENABLED` para `false` em `assets/demo.js`. O carregador então inicia o Firebase já existente; nenhum privilégio de produção é concedido pelo modo de demonstração. A aparência geral ainda utiliza os assets e fontes existentes do site, alguns externos.
