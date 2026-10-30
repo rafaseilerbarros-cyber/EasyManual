@@ -131,6 +131,6 @@ No ambiente local, a sessão inicial entra automaticamente com `admin@easymanual
 
 ## Abertura direta, sem comandos (modo temporário)
 
-A versão atual inicia em **modo de demonstração**, conectada como Admin e com todos os módulos visíveis. Basta abrir o site publicado ou `index.html`: não exige terminal, emuladores, Firebase nem senha. Flows, perfil demonstrativo e referências de arquivos são salvos somente neste navegador; o conteúdo dos arquivos não é enviado/indexado. Cadastro, pagamentos e convites reais ficam desativados. As respostas de treinamento/busca continuam demonstrativas. O aviso na página identifica este modo.
+A versão atual inicia em **modo de demonstração**, conectada como Admin e com todos os módulos visíveis. Basta abrir o site publicado ou `index.html`: não exige terminal, emuladores, Firebase nem senha. Flows, perfil demonstrativo e referências de arquivos são salvos somente neste navegador; o conteúdo dos arquivos não é enviado/indexado. Cadastro, pagamentos e convites reais ficam desativados. As respostas de treinamento/busca continuam demonstrativas. O modo é identificado na conta e nos textos do workspace.
 
 Para restaurar o fluxo real de autenticação, altere `DEMO_ENABLED` para `false` em `assets/demo.js`. O carregador então inicia o Firebase já existente; nenhum privilégio de produção é concedido pelo modo de demonstração. A aparência geral ainda utiliza os assets e fontes existentes do site, alguns externos.

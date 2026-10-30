@@ -28,7 +28,6 @@
     for(const id of ['manage-subscription','invite-team','verification-controls'])$(id).hidden=true;
     $('acc-password').disabled=true;$('acc-password').placeholder='Demonstração sem senha';
     document.querySelectorAll('[data-auth-status]').forEach(el=>{el.textContent='Modo de demonstração: você já está conectado como admin.';});
-    const banner=document.createElement('aside');banner.id='demo-banner';banner.setAttribute('role','status');banner.style.cssText='padding:9px 20px;background:#f5ae2e;color:#191027;text-align:center;font:12px/1.5 sans-serif';banner.textContent='Demonstração · Admin conectado · Flows salvos neste navegador · Sem acesso a contas reais';document.body.prepend(banner);
     const member=document.createElement('p');member.textContent='Admin — Titular da demonstração';$('team-members').replaceChildren(member);
     renderFiles();
     if(Array.isArray(saved.nodes)&&saved.nodes.every(n=>n&&typeof n.title==='string'&&Number.isFinite(n.x)&&Number.isFinite(n.y))) {appState.flowNodes=saved.nodes;renderFlowMap();}
