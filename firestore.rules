@@ -1,0 +1,22 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function member(wid) {return request.auth != null && exists(/databases/$(database)/documents/workspaces/$(wid)/members/$(request.auth.uid));}
+    function active(wid) {
+      let w=get(/databases/$(database)/documents/workspaces/$(wid)).data;
+      return w.status=='active' && w.expiresAt>request.time.toMillis() && w.memberCount<=w.seatLimit;
+    }
+    match /users/{uid} {allow read: if request.auth!=null && request.auth.uid==uid; allow write: if false;}
+    match /workspaces/{wid} {
+      allow read: if member(wid);
+      allow write: if false;
+      match /members/{uid} {allow read: if member(wid); allow write: if false;}
+      match /files/{fileId} {allow read: if member(wid); allow write: if false;}
+      match /flows/{flowId} {
+        allow read: if member(wid) && active(wid) && 'flow-map' in get(/databases/$(database)/documents/workspaces/$(wid)).data.modules;
+        allow write: if false;
+      }
+    }
+    match /{document=**} {allow read,write: if false;}
+  }
+}

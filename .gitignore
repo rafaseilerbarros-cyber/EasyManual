@@ -9,3 +9,9 @@ Thumbs.db
 node_modules/
 dist/
 build/
+
+# Firebase local parameters and emulator artifacts
+.env.*
+functions/.env*
+.firebase/
+*-debug.log*
