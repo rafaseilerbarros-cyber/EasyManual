@@ -15,7 +15,7 @@ test('opening the static demo automatically shows admin workspace without any ba
  const t=await setup();try{
  assert.equal(t.w.EasyManualDemo,true);assert.equal(t.w.document.getElementById('user-display-name').textContent,'Admin');
  assert(!t.w.document.getElementById('screen-app-workspace').classList.contains('hidden'));
- assert(t.w.document.getElementById('demo-banner'));assert(t.w.EasyAccount.canAccess('flow-map'));
+ assert.equal(t.w.document.getElementById('demo-banner'),null);assert(t.w.EasyAccount.canAccess('flow-map'));
  t.w.EasyAccount.saveFlow();assert(Array.isArray(JSON.parse(t.w.localStorage.getItem('easymanual-static-demo-v1')).nodes));
  }finally{t.dom.window.close();}
 });
