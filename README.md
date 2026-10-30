@@ -115,7 +115,7 @@ npm ci --prefix functions
 npm run dev:local
 ```
 
-Abra **http://127.0.0.1:5173**. Entre com **admin@easymanual.local** e a senha exibida no terminal. A senha é gerada na primeira execução, guardada em `.local/credentials.json` (ignorado pelo Git) e reutilizada nas seguintes. Nenhuma senha é enviada ao GitHub.
+Abra **http://127.0.0.1:5173**. Entre com **admin@easymanual.local** e a senha fixa **EasyManual**. Essa credencial é exclusiva do ambiente local de demonstração. Ao reiniciar com `npm run dev:local`, a senha anterior da conta local é substituída, preservando os arquivos e flows.
 
 O comando inicia os emuladores locais e cria uma conta titular com plano Companhias Aéreas: Upload, Busca, Treinamento, Flow Map, convites e gerenciamento de até 2.000 usuários. Não exige Firebase de produção, configuração de Google ou Stripe. O botão Google usa o simulador local do Firebase; para a conta com acesso completo, use o e-mail/senha acima. As demais contas começam sem plano. Pagamentos estão desativados nesse ambiente.
 

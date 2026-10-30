@@ -2,7 +2,6 @@
 const fs=require('node:fs');
 const path=require('node:path');
 const net=require('node:net');
-const {randomBytes}=require('node:crypto');
 const {spawn}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 async function requireFreePort(port) {
@@ -22,7 +21,7 @@ async function main() {
   if(!fs.existsSync(cli))throw new Error('Instale as dependências: npm ci && npm ci --prefix functions');
   for(const port of [5173,9099,8080,9199,5001,4400])await requireFreePort(port);
   fs.mkdirSync(path.join(root,'.local'),{recursive:true});
-  createIfMissing(path.join(root,'.local/credentials.json'),JSON.stringify({email:'admin@easymanual.local',password:`EM-${randomBytes(15).toString('base64url')}!`},null,2)+'\n');
+  fs.writeFileSync(path.join(root,'.local/credentials.json'),JSON.stringify({email:'admin@easymanual.local',password:'EasyManual'},null,2)+'\n',{mode:0o600});
   // Emulator-only placeholders; these are never used to call a payment provider.
   createIfMissing(path.join(root,'functions/.secret.local'),'STRIPE_SECRET_KEY=emulator-only\nSTRIPE_WEBHOOK_SECRET=emulator-only\nSTRIPE_PRICE_IDS={}\n');
   createIfMissing(path.join(root,'functions/.env.local'),'APP_URL=http://127.0.0.1:5173\n');

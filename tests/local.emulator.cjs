@@ -21,6 +21,7 @@ async function call(name,data={}) {
 before(async()=>{
   server=await startLocalServer({quiet:true});
   const credentials=JSON.parse(fs.readFileSync('.local/credentials.json'));
+  assert.equal(credentials.password,'EasyManual');
   const response=await fetch('http://127.0.0.1:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=demo-easymanual-local',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({...credentials,returnSecureToken:true})});
   const result=await response.json();assert.equal(response.status,200,JSON.stringify(result.error));token=result.idToken;assert(token);
 });
