@@ -32,7 +32,7 @@
     renderFiles();
     if(Array.isArray(saved.nodes)&&saved.nodes.every(n=>n&&typeof n.title==='string'&&Number.isFinite(n.x)&&Number.isFinite(n.y))) {appState.flowNodes=saved.nodes;renderFlowMap();}
     else applyPresetFlow('cockpit-prep');
-    navigateTo('app-workspace');
+    navigateTo('pagina-inicial');
   }
   const demoOnly=()=>notify('Esta é uma demonstração já conectada como admin. Cadastro, convites e pagamentos reais estão desativados.');
   window.EasyAccount={
