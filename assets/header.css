@@ -24,3 +24,18 @@ body:has(#screen-pagina-inicial:not(.hidden)) #site-header #auth-buttons-logged-
 #site-header button:focus-visible{outline:2px solid #f5ae2e;outline-offset:4px}
 @media(max-width:900px) and (min-width:768px){#site-header{padding:18px 24px;gap:10px}#site-header>.site-desktop-nav{gap:0}#site-header>.site-desktop-nav>button{padding:10px 8px}}
 @media(max-width:767px){#site-header{grid-template-columns:1fr auto auto;min-height:76px;padding:16px;gap:10px}#site-header>.site-desktop-nav{display:none}#site-header>#mobile-menu-root{display:block}#site-header>div:first-child>div:first-child{width:30px;height:30px;flex-basis:30px}#site-header>div:first-child>div:last-child>span:first-child{font-size:15px}#site-header>div:first-child>div:last-child>span:last-child{font-size:7px}#auth-buttons-logged-in>button:first-child{padding:6px;gap:5px}#user-display-name{max-width:60px;font-size:11px}#auth-buttons-logged-in:not(.hidden){gap:3px}}
+/* Quiet profile control, with contrast adapted to the light Hero. */
+#auth-buttons-logged-in>button:first-child{gap:7px;padding:6px 9px;background:#ffffff06;border-color:#ffffff14;border-radius:8px;transition:background-color .2s,border-color .2s}
+#auth-buttons-logged-in>button:first-child:hover{background:#ffffff0c;border-color:#ffffff2b}
+#auth-buttons-logged-in>button:first-child>div{width:21px;height:21px;flex-basis:21px;background:#f5ae2e0a;color:#bd975c;font-size:10px}
+#user-display-name{font-size:11px;font-weight:500;color:#c3bdd2}
+#auth-buttons-logged-in>button:first-child>svg{width:12px;height:12px;opacity:.55}
+#auth-buttons-logged-in>button:last-child{padding:6px;color:#9a93ad}
+#auth-buttons-logged-in>button:last-child svg{width:14px;height:14px;opacity:.65}
+body:has(#screen-pagina-inicial:not(.hidden)) #auth-buttons-logged-in>button:first-child{background:#ffffff18;border-color:#202a3614}
+body:has(#screen-pagina-inicial:not(.hidden)) #auth-buttons-logged-in>button:first-child:hover{background:#ffffff40;border-color:#202a362b}
+body:has(#screen-pagina-inicial:not(.hidden)) #user-display-name{color:#46505b}
+body:has(#screen-pagina-inicial:not(.hidden)) #auth-buttons-logged-in>button:first-child>div{background:#202a3608;color:#8c733f}
+body:has(#screen-pagina-inicial:not(.hidden)) #auth-buttons-logged-in>button:first-child>svg{color:#66707a}
+body:has(#screen-pagina-inicial:not(.hidden)) #site-header #auth-buttons-logged-in>button:last-child{color:#66707a}
+@media(prefers-reduced-motion:reduce){#auth-buttons-logged-in>button:first-child{transition:none}}
