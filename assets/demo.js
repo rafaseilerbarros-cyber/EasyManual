@@ -27,11 +27,31 @@
   function renderFiles(){
     $('sources-list').replaceChildren();
     saved.files.forEach(file=>{
-      const row=document.createElement('div');row.className='p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4';
-      const title=document.createElement('span');title.textContent=`${file.name} · ${(file.size/1048576).toFixed(1)} MB · ${file.sample?'Exemplo de manual (demonstração)':'Referência de arquivo (demo)'}`;
-      const remove=document.createElement('button');remove.type='button';remove.textContent='Remover';remove.onclick=()=>{saved.files=saved.files.filter(f=>f.id!==file.id);persist();renderFiles();};
-      row.append(title,remove);$('sources-list').append(row);
+      const originalIcons={
+        'example-fcom-3':['file-text','#F59E0B'],
+        'example-qrh':['book-open','#E23B2E'],
+        'example-fcom-1':['layers','#22D3EE'],
+        'example-fctm':['graduation-cap','#C084FC'],
+        'example-mel':['clipboard-list','#FBBF24']
+      };
+      const [symbol,color]=originalIcons[file.id]||['file-text','#F59E0B'];
+      const icon=(name,classes)=>{const el=document.createElement('i');el.dataset.lucide=name;el.className=classes;return el;};
+      const row=document.createElement('div');row.className='p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all';
+      const content=document.createElement('div');content.className='flex items-center gap-3 min-w-0';
+      const badge=document.createElement('div');badge.className='p-2.5 rounded-lg shrink-0';badge.style.color=color;badge.style.backgroundColor=color+'1A';badge.append(icon(symbol,'w-5 h-5'));
+      const details=document.createElement('div');details.className='min-w-0';
+      const title=document.createElement('h4');title.className='font-bold text-white text-sm break-words';title.textContent=file.name;
+      const meta=document.createElement('div');meta.className='flex items-center flex-wrap gap-3 text-[11px] text-[#94A3B8] mt-0.5';
+      const size=document.createElement('span');size.textContent=(file.size/1048576).toFixed(1)+' MB';
+      const dot=document.createElement('span');dot.textContent='•';dot.setAttribute('aria-hidden','true');
+      const status=document.createElement('span');status.className='text-emerald-400 font-semibold flex items-center gap-1';
+      status.append(icon('check-circle','w-3 h-3'),document.createTextNode(file.sample?'Exemplo de manual (demonstração)':'Referência de arquivo (demo)'));
+      meta.append(size,dot,status);details.append(title,meta);content.append(badge,details);
+      const remove=document.createElement('button');remove.type='button';remove.className='p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors shrink-0';remove.setAttribute('aria-label','Remover '+file.name);remove.title='Remover arquivo';remove.append(icon('trash-2','w-4 h-4'));
+      remove.onclick=()=>{saved.files=saved.files.filter(f=>f.id!==file.id);persist();renderFiles();};
+      row.append(content,remove);$('sources-list').append(row);
     });
+    window.lucide?.createIcons();
     $('sidebar-doc-count').textContent=`${saved.files.length} arquivos de demonstração`;
   }
   function activate(){
