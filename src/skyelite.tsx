@@ -46,7 +46,7 @@ function Hero() {
             <div className="p-3 rounded-xl bg-[#0D0B34]/80 border border-[#1E1B56] backdrop-blur-md text-left flex items-center gap-3">
               <i data-lucide="check-circle" className="w-5 h-5 text-[#F59E0B] shrink-0"></i>
               <div>
-                <div className="text-xs font-bold text-white">99.8% Precisão</div>
+                <div className="text-xs font-bold text-white">100% Precisão</div>
                 <div className="text-[10px] text-[#94A3B8]">Auditado por SMEs</div>
               </div>
             </div>
