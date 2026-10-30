@@ -51,7 +51,7 @@ O **EasyManual** é um aplicativo de alta performance projetado para facilitar, 
   5. *Táxi Aéreo* - R$ 250.000,00/ano
   6. *Companhias Aéreas* - R$ 600.000,00/ano
 - **Tabela de Informações dos Planos**: Matriz comparativa de usuários, custo unitário e permissões dos módulos.
-- **Modal de Checkout**: Simulação de aquisição que atualiza o plano no banco de dados.
+- **Checkout seguro**: Assinatura anual no Stripe, ativada por webhook e aplicada ao workspace no servidor.
 
 ### 6. Upload de Arquivos (`screens/upload-de-arquivos.md`)
 - Gerenciador de base de conhecimento no estilo NotebookLM.
@@ -100,3 +100,7 @@ Basta abrir o arquivo [`index.html`](file:///C:/Users/Rafael/.gemini/antigravity
 O hero e o menu móvel ficam em `src/skyelite.tsx`. As demais telas mantêm o funcionamento atual. O bundle `assets/skyelite.js` é versionado para que o `index.html` continue abrindo diretamente no navegador, sem servidor de build. Tailwind, fontes e vídeo continuam exigindo internet.
 
 Para desenvolver: `npm ci`, `npm run typecheck` e `npm run build`. Após editar o TSX, gere e versione o bundle novamente.
+
+## Autenticação e permissões de planos
+
+Login real por e-mail/senha e Google, recuperação de senha, assinatura Stripe e limites por workspace. A ativação exige configurar os provedores Firebase, publicar funções/regras e cadastrar os preços e o webhook Stripe. Consulte [o guia completo de ativação](docs/AUTH_AND_PLANS.md).

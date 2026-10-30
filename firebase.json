@@ -4,7 +4,18 @@
     "ignore": [
       "firebase.json",
       "**/.*",
-      "**/node_modules/**"
+      "**/node_modules/**",
+      "functions/**",
+      "tests/**",
+      "docs/**",
+      "src/**",
+      "package*.json",
+      "tsconfig.json",
+      "README.md",
+      "*.rules",
+      "firebase.test.json",
+      "firestore.indexes.json",
+      "**/*.log"
     ],
     "rewrites": [
       {
@@ -12,5 +23,16 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs22"
+  },
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
   }
 }

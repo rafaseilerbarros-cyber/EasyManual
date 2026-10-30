@@ -933,6 +933,8 @@
           <p class="text-xs text-[#94A3B8]">Digite seu e-mail e senha para entrar na plataforma</p>
         </div>
 
+        <p id="auth-service-status" role="status" class="text-sm text-amber-300"></p>
+        <button type="button" onclick="window.EasyAccount?.google(this)" class="w-full py-3 mb-4 rounded-xl border border-[#F59E0B] text-white font-bold">Continuar com Google</button>
         <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
           <div class="space-y-1">
             <label class="text-xs font-semibold text-[#94A3B8]">E-mail</label>
@@ -955,6 +957,7 @@
           </button>
         </form>
 
+        <button type="button" onclick="window.EasyAccount?.reset(this)" class="text-sm text-[#F59E0B] mt-3">Esqueci minha senha</button>
         <div class="text-center pt-2 text-xs text-[#94A3B8] space-y-2">
           <p>Ainda não tem conta? <button onclick="navigateTo('cadastro')" class="text-[#F59E0B] font-bold hover:underline">Cadastre-se aqui</button></p>
           <p><button onclick="navigateTo('planos')" class="text-[#94A3B8] hover:text-white transition-colors">Conhecer planos disponíveis</button></p>
@@ -971,6 +974,7 @@
           <p class="text-xs text-[#94A3B8]">Preencha os dados abaixo para se cadastrar</p>
         </div>
 
+        <button type="button" onclick="window.EasyAccount?.google(this)" class="w-full py-3 mb-4 rounded-xl border border-[#F59E0B] text-white font-bold">Continuar com Google</button>
         <form id="form-cadastro" onsubmit="handleRegister(event)" class="space-y-4">
           <div class="space-y-1">
             <label class="text-xs font-semibold text-[#94A3B8]">Nome Completo</label>
@@ -992,7 +996,7 @@
             <label class="text-xs font-semibold text-[#94A3B8]">Senha</label>
             <div class="relative">
               <i data-lucide="lock" class="w-4 h-4 absolute left-3 top-3 text-[#94A3B8]"></i>
-              <input type="password" id="reg-password" autocomplete="new-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Sua senha">
+              <input type="password" id="reg-password" minlength="6" autocomplete="new-password" required class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl pl-9 pr-4 py-2.5 text-sm text-white focus:outline-none transition-colors" placeholder="Sua senha">
             </div>
           </div>
 
@@ -1005,7 +1009,7 @@
           </div>
 
           <div class="flex items-center gap-2 pt-1">
-            <input type="checkbox" id="reg-terms" required checked class="w-4 h-4 rounded accent-[#F59E0B] bg-[#040122] border-[#1E1B56]">
+            <input type="checkbox" id="reg-terms" required class="w-4 h-4 rounded accent-[#F59E0B] bg-[#040122] border-[#1E1B56]">
             <label for="reg-terms" class="text-xs text-[#94A3B8] cursor-pointer">
               I agree with the security terms
             </label>
@@ -1048,7 +1052,7 @@
 
           <div class="space-y-1">
             <label class="text-xs font-semibold text-[#94A3B8]">Nova Senha (deixe em branco se não quiser alterar)</label>
-            <input type="password" id="acc-password" autocomplete="new-password" placeholder="Nova senha..." class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
+            <input type="password" id="acc-password" minlength="6" autocomplete="new-password" placeholder="Nova senha..." class="w-full bg-[#040122] border border-[#1E1B56] focus:border-[#F59E0B] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
           </div>
 
           <div class="space-y-1 pt-2">
@@ -1057,8 +1061,8 @@
               <div class="flex items-center gap-3">
                 <i data-lucide="ticket" class="w-5 h-5 text-[#F59E0B]"></i>
                 <div>
-                  <h4 id="user-active-plan-title" class="font-bold text-white text-sm">Pilotos Operacionais (R$ 1.000,00/ano)</h4>
-                  <p class="text-xs text-[#94A3B8]">Acesso ilimitado ao Upload, Treinamento, Busca e Flow Map</p>
+                  <h4 id="user-active-plan-title" class="font-bold text-white text-sm">Sem plano ativo</h4>
+                  <p id="account-plan-description" class="text-xs text-[#94A3B8]">Escolha um plano para liberar seu workspace.</p>
                 </div>
               </div>
               <button type="button" onclick="navigateTo('planos')" class="px-3 py-1.5 rounded-lg bg-[#F59E0B]/10 text-[#F59E0B] text-xs font-bold hover:bg-[#F59E0B] hover:text-black transition-colors">
@@ -1076,6 +1080,26 @@
             </button>
           </div>
         </form>
+      </div>
+      <div class="w-full max-w-2xl mx-auto px-6 pb-8 space-y-4 text-sm">
+        <div id="verification-controls" hidden class="space-x-3">
+          <button type="button" onclick="window.EasyAccount?.verify(this)" class="text-amber-400">Reenviar verificação de e-mail</button>
+          <button type="button" onclick="window.EasyAccount?.reload(this)" class="text-amber-400">Já verifiquei meu e-mail</button>
+        </div>
+        <button id="manage-subscription" hidden type="button" onclick="window.EasyAccount?.portal(this)" class="px-4 py-2 rounded-xl border border-amber-400 text-amber-400">Gerenciar assinatura e pagamentos</button>
+        <form id="invite-team" hidden onsubmit="window.EasyAccount?.invite(event)" class="space-y-2">
+          <label for="invite-email">Convidar membro da equipe (limite compartilhado do plano)</label>
+          <input id="invite-email" type="email" required placeholder="E-mail do convidado" class="w-full p-2 bg-[#040122] border border-[#1E1B56] rounded-xl">
+          <button class="text-amber-400">Criar código de convite</button>
+          <label for="invite-result" class="block">Código para compartilhar com o convidado</label>
+          <input id="invite-result" readonly class="w-full p-2 bg-[#040122] border border-[#1E1B56] rounded-xl">
+        </form>
+        <form onsubmit="window.EasyAccount?.join(event)" class="space-y-2">
+          <label for="join-code">Entrar em uma equipe com convite</label>
+          <input id="join-code" required placeholder="Código recebido do titular" class="w-full p-2 bg-[#040122] border border-[#1E1B56] rounded-xl">
+          <button class="text-amber-400">Entrar na equipe</button>
+        </form>
+        <div><h3 class="font-bold">Membros do workspace</h3><div id="team-members"></div></div>
       </div>
     </section>
 
@@ -1439,11 +1463,11 @@
         <div class="p-3.5 rounded-xl bg-[#040122] border border-[#1E1B56] space-y-2">
           <div class="flex items-center justify-between text-[11px]">
             <span class="text-[#94A3B8]">Manuais Ativos:</span>
-            <span id="sidebar-doc-count" class="font-bold text-[#F59E0B]">5 arquivos</span>
+            <span id="sidebar-doc-count" class="font-bold text-[#F59E0B]">0 arquivos</span>
           </div>
           <div class="flex items-center justify-between text-[11px]">
-            <span class="text-[#94A3B8]">A320 Fleet Index:</span>
-            <span class="font-mono text-emerald-400 font-bold">READY (FCOM/QRH/FCTM/MEL)</span>
+            <span class="text-[#94A3B8]">Plano e equipe:</span>
+            <span id="workspace-plan-status" class="text-[#F59E0B] text-right">Sem plano ativo</span>
           </div>
         </div>
       </aside>
@@ -1457,13 +1481,13 @@
             <div>
               <h1 class="text-2xl font-bold font-heading text-white">Upload de Arquivos Fonte</h1>
               <p class="text-xs text-[#94A3B8] mt-1">
-                Adicione manuais, QRH, FCOM e procedimentos em PDF ou TXT. O sistema irá processar e usar esses documentos como fonte no <strong>Treinamento</strong> e no <strong>Chat de busca</strong>.
+                Adicione manuais, QRH, FCOM e procedimentos em PDF ou TXT. Os arquivos são armazenados no workspace. Os exemplos atuais de Treinamento e Busca são demonstrativos; a indexação por IA ainda não está conectada.
               </p>
             </div>
             <label for="manual-file-input" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] text-white font-bold text-xs cursor-pointer shadow-md shadow-[#F59E0B]/20 flex items-center justify-center gap-2 hover:opacity-95">
               <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Arquivo
             </label>
-            <input type="file" id="manual-file-input" class="hidden" multiple onchange="handleFileUpload(event)">
+            <input type="file" id="manual-file-input" accept=".pdf,.txt" class="hidden" multiple onchange="handleFileUpload(event)">
           </div>
 
           <!-- Drag and Drop Dropzone -->
@@ -1479,119 +1503,10 @@
           <div class="space-y-4">
             <h3 class="text-sm font-bold text-white flex items-center justify-between">
               <span>Manuais Inseridos na Base de Dados</span>
-              <span class="text-xs text-[#94A3B8] font-normal">Fontes consultáveis pela IA (Frota A320)</span>
+              <span class="text-xs text-[#94A3B8] font-normal">Arquivos do seu workspace</span>
             </h3>
 
             <div id="sources-list" class="space-y-3">
-              <!-- Document 1: A320 FCOM Vol 3 -->
-              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 rounded-lg bg-[#F59E0B]/10 text-[#F59E0B]">
-                    <i data-lucide="file-text" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-white text-sm">Airbus A320 FCOM Vol 3 - Emergency & Abnormal Procedures.pdf</h4>
-                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                      <span>4.2 MB</span>
-                      <span>•</span>
-                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (1.240 seções)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <!-- Document 2: A320 QRH -->
-              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 rounded-lg bg-[#E23B2E]/10 text-[#E23B2E]">
-                    <i data-lucide="book-open" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-white text-sm">Airbus A320 QRH - Quick Reference Handbook (Rev 22).pdf</h4>
-                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                      <span>3.4 MB</span>
-                      <span>•</span>
-                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (740 seções & checklists de contingência)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <!-- Document 3: A320 FCOM Vol 1 Systems -->
-              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 rounded-lg bg-cyan-500/10 text-cyan-400">
-                    <i data-lucide="layers" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-white text-sm">Airbus A320 FCOM Vol 1 - Aircraft Systems Description.pdf</h4>
-                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                      <span>8.8 MB</span>
-                      <span>•</span>
-                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (2.650 seções • Hidráulica, FBW, Elétrica, Motores)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <!-- Document 4: A320 FCTM Training Manual -->
-              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 rounded-lg bg-purple-500/10 text-purple-400">
-                    <i data-lucide="graduation-cap" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-white text-sm">Airbus A320 FCTM - Flight Crew Training Manual.pdf</h4>
-                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                      <span>5.2 MB</span>
-                      <span>•</span>
-                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (980 seções • Técnicas de pilotagem, Crosswind, Go-Around)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
-
-              <!-- Document 5: A320 MEL Minimum Equipment List -->
-              <div class="p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all">
-                <div class="flex items-center gap-3">
-                  <div class="p-2.5 rounded-lg bg-amber-500/10 text-amber-400">
-                    <i data-lucide="clipboard-list" class="w-5 h-5"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-white text-sm">Airbus A320 MEL - Minimum Equipment List (Rev 48).pdf</h4>
-                    <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                      <span>6.5 MB</span>
-                      <span>•</span>
-                      <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                        <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado (1.540 itens de despacho operacional)
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-                  <i data-lucide="trash-2" class="w-4 h-4"></i>
-                </button>
-              </div>
             </div>
           </div>
         </div>
@@ -1732,6 +1647,7 @@
 
         <!-- ================= SCREEN 08: FLOW MAP (Interactive Cockpit Builder) ================= -->
         <div id="tab-content-flow-map" class="workspace-tab hidden flex-1 flex flex-col h-full min-h-[calc(100vh-65px)]">
+          <button type="button" onclick="window.EasyAccount?.saveFlow(this)" class="self-end m-4 px-4 py-2 rounded-xl border border-amber-400 text-amber-400">Salvar flow no workspace</button>
           <header class="flows-heading"><div><span class="flows-eyebrow">WORKSPACE / A320</span><h2>Flows do cockpit</h2><p>Escolha um flow e acompanhe a sequência no painel.</p></div><button onclick="clearFlowMap()">+ Novo flow</button></header>
           <div class="flows-layout">
             <section class="flows-library" aria-label="Sugestões de flows">
@@ -1798,7 +1714,7 @@
           </div>
           <div>
             <h3 class="text-xl font-bold font-heading text-white">Adquirir Plano EasyManual</h3>
-            <p class="text-xs text-[#94A3B8]">Confirme os dados de faturamento e assinatura</p>
+            <p class="text-xs text-[#94A3B8]">Confira o plano e prossiga para o pagamento</p>
           </div>
         </div>
         <button onclick="closeAcquireModal()" class="text-[#94A3B8] hover:text-white">
@@ -1816,34 +1732,31 @@
           <span id="modal-plan-price" class="font-extrabold text-[#F59E0B] text-base">R$ 1.000,00/ano</span>
         </div>
         <div class="flex items-center justify-between text-xs pt-1 border-t border-[#1E1B56]">
-          <span class="text-[#94A3B8]">Status de Armazenamento:</span>
-          <span class="text-emerald-400 font-mono font-semibold">Integrado com Firebase Database</span>
+          <span class="text-[#94A3B8]">Ativação:</span>
+          <span class="text-emerald-400 font-mono font-semibold">Após confirmação do pagamento</span>
         </div>
       </div>
 
       <form onsubmit="confirmPlanAcquisition(event)" class="space-y-4">
-        <div class="space-y-1">
-          <label class="text-xs font-semibold text-[#94A3B8]">Nome do Titular da Conta</label>
-          <input type="text" id="billing-name" required value="Rafael Barros" class="w-full bg-[#040122] border border-[#1E1B56] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
-        </div>
-
-        <div class="space-y-1">
-          <label class="text-xs font-semibold text-[#94A3B8]">Número do Cartão de Crédito / PIX</label>
-          <input type="text" required value="•••• •••• •••• 4592" class="w-full bg-[#040122] border border-[#1E1B56] rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none">
-        </div>
-
+        <p class="text-sm text-[#94A3B8]">Você será direcionado ao pagamento seguro do Stripe. O acesso será liberado após a confirmação da assinatura.</p>
         <div class="pt-2 flex items-center gap-3">
           <button type="button" onclick="closeAcquireModal()" class="flex-1 py-3 rounded-xl border border-[#1E1B56] text-[#94A3B8] text-sm font-semibold hover:text-white">
             Cancelar
           </button>
           <button type="submit" class="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#E23B2E] text-white font-bold text-sm shadow-lg shadow-[#F59E0B]/20">
-            Confirmar Assinatura
+            Ir para pagamento
           </button>
         </div>
       </form>
     </div>
   </div>
 
+  <dialog id="account-message" aria-labelledby="account-message-title" class="max-w-md w-full p-6 rounded-2xl bg-[#0D0B34] text-white border border-[#F59E0B] backdrop:bg-black/70">
+    <h2 id="account-message-title" class="font-bold text-lg mb-3">EasyManual</h2>
+    <p id="account-message-text" role="status" class="text-sm mb-4"></p>
+    <form method="dialog"><button class="px-5 py-2 bg-[#F59E0B] text-black rounded-xl">Entendi</button></form>
+  </dialog>
+  <script type="module" src="assets/account.js"></script>
   <script src="assets/skyelite.js"></script>
 
   <!-- APPLICATION SCRIPTS -->
@@ -1854,7 +1767,7 @@
         isLoggedIn: false,
         name: '',
         email: '',
-        plan: 'Pilotos Operacionais (R$ 1.000,00/ano)'
+        plan: 'Sem plano ativo'
       },
       currentScreen: 'pagina-inicial',
       activeWorkspaceTab: 'upload-de-arquivos',
@@ -1879,6 +1792,8 @@
 
     // Navigation Switcher with Fluid Animations
     function navigateTo(screenId) {
+      if (['app-workspace','alteracao-de-conta'].includes(screenId) && !appState.user.isLoggedIn) screenId = 'login';
+      if (screenId === 'app-workspace' && !window.EasyAccount?.canAccess(appState.activeWorkspaceTab)) screenId = 'alteracao-de-conta';
       appState.currentScreen = screenId;
 
       document.querySelectorAll('.screen-view').forEach(el => {
@@ -1906,6 +1821,7 @@
     }
 
     function switchWorkspaceTab(tabId) {
+      if (!window.EasyAccount?.canAccess(tabId)) return;
       appState.activeWorkspaceTab = tabId;
 
       document.querySelectorAll('.workspace-tab').forEach(el => {
@@ -1939,42 +1855,11 @@
       lucide.createIcons();
     }
 
-    // Auth Handlers
-    function handleLogin(e) {
-      e.preventDefault();
-      const email = document.getElementById('login-email').value;
-      appState.user.email = email;
-      appState.user.name = email.split('@')[0];
-      appState.user.isLoggedIn = true;
-      updateAuthUI();
-      navigateTo('app-workspace');
-    }
-
-    function handleRegister(e) {
-      e.preventDefault();
-      const name = document.getElementById('reg-name').value;
-      const email = document.getElementById('reg-email').value;
-      appState.user.name = name;
-      appState.user.email = email;
-      appState.user.isLoggedIn = true;
-      updateAuthUI();
-      navigateTo('app-workspace');
-    }
-
-    function handleAccountUpdate(e) {
-      e.preventDefault();
-      appState.user.name = document.getElementById('acc-name').value;
-      appState.user.email = document.getElementById('acc-email').value;
-      updateAuthUI();
-      alert('Dados da conta atualizados com sucesso no banco de dados!');
-      navigateTo('pagina-inicial');
-    }
-
-    function logoutUser() {
-      appState.user.isLoggedIn = false;
-      updateAuthUI();
-      navigateTo('pagina-inicial');
-    }
+    // Authentication is validated by Firebase, never by local form state.
+    function handleLogin(e) { e.preventDefault(); return window.EasyAccount?.login(e); }
+    function handleRegister(e) { e.preventDefault(); return window.EasyAccount?.register(e); }
+    function handleAccountUpdate(e) { e.preventDefault(); return window.EasyAccount?.update(e); }
+    function logoutUser() { return window.EasyAccount?.logout(); }
 
     function updateAuthUI() {
       const loggedOutDiv = document.getElementById('auth-buttons-logged-out');
@@ -2006,6 +1891,7 @@
 
     function acquirePlan(event, planName, planPrice) {
       event.stopPropagation();
+      if (!appState.user.isLoggedIn) { navigateTo('login'); return; }
       appState.selectedPlanForPurchase = { name: planName, price: planPrice };
       document.getElementById('modal-plan-name').textContent = planName;
       document.getElementById('modal-plan-price').textContent = planPrice;
@@ -2016,76 +1902,9 @@
       document.getElementById('acquire-plan-modal').classList.add('hidden');
     }
 
-    function confirmPlanAcquisition(e) {
-      e.preventDefault();
-      if (appState.selectedPlanForPurchase) {
-        appState.user.plan = `${appState.selectedPlanForPurchase.name} (${appState.selectedPlanForPurchase.price})`;
-        updateAuthUI();
-      }
-      closeAcquireModal();
-      alert(`Parabéns! O plano ${appState.selectedPlanForPurchase.name} foi assinado e atualizado no banco de dados com sucesso!`);
-      navigateTo('app-workspace');
-    }
-
-    // File Upload Handler
-    function handleFileUpload(e) {
-      const files = e.target.files;
-      if (files && files.length > 0) {
-        addFilesToList(files);
-      }
-    }
-
-    function handleFileDrop(e) {
-      e.preventDefault();
-      const files = e.dataTransfer.files;
-      if (files && files.length > 0) {
-        addFilesToList(files);
-      }
-    }
-
-    function addFilesToList(files) {
-      const sourcesList = document.getElementById('sources-list');
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const item = document.createElement('div');
-        item.className = 'p-4 rounded-xl bg-[#0D0B34] border border-[#1E1B56] flex items-center justify-between gap-4 hover:border-[#F59E0B]/40 transition-all';
-        item.innerHTML = `
-          <div class="flex items-center gap-3">
-            <div class="p-2.5 rounded-lg bg-[#F59E0B]/10 text-[#F59E0B]">
-              <i data-lucide="file" class="w-5 h-5"></i>
-            </div>
-            <div>
-              <h4 class="font-bold text-white text-sm">${file.name}</h4>
-              <div class="flex items-center gap-3 text-[11px] text-[#94A3B8] mt-0.5">
-                <span>${(file.size / (1024 * 1024)).toFixed(1)} MB</span>
-                <span>•</span>
-                <span class="text-emerald-400 font-semibold flex items-center gap-1">
-                  <i data-lucide="check-circle" class="w-3 h-3"></i> Indexado com sucesso
-                </span>
-              </div>
-            </div>
-          </div>
-          <button onclick="removeDocument(this)" class="p-2 text-[#94A3B8] hover:text-[#E23B2E] transition-colors">
-            <i data-lucide="trash-2" class="w-4 h-4"></i>
-          </button>
-        `;
-        sourcesList.appendChild(item);
-      }
-      lucide.createIcons();
-      updateSidebarDocCount();
-    }
-
-    function updateSidebarDocCount() {
-      const list = document.getElementById('sources-list');
-      const count = list ? list.children.length : 0;
-      const el = document.getElementById('sidebar-doc-count');
-      if (el) el.textContent = `${count} ${count === 1 ? 'arquivo' : 'arquivos'}`;
-    }
-
-    function removeDocument(btn) {
-      btn.closest('div.p-4').remove();
-      updateSidebarDocCount();
-    }
+    function confirmPlanAcquisition(e) { e.preventDefault(); return window.EasyAccount?.checkout(e); }
+    function handleFileUpload(e) { return window.EasyAccount?.upload(Array.from(e.target.files || [])); }
+    function handleFileDrop(e) { e.preventDefault(); return window.EasyAccount?.upload(Array.from(e.dataTransfer.files || [])); }
 
     // ================= RICH TEXT & CHECKLIST FORMATTERS =================
     function formatInlineMarkdown(str) {
@@ -2223,8 +2042,9 @@
       handleSendTrainingMessage(new Event('submit'));
     }
 
-    function handleSendTrainingMessage(e) {
+    async function handleSendTrainingMessage(e) {
       e.preventDefault();
+      if (!await window.EasyAccount?.authorize('treinamento')) return;
       const input = document.getElementById('treinamento-input');
       const text = input.value.trim();
       if (!text) return;
@@ -2248,7 +2068,9 @@
       container.scrollTop = container.scrollHeight;
 
       // Simulate AI response stream
+      const trainingUser = appState.user.email;
       setTimeout(() => {
+        if (appState.user.email !== trainingUser || !window.EasyAccount?.canAccess('treinamento', false)) return;
         const aiMsg = document.createElement('div');
         aiMsg.className = 'flex items-start gap-3 max-w-3xl';
 
@@ -2308,8 +2130,9 @@
       handleSearchPane(new Event('submit'));
     }
 
-    function handleSearchPane(e) {
+    async function handleSearchPane(e) {
       e.preventDefault();
+      if (!await window.EasyAccount?.authorize('chat-de-busca')) return;
       const query = document.getElementById('pane-search-input').value.trim();
       if (!query) return;
 
@@ -2549,6 +2372,8 @@
     }
 
     function handleCockpitCanvasClick(e) {
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+
       if(flowMapState.hasMoved){flowMapState.hasMoved=false;return;}
       if(e.target.closest('.flow-node-dot') || flowMapState.mode!=='add')return;
       const position = flowPosition(e);
@@ -2560,6 +2385,8 @@
     }
     function selectFlowNode(id){flowMapState.selectedNodeId=id;renderFlowMap();}
     function handleNodeMouseDown(e,id){
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+
       if(e.button!==0 || !e.isPrimary || flowView.pointerId!==null || flowMapState.isDragging)return;
       e.stopPropagation();flowMapState.nodePointerId=e.pointerId;flowMapState.draggedNodeId=id;flowMapState.isDragging=true;flowMapState.hasMoved=false;flowMapState.startX=e.clientX;flowMapState.startY=e.clientY;
       document.getElementById('flow-viewport').setPointerCapture(e.pointerId);
@@ -2579,6 +2406,8 @@
       if(document.getElementById('flow-viewport').hasPointerCapture(e.pointerId))document.getElementById('flow-viewport').releasePointerCapture(e.pointerId);
     }
     function editFlowNodeText(e,id) {
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+
       e.stopPropagation();
       const node=appState.flowNodes.find(n=>n.id===id);
       if (!node) return;
@@ -2586,8 +2415,12 @@
         node.title=title;renderFlowMap();
       }});
     }
-    function deleteFlowNode(e,id){e.stopPropagation();appState.flowNodes=appState.flowNodes.filter(n=>n.id!==id);appState.flowNodes.forEach((n,i)=>n.id=i+1);flowMapState.selectedNodeId=null;renderFlowMap();}
-    function reorderFlowNode(id,delta){const i=appState.flowNodes.findIndex(n=>n.id===id);const j=i+delta;if(j<0||j>=appState.flowNodes.length)return;[appState.flowNodes[i],appState.flowNodes[j]]=[appState.flowNodes[j],appState.flowNodes[i]];appState.flowNodes.forEach((n,k)=>n.id=k+1);flowMapState.selectedNodeId=j+1;renderFlowMap();}
+    function deleteFlowNode(e,id){
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+e.stopPropagation();appState.flowNodes=appState.flowNodes.filter(n=>n.id!==id);appState.flowNodes.forEach((n,i)=>n.id=i+1);flowMapState.selectedNodeId=null;renderFlowMap();}
+    function reorderFlowNode(id,delta){
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+const i=appState.flowNodes.findIndex(n=>n.id===id);const j=i+delta;if(j<0||j>=appState.flowNodes.length)return;[appState.flowNodes[i],appState.flowNodes[j]]=[appState.flowNodes[j],appState.flowNodes[i]];appState.flowNodes.forEach((n,k)=>n.id=k+1);flowMapState.selectedNodeId=j+1;renderFlowMap();}
     function stepFlow(delta){const index=appState.flowNodes.findIndex(n=>n.id===flowMapState.selectedNodeId);const next=index<0?0:index+delta;if(appState.flowNodes[next])selectFlowNode(appState.flowNodes[next].id);}
     function renderFlowMap(){
       const nodes=appState.flowNodes;const selected=flowMapState.selectedNodeId;const preset=flowPresets.find(p=>p.id===flowMapState.preset);
@@ -2606,12 +2439,16 @@
       filterFlows(document.getElementById('flow-search').value);setFlowInteractionMode(flowMapState.mode);
     }
     function clearFlowMap() {
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+
       const clear = () => {resetFlowView();appState.flowNodes=[];flowMapState.preset=null;flowMapState.selectedNodeId=null;flowMapState.mode='add';renderFlowMap();};
       if (!appState.flowNodes.length) { clear(); return; }
       openFlowDialog({title:'Criar um novo flow?', description:'As alterações do flow atual serão descartadas.', submitLabel:'Criar novo flow', onSubmit:clear});
     }
 
     function loadPresetFlow(type) {
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+
       if (appState.flowNodes.length) {
         openFlowDialog({title:'Substituir o flow atual?', description:'Ao carregar esta sugestão, as alterações do flow atual serão descartadas.', submitLabel:'Carregar sugestão', onSubmit:() => applyPresetFlow(type)});
         return;
@@ -2620,6 +2457,8 @@
     }
 
     function applyPresetFlow(type) {
+      if (!window.EasyAccount?.canAccess('flow-map', false)) return;
+
       resetFlowView();
       flowMapState.preset = type;
       flowMapState.selectedNodeId = 1;
@@ -2716,7 +2555,7 @@
       lucide.createIcons();
       updateAuthUI();
       initFlowView();
-      loadPresetFlow('cockpit-prep');
+      renderFlowMap();
       initScrollAnimations();
     });
 

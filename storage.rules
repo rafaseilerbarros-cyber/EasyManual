@@ -1,0 +1,24 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function member(wid) {return request.auth!=null && firestore.exists(/databases/(default)/documents/workspaces/$(wid)/members/$(request.auth.uid));}
+    function active(wid) {
+      let w=firestore.get(/databases/(default)/documents/workspaces/$(wid)).data;
+      return w.status=='active' && w.expiresAt>request.time.toMillis() && w.memberCount<=w.seatLimit;
+    }
+    match /workspaces/{wid}/{fileId} {
+      allow read: if member(wid) && active(wid) && firestore.get(/databases/(default)/documents/workspaces/$(wid)/files/$(fileId)).data.status=='ready';
+      allow create: if resource==null && member(wid) && active(wid) && withinQuota(wid) && request.auth.token.email_verified==true && validReservation(wid,fileId);
+      allow update,delete: if false;
+    }
+    function withinQuota(wid) {
+      let w=firestore.get(/databases/(default)/documents/workspaces/$(wid)).data;
+      return w.planId!='entusiastas' || w.fileCount<=1;
+    }
+    function validReservation(wid,fileId) {
+      let f=firestore.get(/databases/(default)/documents/workspaces/$(wid)/files/$(fileId)).data;
+      return f.uploaderId==request.auth.uid && f.status=='pending' && f.expiresAt>request.time && request.resource.size==f.size && request.resource.size<=20*1024*1024 && request.resource.contentType==f.contentType;
+    }
+    match /{allPaths=**} {allow read,write: if false;}
+  }
+}
